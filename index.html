@@ -2,65 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ThinkLedger | Home</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="js/script.js" defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnSphere | Your Digital Companion</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="java/script.js" defer></script>
+</head>
 <body>
-  <header>
+  <!-- Navbar -->
+  <header class="navbar">
     <div class="logo">
-      <img src="image/hello.jpg" alt="ThinkLedger Logo">
-      <h1>ThinkLedger</h1>
+      <div class="icon">LS</div>
+      <div>
+        <h1>LearnSphere</h1>
+        <p>Your Digital Companion</p>
+      </div>
     </div>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="notes.html">Notes</a>
-      <a href="about.html">About Us</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="contact.html">Contact</a>
+
+    <!-- Hamburger -->
+    <div class="menu-toggle" id="menu-toggle">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <nav id="nav-links">
+      <a href="#">Home</a>
+      <a href="#notes">Notes</a>
+      <a href="#papers">Papers</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
+    <button class="publish-btn">Publish</button>
   </header>
 
-  <main>
-    <section class="intro">
-      <h2>Welcome to ThinkLedger</h2>
-      <p>Explore and share notes with students around Nepal!</p>
-    </section>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="tagline">Experience the best</p>
+      <h2>Empowering students with high-quality content and modern learning tools.</h2>
+      <p class="desc">
+        LearnSphere delivers curated study materials, engaging videos, and quick revision guides
+        to help students excel in every exam.
+      </p>
+    </div>
 
-    <section class="grades">
-      <h3>Browse by Grade</h3>
-      <div class="grade-list">
-        <div class="grade-card" onclick="openSubjects('Grade 8')">Grade 8</div>
-        <div class="grade-card" onclick="openSubjects('Grade 9')">Grade 9</div>
-        <div class="grade-card" onclick="openSubjects('Grade 10')">Grade 10</div>
-        <div class="grade-card" onclick="openSubjects('Grade 11')">Grade 11</div>
-        <div class="grade-card" onclick="openSubjects('Grade 12')">Grade 12</div>
+    <div class="hero-box">
+      <h3>Download Your Notes Anytime</h3>
+      <p>Access class notes, past question papers, and syllabus updates wherever you are.</p>
+
+      <div class="stats">
+        <div>
+          <h4>1200+</h4>
+          <p>Study Guides</p>
+        </div>
+        <div>
+          <h4>340+</h4>
+          <p>Past Papers</p>
+        </div>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="social-icons">
-      <a href="https://m.facebook.com/nawaraj.gupta12/" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
-
-      <a href="https://instagram.com/yourpage" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
-
-       <a href="https://youtube.com/yourchannel" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
-
-      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
-
     </div>
-    <p>&copy; 2025 ThinkLedger. All rights reserved.</p>
-  </footer>
+  </section>
 
-  <!-- Popup for subjects -->
-  <div id="subjectPopup" class="popup">
-    <div class="popup-content">
-      <span class="close" onclick="closePopup()">&times;</span>
-      <h3 id="popupTitle"></h3>
-      <div id="subjectList"></div>
+  <!-- Notes Section -->
+  <section id="notes" class="notes-section">
+    <h2>Find Your Notes</h2>
+    <p>Choose your grade to unlock curated notes, past papers, and quizzes.</p>
+
+    <div class="grade-grid">
+      <div class="grade-card">
+        <h3>Grade 8</h3>
+        <p>Foundational concepts and revision notes</p>
+        <a href="#">Explore →</a>
+      </div>
+      <div class="grade-card">
+        <h3>Grade 9</h3>
+        <p>High-clarity lessons with practice sets</p>
+        <a href="#">Explore →</a>
+      </div>
+      <div class="grade-card">
+        <h3>Grade 10</h3>
+        <p>Complete SEE preparation toolkit</p>
+        <a href="#">Explore →</a>
+      </div>
+      <div class="grade-card">
+        <h3>Grade 11</h3>
+        <p>Subject-wise deep dives and summaries</p>
+        <a href="#">Explore →</a>
+      </div>
     </div>
+  </section>
+
+  <!-- Social Buttons -->
+  <div class="social-buttons">
+    <a href="#">f</a>
+    <a href="#">ig</a>
+    <a href="#">✉</a>
+    <a href="#">in</a>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> LearnSphere — All rights reserved.
+  </footer>
 </body>
 </html>
