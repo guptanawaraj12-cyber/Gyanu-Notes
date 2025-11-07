@@ -33,7 +33,9 @@
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
-    <button class="publish-btn">Publish</button>
+
+    <!-- Login Button -->
+    <button id="login-btn" class="login-btn">Login</button>
   </header>
 
   <!-- Hero Section -->
@@ -70,26 +72,10 @@
     <p>Choose your grade to unlock curated notes, past papers, and quizzes.</p>
 
     <div class="grade-grid">
-      <div class="grade-card">
-        <h3>Grade 8</h3>
-        <p>Foundational concepts and revision notes</p>
-        <a href="#">Explore →</a>
-      </div>
-      <div class="grade-card">
-        <h3>Grade 9</h3>
-        <p>High-clarity lessons with practice sets</p>
-        <a href="#">Explore →</a>
-      </div>
-      <div class="grade-card">
-        <h3>Grade 10</h3>
-        <p>Complete SEE preparation toolkit</p>
-        <a href="#">Explore →</a>
-      </div>
-      <div class="grade-card">
-        <h3>Grade 11</h3>
-        <p>Subject-wise deep dives and summaries</p>
-        <a href="#">Explore →</a>
-      </div>
+      <div class="grade-card"><h3>Grade 8</h3><p>Foundational concepts and revision notes</p><a href="#">Explore →</a></div>
+      <div class="grade-card"><h3>Grade 9</h3><p>High-clarity lessons with practice sets</p><a href="#">Explore →</a></div>
+      <div class="grade-card"><h3>Grade 10</h3><p>Complete SEE preparation toolkit</p><a href="#">Explore →</a></div>
+      <div class="grade-card"><h3>Grade 11</h3><p>Subject-wise deep dives and summaries</p><a href="#">Explore →</a></div>
     </div>
   </section>
 
@@ -114,6 +100,56 @@
     <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
     <a href="mailto:info@learnsphere.com"><i class="fas fa-envelope"></i></a>
     <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+
+  <!-- Login Popup -->
+  <div id="login-popup" class="login-popup">
+    <div class="login-box">
+      <span id="close-login" class="close-btn">&times;</span>
+      <h2>Login to LearnSphere</h2>
+      <form>
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
+
+        <a href="#" class="forgot-link">Forgot password?</a>
+
+        <button type="submit" class="submit-btn">Login</button>
+
+        <p class="signup-text">
+          Don’t have an account? <a href="#" id="open-signup" class="signup-link">Sign Up</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Signup Popup -->
+  <div id="signup-popup" class="login-popup">
+    <div class="login-box">
+      <span id="close-signup" class="close-btn">&times;</span>
+      <h2>Create Your Account</h2>
+      <form>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required />
+
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="Enter your email" required />
+
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Create a password" required />
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Confirm your password" required />
+
+        <button type="submit" class="submit-btn">Sign Up</button>
+
+        <p class="signup-text">
+          Already have an account? <a href="#" id="open-login" class="signup-link">Login</a>
+        </p>
+      </form>
+    </div>
   </div>
 
   <!-- Footer -->
