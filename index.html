@@ -1,160 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LearnSphere | Your Digital Companion</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Hub</title>
+  <link rel="stylesheet" href="css/style.css">
   <script src="java/script.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
+  <!-- Header -->
+  <header>
     <div class="logo">
-      <div class="icon">LS</div>
-      <div>
-        <h1>LearnSphere</h1>
-        <p>Your Digital Companion</p>
-      </div>
+      <img src="logo.png" alt="Study Hub Logo">
+      <h1>Study Hub</h1>
     </div>
-
-    <!-- Hamburger -->
-    <div class="menu-toggle" id="menu-toggle">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-    </div>
-
-    <nav id="nav-links">
-      <a href="#home" class="active">Home</a>
-      <a href="#notes">Notes</a>
-      <a href="#papers">Papers</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+    <nav>
+      <ul>
+        <li><a href="#" id="home-link">Home</a></li>
+        <li><a href="#" id="notes-link">Notes</a></li>
+        <li><a href="#" id="paper-link">Paper</a></li>
+        <li><a href="#" id="about-link">About Us</a></li>
+        <li><a href="#" id="contact-link">Contact</a></li>
+        <li><a href="#" id="login-link">Login</a></li>
+      </ul>
     </nav>
-
-    <!-- Login Button -->
-    <button id="login-btn" class="login-btn">Login</button>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="hero-text">
-      <p class="tagline">Experience the best</p>
-      <h2>Empowering students with high-quality content and modern learning tools.</h2>
-      <p class="desc">
-        LearnSphere delivers curated study materials, engaging videos, and quick revision guides
-        to help students excel in every exam.
-      </p>
-    </div>
+  <!-- Social Media Sidebar -->
+  <div class="social-sidebar">
+    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+  </div>
 
-    <div class="hero-box">
-      <h3>Download Your Notes Anytime</h3>
-      <p>Access class notes, past question papers, and syllabus updates wherever you are.</p>
+  <!-- Main Content -->
+  <main>
+    <!-- Home Section -->
+    <section id="home" class="active-section section">
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search Notes or Papers...">
+        <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+        <div id="search-result"></div>
+      </div>
+      <h2>Welcome to Study Hub</h2>
+      <p>Your one-stop solution for notes, papers, and study materials from class 8 to 12.</p>
+    </section>
 
-      <div class="stats">
-        <div>
-          <h4>1200+</h4>
-          <p>Study Guides</p>
+    <!-- Notes Section -->
+    <section id="notes" class="section">
+      <h2>Notes</h2>
+      <div class="study-container">
+        <div id="class-select" class="select-step">
+          <h3>Select Class</h3>
+          <div class="options">
+            <button data-class="8">Class 8</button>
+            <button data-class="9">Class 9</button>
+            <button data-class="10">Class 10</button>
+            <button data-class="11">Class 11</button>
+            <button data-class="12">Class 12</button>
+          </div>
         </div>
-        <div>
-          <h4>340+</h4>
-          <p>Past Papers</p>
+        <div id="subject-select" class="select-step hidden">
+          <h3>Select Subject</h3>
+          <div class="options"></div>
+        </div>
+        <div id="chapter-select" class="select-step hidden">
+          <h3>Select Chapter</h3>
+          <div class="options"></div>
+        </div>
+        <div id="note-display" class="select-step hidden">
+          <h3>Notes</h3>
+          <div class="note-content"></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Notes Section -->
-  <section id="notes" class="notes-section">
-    <h2>Find Your Notes</h2>
-    <p>Choose your grade to unlock curated notes, past papers, and quizzes.</p>
+    <!-- Paper Section -->
+    <section id="paper" class="section">
+      <h2>Papers</h2>
+      <div class="study-container">
+        <div id="paper-class-select" class="select-step">
+          <h3>Select Class</h3>
+          <div class="options">
+            <button data-class="8">Class 8</button>
+            <button data-class="9">Class 9</button>
+            <button data-class="10">Class 10</button>
+            <button data-class="11">Class 11</button>
+            <button data-class="12">Class 12</button>
+          </div>
+        </div>
+        <div id="paper-subject-select" class="select-step hidden">
+          <h3>Select Subject</h3>
+          <div class="options"></div>
+        </div>
+        <div id="paper-display" class="select-step hidden">
+          <h3>Papers</h3>
+          <div class="note-content"></div>
+        </div>
+      </div>
+    </section>
 
-    <div class="grade-grid">
-      <div class="grade-card"><h3>Grade 8</h3><p>Foundational concepts and revision notes</p><a href="#">Explore →</a></div>
-      <div class="grade-card"><h3>Grade 9</h3><p>High-clarity lessons with practice sets</p><a href="#">Explore →</a></div>
-      <div class="grade-card"><h3>Grade 10</h3><p>Complete SEE preparation toolkit</p><a href="#">Explore →</a></div>
-      <div class="grade-card"><h3>Grade 11</h3><p>Subject-wise deep dives and summaries</p><a href="#">Explore →</a></div>
-    </div>
-  </section>
+    <!-- About Section -->
+    <section id="about" class="section">
+      <h2>About Us</h2>
+      <p>Study Hub is an educational platform providing notes and study material for students from class 8 to 12 in an interactive and structured way.</p>
+    </section>
 
-  <!-- About -->
-  <section id="about" class="about-section">
-    <h2>About LearnSphere</h2>
-    <p>
-      LearnSphere is an open learning platform designed to simplify studying for students across grades.
-      We aim to make quality education accessible, fun, and effective through technology.
-    </p>
-  </section>
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="contact-container">
+        <div class="contact-form">
+          <h2>Contact Us</h2>
+          <form id="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <p><i class="fas fa-envelope"></i> info@studyhub.com</p>
+          <p><i class="fas fa-phone"></i> +123 456 7890</p>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Education Street, City, Country</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <!-- Contact -->
-  <section id="contact" class="contact-section">
-    <h2>Contact Us</h2>
-    <p>Have questions or feedback? Reach out to us!</p>
-  </section>
-
-  <!-- Social Buttons -->
-  <div class="social-buttons">
-    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="mailto:info@learnsphere.com"><i class="fas fa-envelope"></i></a>
-    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-  </div>
-
-  <!-- Login Popup -->
-  <div id="login-popup" class="login-popup">
-    <div class="login-box">
-      <span id="close-login" class="close-btn">&times;</span>
-      <h2>Login to LearnSphere</h2>
-      <form>
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required />
-
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required />
-
-        <a href="#" class="forgot-link">Forgot password?</a>
-
-        <button type="submit" class="submit-btn">Login</button>
-
-        <p class="signup-text">
-          Don’t have an account? <a href="#" id="open-signup" class="signup-link">Sign Up</a>
-        </p>
-      </form>
-    </div>
-  </div>
-
-  <!-- Signup Popup -->
-  <div id="signup-popup" class="login-popup">
-    <div class="login-box">
-      <span id="close-signup" class="close-btn">&times;</span>
-      <h2>Create Your Account</h2>
-      <form>
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required />
-
-        <label for="signup-email">Email</label>
-        <input type="email" id="signup-email" placeholder="Enter your email" required />
-
-        <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" placeholder="Create a password" required />
-
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" placeholder="Confirm your password" required />
-
-        <button type="submit" class="submit-btn">Sign Up</button>
-
-        <p class="signup-text">
-          Already have an account? <a href="#" id="open-login" class="signup-link">Login</a>
-        </p>
-      </form>
+  <!-- Login/Register Modal -->
+  <div class="modal hidden" id="auth-modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div id="login-form">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email" required>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button id="login-btn">Login</button>
+        <p>Don't have an account? <span id="show-register">Register</span></p>
+      </div>
+      <div id="register-form" class="hidden">
+        <h2>Register</h2>
+        <input type="text" id="register-name" placeholder="Full Name" required>
+        <input type="email" id="register-email" placeholder="Email" required>
+        <input type="password" id="register-password" placeholder="Password" required>
+        <button id="register-btn">Register</button>
+        <p>Already have an account? <span id="show-login">Login</span></p>
+      </div>
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
-    © <span id="year"></span> LearnSphere — All rights reserved.
+    <div class="footer-left">
+      <h3>Study Hub</h3>
+      <p>Learn better, faster, and easier.</p>
+    </div>
+    <div class="footer-center">
+      <ul class="quick-links">
+        <li><a href="#" id="footer-home">Home</a></li>
+        <li><a href="#" id="footer-notes">Notes</a></li>
+        <li><a href="#" id="footer-paper">Paper</a></li>
+        <li><a href="#" id="footer-about">About Us</a></li>
+        <li><a href="#" id="footer-contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-right">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
   </footer>
+  <div class="copyright">
+    © 2025 StudyHub. All rights reserved.
+  </div>
 </body>
 </html>
