@@ -164,10 +164,3 @@ loginLink.addEventListener("click", () => modal.classList.remove("hidden"));
 closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
 showRegister.addEventListener("click", () => { loginForm.classList.add("hidden"); registerForm.classList.remove("hidden"); });
 showLogin.addEventListener("click", () => { registerForm.classList.add("hidden"); loginForm.classList.remove("hidden"); });
-// Hamburger toggle
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
-
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
