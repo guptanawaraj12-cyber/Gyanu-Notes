@@ -1,166 +1,82 @@
-// ------------------------
-// Section Navigation
-// ------------------------
-const sections = {
-  home: document.getElementById("home"),
-  notes: document.getElementById("notes"),
-  paper: document.getElementById("paper"),
-  about: document.getElementById("about"),
-  contact: document.getElementById("contact")
-};
-
-// Menu links
-document.getElementById("home-link").addEventListener("click", () => showSection("home"));
-document.getElementById("notes-link").addEventListener("click", () => showSection("notes"));
-document.getElementById("paper-link").addEventListener("click", () => showSection("paper"));
-document.getElementById("about-link").addEventListener("click", () => showSection("about"));
-document.getElementById("contact-link").addEventListener("click", () => showSection("contact"));
-
-// Footer quick links
-document.getElementById("footer-home").addEventListener("click", () => showSection("home"));
-document.getElementById("footer-notes").addEventListener("click", () => showSection("notes"));
-document.getElementById("footer-paper").addEventListener("click", () => showSection("paper"));
-document.getElementById("footer-about").addEventListener("click", () => showSection("about"));
-document.getElementById("footer-contact").addEventListener("click", () => showSection("contact"));
-
-// Show section function with smooth scroll
-function showSection(sectionId) {
-  for (let key in sections) {
-    sections[key].classList.remove("active-section");
-  }
-  sections[sectionId].classList.add("active-section");
-  sections[sectionId].scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-// ------------------------
-// Notes Section Logic
-// ------------------------
-const studyData = {
-  8: { Math: ["Chapter 1", "Chapter 2"], Science: ["Chapter A", "Chapter B"] },
-  9: { Math: ["Chapter 1", "Chapter 2"], Science: ["Chapter A", "Chapter B"] },
-  10: { Math: ["Chapter 1", "Chapter 2"], Science: ["Chapter A", "Chapter B"] },
-  11: { Physics: ["Chapter 1", "Chapter 2"], Chemistry: ["Chapter 1", "Chapter 2"] },
-  12: { Physics: ["Chapter 1", "Chapter 2"], Chemistry: ["Chapter 1", "Chapter 2"] }
-};
-
-const classButtons = document.querySelectorAll("#class-select button");
-const subjectSelect = document.querySelector("#subject-select");
-const chapterSelect = document.querySelector("#chapter-select");
-const noteDisplay = document.querySelector("#note-display");
-
-classButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const selectedClass = btn.dataset.class;
-    subjectSelect.querySelector(".options").innerHTML = "";
-    chapterSelect.querySelector(".options").innerHTML = "";
-    noteDisplay.querySelector(".note-content").textContent = "";
-    chapterSelect.classList.add("hidden");
-    noteDisplay.classList.add("hidden");
-
-    for (let sub in studyData[selectedClass]) {
-      const subBtn = document.createElement("button");
-      subBtn.textContent = sub;
-      subBtn.addEventListener("click", () => {
-        chapterSelect.querySelector(".options").innerHTML = "";
-        noteDisplay.querySelector(".note-content").textContent = "";
-        noteDisplay.classList.add("hidden");
-
-        studyData[selectedClass][sub].forEach(chap => {
-          const chapBtn = document.createElement("button");
-          chapBtn.textContent = chap;
-          chapBtn.addEventListener("click", () => {
-            noteDisplay.querySelector(".note-content").textContent = `Notes for Class ${selectedClass} - ${sub} - ${chap}`;
-            noteDisplay.classList.remove("hidden");
-          });
-          chapterSelect.querySelector(".options").appendChild(chapBtn);
-        });
-        chapterSelect.classList.remove("hidden");
-      });
-      subjectSelect.querySelector(".options").appendChild(subBtn);
-    }
-    subjectSelect.classList.remove("hidden");
-  });
+// Mobile Menu Toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('nav ul');
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
 });
 
-// ------------------------
-// Paper Section Logic
-// ------------------------
-const paperData = {
-  8: { Math: ["Paper 1", "Paper 2"], Science: ["Paper A", "Paper B"] },
-  9: { Math: ["Paper 1", "Paper 2"], Science: ["Paper A", "Paper B"] },
-  10: { Math: ["Paper 1", "Paper 2"], Science: ["Paper A", "Paper B"] },
-  11: { Physics: ["Paper 1","Paper 2"], Chemistry:["Paper 1","Paper 2"] },
-  12: { Physics: ["Paper 1","Paper 2"], Chemistry:["Paper 1","Paper 2"] }
-};
-
-const paperClassButtons = document.querySelectorAll("#paper-class-select button");
-const paperSubjectSelect = document.querySelector("#paper-subject-select");
-const paperDisplay = document.querySelector("#paper-display");
-
-paperClassButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const selectedClass = btn.dataset.class;
-    paperSubjectSelect.querySelector(".options").innerHTML = "";
-    paperDisplay.querySelector(".note-content").textContent = "";
-    paperDisplay.classList.add("hidden");
-
-    for (let sub in paperData[selectedClass]) {
-      const subBtn = document.createElement("button");
-      subBtn.textContent = sub;
-      subBtn.addEventListener("click", () => {
-        paperDisplay.querySelector(".note-content").textContent = `Papers for Class ${selectedClass} - ${sub}: ${paperData[selectedClass][sub].join(", ")}`;
-        paperDisplay.classList.remove("hidden");
-      });
-      paperSubjectSelect.querySelector(".options").appendChild(subBtn);
-    }
-    paperSubjectSelect.classList.remove("hidden");
-  });
+// Scroll effect for menu
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
 });
 
-// ------------------------
-// Search Functionality
-// ------------------------
-document.getElementById("search-btn").addEventListener("click", () => {
-  const query = document.getElementById("search-input").value.toLowerCase();
-  let result = "";
+// Toggle login/register forms with sliding animation
+const loginCard = document.getElementById('login-card');
+const registerCard = document.getElementById('register-card');
+const showRegister = document.getElementById('show-register');
+const showLogin = document.getElementById('show-login');
 
-  // Search Notes
-  for (let cls in studyData) {
-    for (let sub in studyData[cls]) {
-      for (let chap of studyData[cls][sub]) {
-        if (`class ${cls} ${sub} ${chap}`.toLowerCase().includes(query)) {
-          result += `Note Found: Class ${cls} - ${sub} - ${chap}<br>`;
-        }
-      }
-    }
-  }
+showRegister.addEventListener('click', () => {
+  loginCard.classList.remove('visible');
+  loginCard.classList.add('hidden-left');
 
-  // Search Papers
-  for (let cls in paperData) {
-    for (let sub in paperData[cls]) {
-      for (let p of paperData[cls][sub]) {
-        if (`class ${cls} ${sub} ${p}`.toLowerCase().includes(query)) {
-          result += `Paper Found: Class ${cls} - ${sub} - ${p}<br>`;
-        }
-      }
-    }
-  }
-
-  document.getElementById("search-result").innerHTML = result || "No results found!";
+  registerCard.classList.remove('hidden-right');
+  registerCard.classList.add('visible');
 });
 
-// ------------------------
-// Modal Login/Register Logic
-// ------------------------
-const modal = document.getElementById("auth-modal");
-const loginLink = document.getElementById("login-link");
-const closeBtn = modal.querySelector(".close-btn");
-const showRegister = document.getElementById("show-register");
-const showLogin = document.getElementById("show-login");
-const loginForm = document.getElementById("login-form");
-const registerForm = document.getElementById("register-form");
+showLogin.addEventListener('click', () => {
+  registerCard.classList.remove('visible');
+  registerCard.classList.add('hidden-right');
 
-loginLink.addEventListener("click", () => modal.classList.remove("hidden"));
-closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
-showRegister.addEventListener("click", () => { loginForm.classList.add("hidden"); registerForm.classList.remove("hidden"); });
-showLogin.addEventListener("click", () => { registerForm.classList.add("hidden"); loginForm.classList.remove("hidden"); });
+  loginCard.classList.remove('hidden-left');
+  loginCard.classList.add('visible');
+});
+
+
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", function() {
+
+  const particlesContainer = document.getElementById('particles');
+
+  // Make sure the container exists
+  if (!particlesContainer) return;
+
+  const particleCount = 40; // number of particles
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+
+    // Random position
+    particle.style.left = Math.random() * window.innerWidth + 'px';
+    particle.style.top = Math.random() * window.innerHeight + 'px';
+
+    // Random size
+    const size = 4 + Math.random() * 8;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+
+    // Random animation duration & delay
+    particle.style.animationDuration = 15 + Math.random() * 20 + 's';
+    particle.style.animationDelay = Math.random() * 20 + 's';
+
+    // Random gradient color (blue-teal-purple tones)
+    const colors = [
+      'rgba(90,103,216,0.7)',
+      'rgba(32,58,67,0.5)',
+      'rgba(75,192,192,0.6)',
+      'rgba(106,90,205,0.5)'
+    ];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.background = `radial-gradient(circle, ${color} 0%, rgba(0,0,0,0) 100%)`;
+
+    particlesContainer.appendChild(particle);
+  }
+
+});
+

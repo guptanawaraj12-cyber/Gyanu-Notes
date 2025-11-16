@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gyanu Notes - Login/Register</title>
+  <title>Gyanu Notes - Contact</title>
   <!-- Font Awesome CDN for social icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,7 +26,7 @@
   <!-- Floating Particles -->
 <div id="particles"></div>
 
- <div class="floating-social">
+  <div class="floating-social">
   <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook-f"></i></a>
   <a href="https://twitter.com/yourpage" target="_blank"><i class="fab fa-twitter"></i></a>
   <a href="https://instagram.com/yourpage" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -34,33 +35,20 @@
 </div>
 
 
-  <!-- Login/Register Section -->
-  <section class="login-container">
-    <!-- Login Form -->
-    <div class="login-card visible" id="login-card">
-      <h2>Login</h2>
+  <!-- Contact Section -->
+  <section class="contact-container">
+    <!-- Contact Form -->
+    <div class="contact-card">
+      <h2>Contact Us</h2>
       <form>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <input type="submit" value="Login">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <input type="submit" value="Send Message">
       </form>
-      <div class="toggle-link" id="show-register">Register Now</div>
     </div>
 
-    <!-- Register Form -->
-    <div class="login-card hidden-right" id="register-card">
-      <h2>Register</h2>
-      <form>
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <input type="submit" value="Register">
-      </form>
-      <div class="toggle-link" id="show-login">Back to Login</div>
-    </div>
-  </section>
-
-  <!-- Social Media Icons -->
+    <!-- Social Media Icons -->
 <div class="social-icons">
   <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook-f"></i></a>
   <a href="https://twitter.com/yourpage" target="_blank"><i class="fab fa-twitter"></i></a>
@@ -69,6 +57,14 @@
   <a href="https://youtube.com/yourchannel" target="_blank"><i class="fab fa-youtube"></i></a>
 </div>
 
+    <!-- Contact Info -->
+    <div class="contact-card contact-info">
+      <h2>Get in Touch</h2>
+      <p><span>Email:</span> guptanawaraj12@gmail.com</p>
+      <p><span>Phone:</span> +977 9867229032</p>
+      <p><span>Address:</span> Kathmandu, Nepal</p>
+    </div>
+  </section>
 
   <script src="java/script.js"></script>
 </body>
