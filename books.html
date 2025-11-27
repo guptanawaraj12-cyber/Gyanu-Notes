@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gyanu Notes — Books</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <div class="brand"><span class="logo-dot"></span> Gyanu Notes</div>
+      <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="books.html" class="active">Books</a>
+        <a href="notes.html">Notes</a>
+        <a href="about.html">About us</a>
+        <a href="privacy.html">Privacy police</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="hamburger" aria-label="menu">☰</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-title">
+      <h1 style="color:var(--text)">Books</h1>
+      <p class="muted">Upload PDF books and preview them in the browser. (Demo stores files in your browser's localStorage.)</p>
+    </section>
+
+    <section class="card" style="margin-top:12px">
+      <h3>Upload Book (Admin)</h3>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <input type="file" id="bookUpload" accept="application/pdf">
+        <input type="text" id="bookTitle" placeholder="Book title (optional)">
+        <button class="btn" onclick="document.querySelector('#bookUpload').click()">Choose file</button>
+      </div>
+      <div id="bookList" class="list-box"></div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="muted">© Gyanu Notes Demo</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
