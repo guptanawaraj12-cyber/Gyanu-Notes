@@ -30,14 +30,15 @@ registerToggle.addEventListener('click', ()=>{
 
 // ---------------- Firebase Setup ----------------
 const firebaseConfig = {
-  apiKey: "AIzaSyCg2DammNHbiNwH6Yc_0jngX83mGhrK2vI",
-  authDomain: "gyanu-notes.firebaseapp.com",
-  projectId: "gyanu-notes",
-  storageBucket: "gyanu-notes.firebasestorage.app",
-  messagingSenderId: "53515556086",
-  appId: "1:53515556086:web:1986f0db90076ea3a988d7",
-  measurementId: "G-Z7Q8KVFTC5"
+  apiKey: "AIzaSyD-u2H9HK9gqcMHVmcGutPquzhbmp-Wo98",
+  authDomain: "gyanu-notes-b893b.firebaseapp.com",
+  projectId: "gyanu-notes-b893b",
+  storageBucket: "gyanu-notes-b893b.firebasestorage.app",
+  messagingSenderId: "1032638926824",
+  appId: "1:1032638926824:web:1022103cbd727544f3de5d",
+  measurementId: "G-1HJGL57HCP"
 };
+
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
