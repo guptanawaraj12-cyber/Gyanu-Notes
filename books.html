@@ -1,48 +1,286 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gyanu Notes — Books</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - Gyanu Notes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <nav class="container">
-      <div class="brand"><span class="logo-dot"></span> Gyanu Notes</div>
-      <div class="menu">
-        <a href="index.html">Home</a>
-        <a href="books.html" class="active">Books</a>
-        <a href="notes.html">Notes</a>
-        <a href="about.html">About us</a>
-        <a href="privacy.html">Privacy police</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <button class="hamburger" aria-label="menu">☰</button>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Gyanu Notes</h1>
+                <p class="tagline">Knowledge Made Simple</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="notes.html">Notes</a></li>
+                <li><a href="books.html" class="active">Books</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
-  </header>
 
-  <main class="container">
-    <section class="page-title">
-      <h1 style="color:var(--text)">Books</h1>
-      <p class="muted">Upload PDF books and preview them in the browser. (Demo stores files in your browser's localStorage.)</p>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Recommended Books</h1>
+            <p>Explore our curated collection of textbooks and reference materials</p>
+        </div>
     </section>
 
-    <section class="card" style="margin-top:12px">
-      <h3>Upload Book (Admin)</h3>
-      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-        <input type="file" id="bookUpload" accept="application/pdf">
-        <input type="text" id="bookTitle" placeholder="Book title (optional)">
-        <button class="btn" onclick="document.querySelector('#bookUpload').click()">Choose file</button>
-      </div>
-      <div id="bookList" class="list-box"></div>
+    <!-- Books Content -->
+    <section class="books-section">
+        <div class="container">
+            <div class="books-intro">
+                <p>Here you'll find recommended textbooks, reference books, and study guides for all classes. These books are carefully selected to complement your learning journey.</p>
+            </div>
+
+            <!-- School Level Books -->
+            <div class="books-category">
+                <h2 class="category-title">
+                    <i class="fas fa-school"></i> School Level (Class 8-10)
+                </h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Mathematics Textbook</h3>
+                        <p class="book-class">Class 8-10</p>
+                        <p class="book-description">Comprehensive mathematics textbook covering all NEB curriculum topics</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Science Textbook</h3>
+                        <p class="book-class">Class 8-10</p>
+                        <p class="book-description">Complete science guide with practical experiments and theory</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>English Grammar & Composition</h3>
+                        <p class="book-class">Class 8-10</p>
+                        <p class="book-description">Essential English language skills and writing techniques</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Social Studies</h3>
+                        <p class="book-class">Class 8-10</p>
+                        <p class="book-description">Geography, history, and civics comprehensive guide</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- College Level Books -->
+            <div class="books-category">
+                <h2 class="category-title">
+                    <i class="fas fa-university"></i> College Level (Class 11-12)
+                </h2>
+                
+                <!-- Science Stream -->
+                <div class="stream-books">
+                    <h3 class="stream-title">Science Stream</h3>
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <h3>Physics Textbook</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Advanced physics concepts with problem-solving techniques</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-vial"></i>
+                            </div>
+                            <h3>Chemistry Textbook</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Organic, inorganic, and physical chemistry guide</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-dna"></i>
+                            </div>
+                            <h3>Biology Textbook</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Complete biology with diagrams and practical knowledge</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h3>Advanced Mathematics</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Calculus, algebra, and advanced mathematical concepts</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management Stream -->
+                <div class="stream-books">
+                    <h3 class="stream-title">Management Stream</h3>
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h3>Accountancy</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Financial accounting principles and practices</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Economics</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Micro and macroeconomics comprehensive guide</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <h3>Business Studies</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Business management and entrepreneurship guide</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humanities Stream -->
+                <div class="stream-books">
+                    <h3 class="stream-title">Humanities Stream</h3>
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <h3>Sociology</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Society, culture, and social structures</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>Psychology</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">Human behavior and mental processes</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                        <div class="book-card">
+                            <div class="book-icon">
+                                <i class="fas fa-scroll"></i>
+                            </div>
+                            <h3>History</h3>
+                            <p class="book-class">Class 11-12</p>
+                            <p class="book-description">World and Nepali history comprehensive guide</p>
+                            <a href="#" class="btn-small">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reference Books -->
+            <div class="books-category">
+                <h2 class="category-title">
+                    <i class="fas fa-bookmark"></i> Reference & Guide Books
+                </h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <h3>Study Skills Guide</h3>
+                        <p class="book-class">All Classes</p>
+                        <p class="book-description">Effective study techniques and time management</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <h3>Exam Preparation Guide</h3>
+                        <p class="book-class">All Classes</p>
+                        <p class="book-description">Tips and strategies for exam success</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3>Question Banks</h3>
+                        <p class="book-class">All Classes</p>
+                        <p class="book-description">Practice questions and model papers</p>
+                        <a href="#" class="btn-small">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer class="container">
-    <div class="muted">© Gyanu Notes Demo</div>
-  </footer>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Gyanu Notes</h3>
+                    <p>Gyanu Notes is dedicated to providing quality educational resources for students from Class 8 to 12. We believe in making education accessible and simple for everyone.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="notes.html">Notes</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                         <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                       <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                       <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                       <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                       <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

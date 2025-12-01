@@ -1,184 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gyanu Notes - Home</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyanu Notes - Knowledge Made Simple</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Gyanu Notes</h1>
+                <p class="tagline">Knowledge Made Simple</p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search notes, subjects, classes..." class="search-input">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
 
-    <div id="particles-js"></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="notes.html">Notes</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="admin.html" class="admin-link"><i class="fas fa-user-shield"></i> Admin</a></li>
+            </ul>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">Gyanu Notes</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="notes.html">Notes</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="privacy.html">Privacy Policy</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li id="authLink"><a href="login.html" class="login-btn">Login/Register</a></li>
-      
-    </ul>
-    <div class="burger">
-      <div></div><div></div><div></div>
+            <!-- Dark Mode Toggle -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Gyanu Notes</h1>
+                <p class="hero-subtitle">Your Ultimate Destination for Quality Educational Resources</p>
+                <p class="hero-description">
+                    Access comprehensive notes, study materials, and books for classes 8-12 following the NEB curriculum. 
+                    We provide well-organized, easy-to-understand content to help students excel in their academic journey.
+                </p>
+                <div class="hero-buttons">
+                    <a href="notes.html" class="btn btn-primary">Explore Notes</a>
+                    <a href="books.html" class="btn btn-secondary">Browse Books</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Added Section -->
+    <section class="recently-added">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-clock"></i> Recently Added Notes
+            </h2>
+            <div class="recent-notes-grid" id="recentNotesGrid">
+                <!-- Sample Recent Notes -->
+                <div class="recent-note-card" data-note-id="1">
+                    <div class="note-badge">New</div>
+                    <div class="note-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Class 10 Mathematics</h3>
+                    <p class="note-topic">Chapter 5: Trigonometry</p>
+                    <div class="note-meta">
+                        <span class="note-date"><i class="fas fa-calendar"></i> 2 days ago</span>
+                        <span class="note-downloads"><i class="fas fa-download"></i> 245</span>
+                    </div>
+                    <div class="note-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(4.5)</span>
+                    </div>
+                    <div class="note-actions">
+                        <button class="btn-small btn-view" onclick="viewPDF('sample.pdf')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-small btn-download" onclick="downloadNote(1)">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn-icon btn-bookmark" onclick="toggleBookmark(1)">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="btn-icon btn-share" onclick="shareNote(1)">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="recent-note-card" data-note-id="2">
+                    <div class="note-badge">New</div>
+                    <div class="note-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Class 9 Science</h3>
+                    <p class="note-topic">Chapter 3: Chemical Reactions</p>
+                    <div class="note-meta">
+                        <span class="note-date"><i class="fas fa-calendar"></i> 3 days ago</span>
+                        <span class="note-downloads"><i class="fas fa-download"></i> 189</span>
+                    </div>
+                    <div class="note-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(4.0)</span>
+                    </div>
+                    <div class="note-actions">
+                        <button class="btn-small btn-view" onclick="viewPDF('sample.pdf')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-small btn-download" onclick="downloadNote(2)">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn-icon btn-bookmark" onclick="toggleBookmark(2)">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="btn-icon btn-share" onclick="shareNote(2)">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="recent-note-card" data-note-id="3">
+                    <div class="note-badge">New</div>
+                    <div class="note-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Class 11 English</h3>
+                    <p class="note-topic">Unit 2: Grammar & Composition</p>
+                    <div class="note-meta">
+                        <span class="note-date"><i class="fas fa-calendar"></i> 5 days ago</span>
+                        <span class="note-downloads"><i class="fas fa-download"></i> 312</span>
+                    </div>
+                    <div class="note-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="note-actions">
+                        <button class="btn-small btn-view" onclick="viewPDF('sample.pdf')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-small btn-download" onclick="downloadNote(3)">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn-icon btn-bookmark" onclick="toggleBookmark(3)">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="btn-icon btn-share" onclick="shareNote(3)">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Gyanu Notes?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Comprehensive Content</h3>
+                    <p>Complete notes covering all subjects from Class 8 to 12 as per NEB curriculum</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Easy to Understand</h3>
+                    <p>Simplified explanations and clear concepts for better learning experience</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Free Access</h3>
+                    <p>All study materials are available for free download and use</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Regular Updates</h3>
+                    <p>Continuously updated content to match the latest curriculum changes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2><i class="fas fa-envelope"></i> Subscribe to Our Newsletter</h2>
+                    <p>Get notified when new notes are added and receive study tips directly in your inbox!</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email address" required id="newsletterEmail">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Subscribe
+                    </button>
+                </form>
+                <div id="newsletterMessage" class="newsletter-message"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Start Learning?</h2>
+            <p>Join thousands of students who trust Gyanu Notes for their academic success</p>
+            <a href="notes.html" class="btn btn-primary">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="modal pdf-modal">
+        <div class="modal-content pdf-modal-content">
+            <div class="pdf-header">
+                <h3 id="pdfTitle">Document Viewer</h3>
+                <div class="pdf-controls">
+                    <button class="btn-icon" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
+                    <button class="btn-icon" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
+                    <button class="btn-icon" onclick="downloadCurrentPDF()"><i class="fas fa-download"></i></button>
+                    <span class="close" onclick="closePDFViewer()">&times;</span>
+                </div>
+            </div>
+            <div class="pdf-viewer-container">
+                <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+            </div>
+        </div>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Welcome to <span>Gyanu Notes</span></h1>
-      <p>Your futuristic platform for student notes and resources.</p>
-      <div class="search-bar">
-        <input type="text" placeholder="Search notes..." id="searchInput">
-        <button id="searchBtn"><i class="fas fa-search"></i></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Latest Notes Section -->
-  <section class="notes-section">
-    <h2>Latest Notes</h2>
-    <div class="notes-container" id="notesContainer">
-      <!-- Notes cards will be inserted here dynamically -->
-    </div>
-  </section>
-
-  <!-- Social Media Links -->
-  <footer>
-    <div class="socials">
-      <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-    </div>
-    <p>&copy; 2025 Gyanu Notes. All rights reserved.</p>
-  </footer>
-
-  <footer class="fat-footer">
-  <div class="footer-container">
-    
-    <!-- Column 1: About -->
-    <div class="footer-col">
-      <h3>About Gyanu Notes</h3>
-      <p>Your futuristic platform for student notes, resources, and interactive learning. Access, share, and learn in style.</p>
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content share-modal-content">
+            <span class="close" onclick="closeShareModal()">&times;</span>
+            <h2><i class="fas fa-share-alt"></i> Share This Note</h2>
+            <div class="share-buttons">
+                <button class="share-btn facebook" onclick="shareOn('facebook')">
+                    <i class="fab fa-facebook"></i> Facebook
+                </button>
+                <button class="share-btn twitter" onclick="shareOn('twitter')">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn whatsapp" onclick="shareOn('whatsapp')">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn telegram" onclick="shareOn('telegram')">
+                    <i class="fab fa-telegram"></i> Telegram
+                </button>
+                <button class="share-btn email" onclick="shareOn('email')">
+                    <i class="fas fa-envelope"></i> Email
+                </button>
+            </div>
+            <div class="share-link">
+                <input type="text" id="shareLink" readonly>
+                <button class="btn-small" onclick="copyShareLink()">
+                    <i class="fas fa-copy"></i> Copy Link
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Column 2: Quick Links -->
-    <div class="footer-col">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="notes.html">Notes</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-      </ul>
-    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Gyanu Notes</h3>
+                    <p>Gyanu Notes is dedicated to providing quality educational resources for students from Class 8 to 12. We believe in making education accessible and simple for everyone.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="notes.html">Notes</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                         <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                       <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                       <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                       <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                       <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-    <!-- Column 3: Social Media -->
-    <div class="footer-col">
-      <h3>Follow Us</h3>
-      <div class="socials">
-        <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-    </div>
-
-    <!-- Column 4: Newsletter -->
-    <div class="footer-col">
-      <h3>Newsletter</h3>
-      <p>Subscribe to get the latest notes and updates!</p>
-      <form id="newsletterForm">
-        <input type="email" placeholder="Your Email" required>
-        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-      </form>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; 2025 Gyanu Notes. All rights reserved.</p>
-  </div>
-</footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
-<script>
-  const authLink = document.getElementById('authLink');
-  const sessionUser = JSON.parse(localStorage.getItem('gyanuSession'));
-
-  if(sessionUser){
-    authLink.innerHTML = `<a href="#" style="color:#0ff;">Logout (${sessionUser.name})</a>`;
-    authLink.querySelector('a').addEventListener('click', () => {
-      localStorage.removeItem('gyanuSession');
-      alert("Logged out successfully!");
-      window.location.href = "index.html";
-    });
-  }
-</script>
-
-<!-- Newsletter JS -->
-<script>
-const newsletterForm = document.getElementById('newsletterForm');
-newsletterForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  alert("Thank you for subscribing!");
-  newsletterForm.reset();
-});
-</script>
-
-<script>
-
-particlesJS("particles-js", {
-  "particles": {
-    "number": { "value": 90 },
-    "color": { 
-      "value": [
-        "#ff007f", // Neon Pink
-        "#ff3d00", // Cyber Orange
-        "#f6ff00", // Electric Yellow
-        "#32ff45", // Hologram Green
-        "#00eaff", // Aqua Blue
-        "#8b00ff"  // Deep Violet
-      ]
-    },
-    "shape": { "type": "circle" },
-    "opacity": { "value": 0.7, "random": true },
-    "size": { "value": 4, "random": true },
-    "line_linked": { 
-      "enable": true,
-      "distance": 130,
-      "color": "#00eaff", 
-      "opacity": 0.3,
-      "width": 1
-    },
-    "move": {
-      "enable": true,
-      "speed": 2.2,
-      "direction": "none",
-      "random": true,
-      "straight": false,
-      "out_mode": "out"
-    }
-  },
-  "interactivity": {
-    "events": {
-      "onhover": { "enable": true, "mode": "grab" },
-      "onclick": { "enable": false }
-    }
-  },
-  "retina_detect": true
-});
-</script>
-
-
 </html>
