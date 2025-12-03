@@ -1,0 +1,25 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="60" cy="60" r="58" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+  
+  <!-- Book Pages -->
+  <rect x="35" y="30" width="50" height="60" rx="3" fill="#ffffff"/>
+  <rect x="40" y="30" width="45" height="60" rx="3" fill="#f1f5f9"/>
+  
+  <!-- Book Spine -->
+  <rect x="35" y="30" width="8" height="60" fill="#1e293b"/>
+  
+  <!-- Text Lines -->
+  <line x1="48" y1="45" x2="75" y2="45" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="55" x2="75" y2="55" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="65" x2="70" y2="65" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="75" x2="75" y2="75" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Graduation Cap -->
+  <polygon points="60,25 75,30 60,35 45,30" fill="#f59e0b"/>
+  <rect x="58" y="35" width="4" height="8" fill="#f59e0b"/>
+  <circle cx="60" cy="43" r="2" fill="#f59e0b"/>
+  
+  <!-- Letter G -->
+  <text x="60" y="110" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">GN</text>
+</svg>

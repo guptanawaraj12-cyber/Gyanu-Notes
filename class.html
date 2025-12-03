@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Notes - Gyanu Note</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>📚 Gyanu Note</h1>
+                    <span class="tagline">ज्ञान नोट</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#classes">Classes</a></li>
+                <li><a href="index.html#subjects">Subjects</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Home</a> / <span id="currentClass">Class</span>
+        </div>
+    </div>
+
+    <section class="class-detail-section">
+        <div class="container">
+            <h1 class="page-title" id="classTitle">Class Notes</h1>
+            <p class="page-subtitle" id="classSubtitle">Select a subject to view notes</p>
+
+            <div class="subjects-grid" id="classSubjects">
+                <!-- Subjects will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="class.js"></script>
+</body>
+</html>

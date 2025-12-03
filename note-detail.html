@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Detail - Gyanu Note</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>📚 Gyanu Note</h1>
+                    <span class="tagline">ज्ञानु नोट</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#classes">Classes</a></li>
+                <li><a href="index.html#subjects">Subjects</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Home</a> / 
+            <a href="#" id="breadcrumbClass">Class</a> / 
+            <a href="#" id="breadcrumbSubject">Subject</a> / 
+            <span id="breadcrumbNote">Note</span>
+        </div>
+    </div>
+
+    <article class="note-detail">
+        <div class="container">
+            <div class="note-header">
+                <h1 id="noteTitle">Loading...</h1>
+                <div class="note-meta">
+                    <span class="class-badge" id="noteClass">📚 Class</span>
+                    <span class="date" id="noteDate">📅 Date</span>
+                    <span class="views" id="noteViews">👁️ Views</span>
+                    <span class="category" id="noteCategory">📂 Category</span>
+                </div>
+            </div>
+            
+            <div class="note-actions">
+                <button class="btn-action" onclick="window.print()">🖨️ Print</button>
+                <button class="btn-action" id="downloadBtn">⬇️ Download PDF</button>
+                <button class="btn-action" id="shareBtn">🔗 Share</button>
+                <button class="btn-action" id="bookmarkBtn">⭐ Bookmark</button>
+            </div>
+
+            <div class="note-content" id="noteContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+
+            <div class="note-footer">
+                <div class="tags" id="noteTags">
+                    <!-- Tags will be loaded dynamically -->
+                </div>
+            </div>
+
+            <div class="related-notes">
+                <h3>Related Notes from Same Class</h3>
+                <div class="related-grid" id="relatedNotes">
+                    <!-- Related notes will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="note-detail.js"></script>
+</body>
+</html>

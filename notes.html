@@ -3,466 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes - Gyanu Notes</title>
+    <title>Notes - Gyanu Note</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-<nav class="navbar">
-    <div class="container">
-        <div class="logo">
-            <h1>Gyanu Notes</h1>
-            <p class="tagline">Knowledge Made Simple</p>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>📚 Gyanu Note</h1>
+                    <span class="tagline">ज्ञानु नोट</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#classes">Classes</a></li>
+                <li><a href="index.html#subjects">Subjects</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
+    </nav>
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="notes.html">Notes</a></li>
-            <li><a href="books.html">Books</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li><a href="admin.html" class="admin-link"><i class="fas fa-user-shield"></i> Admin</a></li>
-        </ul>
-
-        <button class="theme-toggle" id="themeToggle">
-            <i class="fas fa-moon"></i>
-        </button>
-
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Home</a> / <span id="currentSubject">Notes</span>
         </div>
     </div>
-</nav>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Study Notes</h1>
-            <p>Access comprehensive notes for all subjects from Class 8 to 12</p>
-        </div>
-    </section>
-
-    <!-- Notes Content -->
     <section class="notes-section">
         <div class="container">
-            <!-- School Level (Class 8-10) -->
-            <div class="level-section">
-                <h2 class="level-title">
-                    <i class="fas fa-school"></i> School Level (Class 8-10)
-                </h2>
-                
-                <!-- Class 8 -->
-                <div class="class-group">
-                    <h3 class="class-title">Class 8</h3>
-                    <div class="subjects-grid">
-                        <div class="subject-card">
-                            <i class="fas fa-calculator"></i>
-                            <h4>Mathematics</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-flask"></i>
-                            <h4>Science</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-book"></i>
-                            <h4>English</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-language"></i>
-                            <h4>Nepali</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-users"></i>
-                            <h4>Social Studies</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-laptop-code"></i>
-                            <h4>Computer Science</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 9 -->
-                <div class="class-group">
-                    <h3 class="class-title">Class 9</h3>
-                    <div class="subjects-grid">
-                        <div class="subject-card">
-                            <i class="fas fa-calculator"></i>
-                            <h4>Mathematics</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-flask"></i>
-                            <h4>Science</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-book"></i>
-                            <h4>English</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-language"></i>
-                            <h4>Nepali</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-users"></i>
-                            <h4>Social Studies</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-laptop-code"></i>
-                            <h4>Computer Science</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 10 -->
-                <div class="class-group">
-                    <h3 class="class-title">Class 10</h3>
-                    <div class="subjects-grid">
-                        <div class="subject-card">
-                            <i class="fas fa-calculator"></i>
-                            <h4>Mathematics</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-flask"></i>
-                            <h4>Science</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-book"></i>
-                            <h4>English</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-language"></i>
-                            <h4>Nepali</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-users"></i>
-                            <h4>Social Studies</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-laptop-code"></i>
-                            <h4>Computer Science</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-briefcase"></i>
-                            <h4>Accountancy</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                        <div class="subject-card">
-                            <i class="fas fa-heartbeat"></i>
-                            <h4>Health & Physical Education</h4>
-                            <a href="#" class="btn-small">View Notes</a>
-                        </div>
-                    </div>
+            <h2 class="section-title" id="subjectTitle">Available Notes</h2>
+            
+            <div class="filter-section">
+                <div class="filter-bar">
+                    <input type="text" id="notesSearch" placeholder="Search notes...">
+                    <select id="classFilter">
+                        <option value="all">All Classes</option>
+                        <option value="11">Class 11</option>
+                        <option value="12">Class 12</option>
+                        <option value="bachelor">Bachelor's</option>
+                        <option value="master">Master's</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="recent">Most Recent</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- College Level (Class 11-12) -->
-            <div class="level-section">
-                <h2 class="level-title">
-                    <i class="fas fa-university"></i> College Level (Class 11-12)
-                </h2>
-                
-                <!-- Class 11 -->
-                <div class="class-group">
-                    <h3 class="class-title">Class 11</h3>
-                    
-                    <!-- Science Stream -->
-                    <div class="stream-section">
-                        <h4 class="stream-title">Science Stream</h4>
-                        <div class="subjects-grid">
-                            <div class="subject-card">
-                                <i class="fas fa-atom"></i>
-                                <h4>Physics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-vial"></i>
-                                <h4>Chemistry</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-dna"></i>
-                                <h4>Biology</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-calculator"></i>
-                                <h4>Mathematics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-book"></i>
-                                <h4>English</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-language"></i>
-                                <h4>Nepali</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-laptop-code"></i>
-                                <h4>Computer Science</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Management Stream -->
-                    <div class="stream-section">
-                        <h4 class="stream-title">Management Stream</h4>
-                        <div class="subjects-grid">
-                            <div class="subject-card">
-                                <i class="fas fa-briefcase"></i>
-                                <h4>Accountancy</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-chart-line"></i>
-                                <h4>Economics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-balance-scale"></i>
-                                <h4>Business Studies</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-calculator"></i>
-                                <h4>Business Mathematics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-book"></i>
-                                <h4>English</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-language"></i>
-                                <h4>Nepali</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Humanities Stream -->
-                    <div class="stream-section">
-                        <h4 class="stream-title">Humanities Stream</h4>
-                        <div class="subjects-grid">
-                            <div class="subject-card">
-                                <i class="fas fa-landmark"></i>
-                                <h4>Sociology</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-brain"></i>
-                                <h4>Psychology</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-globe"></i>
-                                <h4>Geography</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-scroll"></i>
-                                <h4>History</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-book"></i>
-                                <h4>English</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-language"></i>
-                                <h4>Nepali</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 12 -->
-                <div class="class-group">
-                    <h3 class="class-title">Class 12</h3>
-                    
-                    <!-- Science Stream -->
-                    <div class="stream-section">
-                        <h4 class="stream-title">Science Stream</h4>
-                        <div class="subjects-grid">
-                            <div class="subject-card">
-                                <i class="fas fa-atom"></i>
-                                <h4>Physics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-vial"></i>
-                                <h4>Chemistry</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-dna"></i>
-                                <h4>Biology</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-calculator"></i>
-                                <h4>Mathematics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-book"></i>
-                                <h4>English</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-language"></i>
-                                <h4>Nepali</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-laptop-code"></i>
-                                <h4>Computer Science</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Management Stream -->
-                    <div class="stream-section">
-                        <h4 class="stream-title">Management Stream</h4>
-                        <div class="subjects-grid">
-                            <div class="subject-card">
-                                <i class="fas fa-briefcase"></i>
-                                <h4>Accountancy</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-chart-line"></i>
-                                <h4>Economics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-balance-scale"></i>
-                                <h4>Business Studies</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-calculator"></i>
-                                <h4>Business Mathematics</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-book"></i>
-                                <h4>English</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-language"></i>
-                                <h4>Nepali</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Humanities Stream -->
-                    <div class="stream-section">
-                        <h4 class="stream-title">Humanities Stream</h4>
-                        <div class="subjects-grid">
-                            <div class="subject-card">
-                                <i class="fas fa-landmark"></i>
-                                <h4>Sociology</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-brain"></i>
-                                <h4>Psychology</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-globe"></i>
-                                <h4>Geography</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-scroll"></i>
-                                <h4>History</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-book"></i>
-                                <h4>English</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                            <div class="subject-card">
-                                <i class="fas fa-language"></i>
-                                <h4>Nepali</h4>
-                                <a href="#" class="btn-small">View Notes</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="notes-grid" id="notesContainer">
+                <!-- Notes will be loaded dynamically -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About Gyanu Notes</h3>
-                    <p>Gyanu Notes is dedicated to providing quality educational resources for students from Class 8 to 12. We believe in making education accessible and simple for everyone.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="notes.html">Notes</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Follow Us</h3>
-                    <div class="social-icons">
-                         <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                       <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                       <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
-                       <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-                       <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
-            </div>
+            <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="notes.js"></script>
 </body>
 </html>
