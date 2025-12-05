@@ -44,36 +44,38 @@
     <section class="books-section">
         <div class="container">
             <!-- Filter Section -->
-            <div class="books-filter">
-                <div class="filter-group">
-                    <label>Class Level</label>
-                    <select id="bookClassFilter">
-                        <option value="all">All Classes</option>
-                        <option value="11">Class 11</option>
-                        <option value="12">Class 12</option>
-                        <option value="bachelor">Bachelor's</option>
-                        <option value="master">Master's</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Subject</label>
-                    <select id="bookSubjectFilter">
-                        <option value="all">All Subjects</option>
-                        <option value="physics">Physics</option>
-                        <option value="chemistry">Chemistry</option>
-                        <option value="biology">Biology</option>
-                        <option value="mathematics">Mathematics</option>
-                        <option value="computer">Computer Science</option>
-                        <option value="english">English</option>
-                        <option value="accountancy">Accountancy</option>
-                        <option value="economics">Economics</option>
-                        <option value="business">Business Studies</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <input type="text" id="bookSearch" placeholder="Search books...">
-                </div>
-            </div>
+            <!-- Filter Section -->
+<div class="books-filter">
+    <div class="filter-group">
+        <label for="bookClassFilter">Class Level</label>
+        <select id="bookClassFilter">
+            <option value="all">All Classes</option>
+            <option value="11">Class 11</option>
+            <option value="12">Class 12</option>
+            <option value="bachelor">Bachelor's</option>
+            <option value="master">Master's</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label for="bookSubjectFilter">Subject</label>
+        <select id="bookSubjectFilter">
+            <option value="all">All Subjects</option>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="biology">Biology</option>
+            <option value="mathematics">Mathematics</option>
+            <option value="computer">Computer Science</option>
+            <option value="english">English</option>
+            <option value="accountancy">Accountancy</option>
+            <option value="economics">Economics</option>
+            <option value="business">Business Studies</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label for="bookSearch">Search Books</label>
+        <input type="text" id="bookSearch" placeholder="Search by title, author...">
+    </div>
+</div>
 
             <!-- Class 11 Books -->
             <div class="books-category" data-class="11">
@@ -484,7 +486,7 @@
         </div>
     </footer>
 
-    <script src="books.js"></script>
-    <script src="script.js"></script>
+    <script src="books-data.js"></script>
+<script src="books.js"></script>
 </body>
 </html>
