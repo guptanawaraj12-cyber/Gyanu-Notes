@@ -42,129 +42,82 @@
     </div>
 
     <section class="contact-section">
-        <div class="container">
-            <div class="contact-grid">
-                <!-- Contact Form -->
-                <div class="contact-form-container">
-                    <h2>Send Us a Message</h2>
-                    <p>Have a question or feedback? Fill out the form below and we'll get back to you as soon as possible.</p>
-                    
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required placeholder="Enter your email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Select a subject</option>
-                                <option value="general">General Inquiry</option>
-                                <option value="feedback">Feedback</option>
-                                <option value="suggestion">Suggestion</option>
-                                <option value="report">Report an Issue</option>
-                                <option value="content">Content Request</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" rows="6" required placeholder="Write your message here..."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-submit">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-
-                        <div id="formMessage" class="form-message"></div>
-                    </form>
+    <div class="contact-container">
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="contact-item-content">
+                        <h3>Email</h3>
+                        <a href="mailto:guptagyanendra32@gmail.com">info@gyanunote.com</a>
+                    </div>
                 </div>
-
-                <!-- Contact Information -->
-                <div class="contact-info-container">
-                    <h2>Get In Touch</h2>
-                    <p>Feel free to reach out to us through any of the following channels:</p>
-
-                    <div class="contact-info-cards">
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <h4>Email Us</h4>
-                            <p>guptagyanendra32@gmail.com</p>
-                            <p>guptanawaraj12@gmail.com</p>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <h4>Call Us</h4>
-                            <p>+977 9814412941</p>
-                            <p>Anywhere , Anytime</p>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <h4>Visit Us</h4>
-                            <p>Parasi, Nawalparasi</p>
-                            <p>Nepal</p>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <h4>Working Hours</h4>
-                            <p>Sunday - Friday: 9 AM - 6 PM</p>
-                            <p>Saturday: Holiday</p>
-                        </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div class="contact-item-content">
+                        <h3>Phone</h3>
+                        <p>+977 9814412941</p>
                     </div>
-
-                    <div class="social-connect">
-                        <h3>Connect With Us</h3>
-                        <div class="social-icons-large">
-                            <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://youtube.com" target="_blank" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="faq-link">
-                        <h3>Frequently Asked Questions</h3>
-                        <p>Before contacting us, you might find answers to common questions in our FAQ section.</p>
-                        <a href="#" class="btn-link">View FAQs <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="contact-item-content">
+                        <h3>Address</h3>
+                        <p>Nawalparasi, Nepal</p>
                     </div>
                 </div>
             </div>
+            
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </div>
         </div>
-    </section>
+        
+        <!-- Contact Form -->
+        <form class="contact-form" id="contactForm" 
+      action="https://api.web3forms.com/submit" 
+      method="POST">
+    
+    <!-- Hidden field with your access key -->
+    <input type="hidden" name="access_key" value="1faf2630-a720-4238-b659-b8d1dc4a541b">
+    
+    <!-- Optional: Redirect after submission -->
+    <input type="hidden" name="redirect" value="https://yourwebsite.com/thank-you.html">
+    
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="Your name">
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="your@email.com">
+    </div>
+    
+    <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required placeholder="How can we help?">
+    </div>
+    
+    <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required placeholder="Your message..."></textarea>
+    </div>
+    
+    <button type="submit" class="submit-btn">
+        <i class="fas fa-paper-plane"></i>
+        Send Message
+    </button>
+</form>
 
     <footer id="contact" class="footer">
         <div class="container">
@@ -211,7 +164,7 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact</h3>
-                    <p><i class="fas fa-envelope"></i> guptagyanendra32@gmail.com</p>
+                    <p><a href="mailto:guptagyanendra32@gmail.com">info@gyanunote.com</a>
                     <p><i class="fas fa-phone"></i> +977 9814412941</p>
                     <p><i class="fas fa-map-marker-alt"></i> Nawalparasi, Nepal</p>
                 </div>

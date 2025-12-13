@@ -80,3 +80,62 @@ inputs.forEach(input => {
         this.style.borderColor = '#2563eb';
     });
 });
+
+// ==================== CONTACT FORM WITH WEB3FORMS ====================
+
+const contactForm = document.getElementById('contactForm');
+
+contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = contactForm.querySelector('.submit-btn');
+    const originalBtnText = submitBtn.innerHTML;
+    
+    // Show loading
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+    
+    // Get form data
+    const formData = new FormData(contactForm);
+    
+    try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
+            contactForm.reset();
+        } else {
+            showMessage('Failed to send message. Please try again.', 'error');
+        }
+    } catch (error) {
+        showMessage('Network error. Please check your connection.', 'error');
+    }
+    
+    // Reset button
+    submitBtn.innerHTML = originalBtnText;
+    submitBtn.disabled = false;
+});
+
+function showMessage(message, type) {
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) existingMessage.remove();
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    contactForm.parentElement.insertBefore(messageDiv, contactForm);
+    
+    setTimeout(() => {
+        messageDiv.style.opacity = '0';
+        setTimeout(() => messageDiv.remove(), 300);
+    }, 5000);
+}
