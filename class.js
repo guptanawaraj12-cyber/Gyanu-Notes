@@ -1,3 +1,60 @@
+// ==================== DYNAMIC SEO OPTIMIZATION ====================
+
+// Get class from URL
+const urlParams = new URLSearchParams(window.location.search);
+const currentClass = urlParams.get('class');
+
+// SEO titles and descriptions for each class
+const seoData = {
+    '11': {
+        title: 'Class 11 Notes - Physics, Chemistry, Math, Biology | Gyanu Note',
+        description: 'Complete Class 11 notes for Physics, Chemistry, Mathematics, and Biology. Free PDF download. NEB curriculum notes for Grade 11 students in Nepal.',
+        keywords: 'class 11 physics notes, class 11 chemistry notes, class 11 math notes, class 11 biology notes, grade 11 notes Nepal, NEB class 11 notes'
+    },
+    '12': {
+        title: 'Class 12 Notes - Physics, Chemistry, Math, Biology | Gyanu Note',
+        description: 'Complete Class 12 notes for Physics, Chemistry, Mathematics, and Biology. Free PDF download. NEB curriculum notes for Grade 12 students in Nepal.',
+        keywords: 'class 12 physics notes, class 12 chemistry notes, class 12 math notes, class 12 biology notes, grade 12 notes Nepal, NEB class 12 notes'
+    },
+    'bachelor': {
+        title: "Bachelor's Level Notes - Computer Science, Management, Science | Gyanu Note",
+        description: "Complete Bachelor's degree notes for Computer Science, Management, and Science streams. University level study materials and notes.",
+        keywords: "bachelor notes, BCA notes, BBS notes, BSc notes, university notes Nepal, bachelor level study materials"
+    },
+    'master': {
+        title: "Master's Level Notes - Advanced Study Materials | Gyanu Note",
+        description: "Complete Master's degree notes and advanced study materials. Postgraduate level notes for various subjects.",
+        keywords: "master notes, postgraduate notes, masters level study materials, advanced notes"
+    }
+};
+
+// Update page title and meta tags dynamically
+if (currentClass && seoData[currentClass]) {
+    document.title = seoData[currentClass].title;
+    
+    // Update meta description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', seoData[currentClass].description);
+    } else {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = 'description';
+        metaDesc.content = seoData[currentClass].description;
+        document.head.appendChild(metaDesc);
+    }
+    
+    // Update meta keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+        metaKeywords.setAttribute('content', seoData[currentClass].keywords);
+    } else {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.name = 'keywords';
+        metaKeywords.content = seoData[currentClass].keywords;
+        document.head.appendChild(metaKeywords);
+    }
+}
+
 // Class subjects data
 const classSubjects = {
     '11': {
