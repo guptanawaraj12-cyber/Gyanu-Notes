@@ -1,238 +1,231 @@
-// Mobile menu toggle
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
+// ==================== GLOBAL VARIABLES ====================
+let currentClass = 'all';
 
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-}
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.navbar')) {
-        navLinks.classList.remove('active');
-        if (hamburger) {
-            hamburger.classList.remove('active');
-        }
+// ==================== NAVIGATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    // Hamburger Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
     }
-});
 
-// Search functionality
-const searchBtn = document.getElementById('searchBtn');
-const searchInput = document.getElementById('searchInput');
-
-if (searchBtn) {
-    searchBtn.addEventListener('click', performSearch);
-}
-
-if (searchInput) {
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            performSearch();
-        }
-    });
-}
-
-function performSearch() {
-    const query = searchInput.value.trim();
-    if (query) {
-        window.location.href = `notes.html?search=${encodeURIComponent(query)}`;
-    }
-}
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            // Close mobile menu after clicking
-            navLinks.classList.remove('active');
-        }
-    });
-});
-
-// Add animation delay to cards
-const animateCards = () => {
-    const classCards = document.querySelectorAll('.class-card');
-    const subjectCards = document.querySelectorAll('.subject-card');
-    const featureCards = document.querySelectorAll('.feature-card');
-    
-    classCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-    });
-    
-    subjectCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.08}s`;
-    });
-    
-    featureCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-    });
-};
-
-// Intersection Observer for scroll animations
-const observeElements = () => {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    // Close mobile menu when clicking on a link
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            if (hamburger && navLinks) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
             }
         });
-    }, {
-        threshold: 0.1
     });
 
-    document.querySelectorAll('.class-card, .subject-card, .feature-card').forEach(el => {
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+
+// ==================== ANIMATIONS ON SCROLL ====================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe all cards and sections
+document.addEventListener('DOMContentLoaded', function() {
+    const animatedElements = document.querySelectorAll('.class-card, .feature-card, .update-card, .note-card, .book-card');
+    
+    animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
-};
-
-// Initialize animations
-document.addEventListener('DOMContentLoaded', () => {
-    animateCards();
-    observeElements();
 });
 
-// Add active state to navigation
-const setActiveNav = () => {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-            link.style.color = 'var(--primary-color)';
+// ==================== COUNTER ANIMATION (For About Page Stats) ====================
+function animateCounter(element) {
+    const target = parseFloat(element.getAttribute('data-target'));
+    const duration = 2000;
+    const increment = target / (duration / 16);
+    let current = 0;
+    const isDecimal = target % 1 !== 0;
+
+    const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+            element.textContent = isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString();
+            requestAnimationFrame(updateCounter);
+        } else {
+            element.textContent = isDecimal ? target.toFixed(1) : target.toLocaleString();
         }
-    });
-};
+    };
 
-setActiveNav();
-// Advanced Search Toggle
-const advancedSearchToggle = document.getElementById('advancedSearchToggle');
-const advancedSearchPanel = document.getElementById('advancedSearchPanel');
-
-if (advancedSearchToggle) {
-    advancedSearchToggle.addEventListener('click', () => {
-        advancedSearchPanel.classList.toggle('active');
-    });
+    updateCounter();
 }
 
-// Apply Advanced Filters
-const applyFilters = document.getElementById('applyFilters');
-if (applyFilters) {
-    applyFilters.addEventListener('click', () => {
-        const classFilter = document.getElementById('filterClass').value;
-        const subjectFilter = document.getElementById('filterSubject').value;
-        const sortFilter = document.getElementById('filterSort').value;
-        const searchQuery = document.getElementById('searchInput').value;
-        
-        // Build URL with filters
-        let url = 'notes.html?';
-        if (searchQuery) url += `search=${encodeURIComponent(searchQuery)}&`;
-        if (classFilter) url += `class=${classFilter}&`;
-        if (subjectFilter) url += `subject=${subjectFilter}&`;
-        if (sortFilter) url += `sort=${sortFilter}`;
-        
-        window.location.href = url;
-    });
-}
-// ==================== LATEST UPDATES SECTION ====================
+// Trigger counter animation when stats section is visible
+document.addEventListener('DOMContentLoaded', function() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    if (statNumbers.length > 0) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
 
-// Load updates on homepage
-function loadLatestUpdates() {
-    const updatesGrid = document.getElementById('updatesGrid');
-    
-    if (!updatesGrid) return; // Not on homepage
-    
-    const updates = getRecentUpdates(6); // Get 6 most recent
-    
-    updatesGrid.innerHTML = updates.map(update => `
-        <a href="${update.link}" class="update-card ${update.type}">
-            <div class="update-badge ${update.badge.toLowerCase()}">${update.badge}</div>
-            
-            <div class="update-icon">
-                <i class="${update.icon}"></i>
-            </div>
-            
-            <div class="update-content">
-                <div class="update-meta">
-                    <span class="update-class">Class ${update.class}</span>
-                    <span class="update-subject">${update.subject}</span>
-                </div>
-                
-                <h3 class="update-title">${update.title}</h3>
-                <p class="update-description">${update.description}</p>
-                
-                <div class="update-footer">
-                    <span class="update-date">
-                        <i class="fas fa-clock"></i> ${formatUpdateDate(update.date)}
-                    </span>
-                    <span class="update-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </span>
-                </div>
-            </div>
-        </a>
-    `).join('');
-}
-
-// View all updates button
-document.addEventListener('DOMContentLoaded', () => {
-    loadLatestUpdates();
-    
-    const viewAllBtn = document.getElementById('viewAllUpdates');
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Show all updates (you can create a separate page or modal)
-            showAllUpdates();
+        statNumbers.forEach(stat => {
+            statsObserver.observe(stat);
         });
     }
 });
 
-// Show all updates (expand the grid)
-function showAllUpdates() {
-    const updatesGrid = document.getElementById('updatesGrid');
-    const viewAllBtn = document.getElementById('viewAllUpdates');
+// ==================== CLASS CARD ANIMATIONS ====================
+document.addEventListener('DOMContentLoaded', function() {
+    const classCards = document.querySelectorAll('.class-card');
     
-    const allUpdates = latestUpdates; // Show all
-    
-    updatesGrid.innerHTML = allUpdates.map(update => `
-        <a href="${update.link}" class="update-card ${update.type}">
-            <div class="update-badge ${update.badge.toLowerCase()}">${update.badge}</div>
-            
-            <div class="update-icon">
-                <i class="${update.icon}"></i>
-            </div>
-            
-            <div class="update-content">
-                <div class="update-meta">
-                    <span class="update-class">Class ${update.class}</span>
-                    <span class="update-subject">${update.subject}</span>
-                </div>
-                
-                <h3 class="update-title">${update.title}</h3>
-                <p class="update-description">${update.description}</p>
-                
-                <div class="update-footer">
-                    <span class="update-date">
-                        <i class="fas fa-clock"></i> ${formatUpdateDate(update.date)}
-                    </span>
-                    <span class="update-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </span>
-                </div>
-            </div>
-        </a>
-    `).join('');
-    
-    viewAllBtn.style.display = 'none'; // Hide button after showing all
+    classCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+
+// ==================== PARTICLE EFFECT (Optional Enhancement) ====================
+function createParticles() {
+    const heroParticles = document.querySelector('.hero-particles');
+    if (!heroParticles) return;
+
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 5 + 2}px;
+            height: ${Math.random() * 5 + 2}px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation: float ${Math.random() * 10 + 10}s infinite;
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        heroParticles.appendChild(particle);
+    }
 }
+
+// Call particle creation on load
+document.addEventListener('DOMContentLoaded', createParticles);
+
+// ==================== FORM VALIDATION (For Contact Page) ====================
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePhone(phone) {
+    const re = /^[0-9]{10}$/;
+    return re.test(phone.replace(/[\s-]/g, ''));
+}
+
+// ==================== LOADING ANIMATION ====================
+window.addEventListener('load', function() {
+    document.body.classList.add('loaded');
+});
+
+// ==================== BACK TO TOP BUTTON ====================
+const backToTopButton = document.createElement('button');
+backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+backToTopButton.className = 'back-to-top';
+backToTopButton.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 999;
+`;
+
+document.body.appendChild(backToTopButton);
+
+window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+        backToTopButton.style.display = 'flex';
+    } else {
+        backToTopButton.style.display = 'none';
+    }
+});
+
+backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+backToTopButton.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-5px) scale(1.1)';
+});
+
+backToTopButton.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0) scale(1)';
+});
+
+// ==================== CONSOLE MESSAGE ====================
+console.log('%c🎓 Welcome to Gyanu Notes! ', 'background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 20px; padding: 10px; border-radius: 5px;');
+console.log('%cYour Learning Companion for Classes 8-12', 'color: #667eea; font-size: 14px;');

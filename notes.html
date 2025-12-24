@@ -3,73 +3,905 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes - Gyanu Note</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Study Notes - Class 8 to 12 All Subjects Nepal | Gyanu Notes</title>
+    <meta name="description" content="Free study notes for Class 8, 9, 10, 11, 12 in Nepal. Download notes for Physics, Chemistry, Biology, Maths, English, Nepali, Computer Science. Complete chapter-wise notes with examples.">
+    <meta name="keywords" content="class 10 physics notes nepal, class 10 maths notes, class 9 science notes, class 11 chemistry notes, class 12 biology notes, free study notes nepal, SEE notes, +2 notes">
+    <meta name="author" content="Nawaraj Gupta - Gyanu Notes">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://nawarajgupta.com.np/notes.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Study Notes - Class 8 to 12 All Subjects Nepal">
+    <meta property="og:description" content="Free study notes for all subjects from Class 8 to 12 in Nepal">
+    <meta property="og:url" content="https://nawarajgupta.com.np/notes.html">
+    <meta property="og:image" content="https://nawarajgupta.com.np/images/notes-og.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Study Notes - Class 8 to 12 Nepal">
+    <meta name="twitter:description" content="Free study notes for all subjects">
+    
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="NP">
+    <meta name="geo.placename" content="Nepal">
+    
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <div class="logo">
-                <a href="index.html">
-                    <h1>📚 Gyanu Note</h1>
-                    <span class="tagline">ज्ञानु नोट</span>
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Gyanu Notes</span>
                 </a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#classes">Notes</a></li>
-                <li><a href="books.html" class="active">Books</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="notes.html" class="active">Notes</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="breadcrumb">
+    <!-- Page Header -->
+    <section class="page-header">
         <div class="container">
-            <a href="index.html">Home</a> / <span id="currentSubject">Notes</span>
+            <h1>Study Notes</h1>
+            <p>Read comprehensive notes for all subjects</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by class, subject, or topic (e.g., 'class 10', 'maths', 'physics')...">
+                    <button class="clear-search" id="clearSearch" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-class="all">All Classes</button>
+                    <button class="filter-btn" data-class="8">Class 8</button>
+                    <button class="filter-btn" data-class="9">Class 9</button>
+                    <button class="filter-btn" data-class="10">Class 10</button>
+                    <button class="filter-btn" data-class="11">Class 11</button>
+                    <button class="filter-btn" data-class="12">Class 12</button>
+                </div>
+            </div>
+            <!-- Search Results Info -->
+            <div class="search-results-info" id="searchResultsInfo" style="display: none;">
+                <p><span id="resultsCount">0</span> results found</p>
+            </div>
+        </div>
+    </section>
+    <!-- SEO Content Section -->
+<section class="seo-content-section" style="background: var(--white); padding: 60px 0;">
+    <div class="container">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <article>
+                <h2 style="color: var(--primary-color); font-size: 2rem; margin-bottom: 1.5rem;">
+                    Free Study Notes for Class 8, 9, 10, 11, 12 - Nepal
+                </h2>
+                
+                <p style="line-height: 1.8; color: var(--text-dark); margin-bottom: 1.5rem; font-size: 1.1rem;">
+                    Welcome to <strong>Gyanu Notes</strong> - Nepal's most comprehensive educational platform providing 
+                    <strong>free study notes</strong> and <strong>textbooks</strong> for students from Class 8 to Class 12. 
+                    Whether you're preparing for <strong>SEE (Secondary Education Examination)</strong> or 
+                    <strong>+2 board exams</strong>, we have everything you need to excel in your studies.
+                </p>
+
+                <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 2rem 0 1rem;">
+                    📚 Complete Notes for All Subjects
+                </h3>
+                
+                <p style="line-height: 1.8; color: var(--text-dark); margin-bottom: 1.5rem;">
+                    Our platform offers detailed chapter-wise notes for all major subjects including:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">🔬 Science Subjects</h4>
+                        <ul style="line-height: 2; color: var(--text-dark);">
+                            <li>✓ Physics Notes</li>
+                            <li>✓ Chemistry Notes</li>
+                            <li>✓ Biology Notes</li>
+                            <li>✓ Science Notes (Class 8-10)</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">📐 Mathematics</h4>
+                        <ul style="line-height: 2; color: var(--text-dark);">
+                            <li>✓ Compulsory Maths Notes</li>
+                            <li>✓ Optional Maths Notes</li>
+                            <li>✓ All Formulas & Solutions</li>
+                            <li>✓ Practice Problems</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">📖 Languages</h4>
+                        <ul style="line-height: 2; color: var(--text-dark);">
+                            <li>✓ English Notes</li>
+                            <li>✓ Nepali Notes</li>
+                            <li>✓ Grammar & Literature</li>
+                            <li>✓ Writing Skills</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">💻 Other Subjects</h4>
+                        <ul style="line-height: 2; color: var(--text-dark);">
+                            <li>✓ Computer Science Notes</li>
+                            <li>✓ Account Notes</li>
+                            <li>✓ Economics Notes</li>
+                            <li>✓ Social Studies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 2rem 0 1rem;">
+                    🎯 Most Searched Notes in Nepal
+                </h3>
+
+                <div style="background: linear-gradient(135deg, #667eea15, #764ba215); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                    <ul style="line-height: 2.5; color: var(--text-dark); font-size: 1.05rem; columns: 2; column-gap: 2rem;">
+                        <li>📌 <strong>Class 10 Physics Notes PDF</strong></li>
+                        <li>📌 <strong>Class 10 Maths Notes</strong></li>
+                        <li>📌 <strong>Class 10 Science Notes</strong></li>
+                        <li>📌 <strong>Class 9 Optional Maths Notes</strong></li>
+                        <li>📌 <strong>Class 11 Chemistry Notes</strong></li>
+                        <li>📌 <strong>Class 12 Biology Notes</strong></li>
+                        <li>📌 <strong>SEE Notes All Subjects</strong></li>
+                        <li>📌 <strong>+2 Physics Notes Nepal</strong></li>
+                    </ul>
+                </div>
+
+                <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 2rem 0 1rem;">
+                    ⭐ Why Choose Gyanu Notes?
+                </h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0;">
+                            ✓
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-dark); margin-bottom: 0.5rem;">100% Free</h4>
+                            <p style="color: var(--text-light); line-height: 1.6;">All notes and books are completely free to download. No hidden charges.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0;">
+                            ✓
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-dark); margin-bottom: 0.5rem;">Updated Content</h4>
+                            <p style="color: var(--text-light); line-height: 1.6;">Regular updates according to latest CDC curriculum of Nepal.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0;">
+                            ✓
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-dark); margin-bottom: 0.5rem;">Easy to Understand</h4>
+                            <p style="color: var(--text-light); line-height: 1.6;">Simple language with examples, diagrams, and solved problems.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0;">
+                            ✓
+                        </div>
+                        <div>
+                            <h4 style="color: var(--text-dark); margin-bottom: 0.5rem;">PDF Format</h4>
+                            <p style="color: var(--text-light); line-height: 1.6;">Download and read offline anytime, anywhere on any device.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 2rem 0 1rem;">
+                    📱 How to Download Notes?
+                </h3>
+
+                <ol style="line-height: 2.5; color: var(--text-dark); font-size: 1.05rem; padding-left: 2rem;">
+                    <li><strong>Select Your Class</strong> - Choose from Class 8, 9, 10, 11, or 12</li>
+                    <li><strong>Choose Subject</strong> - Click on the subject you want to study</li>
+                    <li><strong>Read Online</strong> - Click "Read Notes" to view online</li>
+                    <li><strong>Download PDF</strong> - Click download button to save on your device</li>
+                    <li><strong>Study Offline</strong> - Access your notes anytime without internet</li>
+                </ol>
+
+                <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 10px;">
+                    <p style="color: #1e40af; line-height: 1.8; margin: 0;">
+                        <strong>💡 Pro Tip:</strong> Bookmark this page and visit regularly for new notes and updates. 
+                        Share with your friends to help them succeed too!
+                    </p>
+                </div>
+
+                <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 2rem 0 1rem;">
+                    🎓 Exam Preparation Tips
+                </h3>
+
+                <p style="line-height: 1.8; color: var(--text-dark); margin-bottom: 1rem;">
+                    Preparing for <strong>SEE</strong> or <strong>+2 board exams</strong>? Here are some tips:
+                </p>
+
+                <ul style="line-height: 2.2; color: var(--text-dark); padding-left: 2rem;">
+                    <li>📖 Read notes regularly and make your own summary</li>
+                    <li>✍️ Practice all solved examples and problems</li>
+                    <li>🔄 Revise important formulas and concepts daily</li>
+                    <li>📝 Solve previous year question papers</li>
+                    <li>👥 Study in groups and discuss difficult topics</li>
+                    <li>⏰ Create a study schedule and follow it strictly</li>
+                </ul>
+
+                <div style="text-align: center; margin: 3rem 0;">
+                    <p style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 1.5rem;">
+                        <strong>Start your learning journey today!</strong>
+                    </p>
+                    <a href="#notesContainer" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; text-decoration: none; border-radius: 50px; font-weight: 600;">
+                        <i class="fas fa-arrow-down"></i> Browse All Notes
+                    </a>
+                </div>
+            </article>
         </div>
     </div>
+</section>
 
+    <!-- Notes Content -->
     <section class="notes-section">
         <div class="container">
-            <h2 class="section-title" id="subjectTitle">Available Notes</h2>
-            
-            <div class="filter-section">
-                <div class="filter-bar">
-                    <input type="text" id="notesSearch" placeholder="Search notes...">
-                    <select id="classFilter">
-                        <option value="all">All Classes</option>
-                        <option value="11">Class 11</option>
-                        <option value="12">Class 12</option>
-                        <option value="bachelor">Bachelor's</option>
-                        <option value="master">Master's</option>
-                    </select>
-                    <select id="sortBy">
-                        <option value="recent">Most Recent</option>
-                        <option value="popular">Most Popular</option>
-                        <option value="title">Title A-Z</option>
-                    </select>
+            <div id="notesContainer">
+                <!-- Class 8 -->
+                <div class="class-group" data-class="8">
+                    <h2 class="class-heading">Class 8</h2>
+                    <div class="notes-grid">
+                        <div class="note-card" data-subject="nepali" data-keywords="nepali language grammar literature class 8">
+                            <div class="note-icon"><i class="fas fa-language"></i></div>
+                            <h3>Nepali</h3>
+                            <p>Complete notes with grammar and literature</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 15 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 8', 'Nepali', 'class8-nepali')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="english" data-keywords="english grammar comprehension writing class 8">
+                            <div class="note-icon"><i class="fas fa-book"></i></div>
+                            <h3>English</h3>
+                            <p>Grammar, comprehension, and writing skills</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 12 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 8', 'English', 'class8-english')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="maths" data-keywords="mathematics maths algebra geometry class 8">
+                            <div class="note-icon"><i class="fas fa-calculator"></i></div>
+                            <h3>Mathematics</h3>
+                            <p>Complete solutions with formulas and examples</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 18 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 8', 'Mathematics', 'class8-maths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="computer" data-keywords="computer programming coding technology class 8">
+                            <div class="note-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h3>Computer</h3>
+                            <p>Programming basics and computer fundamentals</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 10 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 8', 'Computer', 'class8-computer')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="science" data-keywords="science physics chemistry biology class 8">
+                            <div class="note-icon"><i class="fas fa-atom"></i></div>
+                            <h3>Science</h3>
+                            <p>Physics, Chemistry, and Biology concepts</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 20 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 8', 'Science', 'class8-science')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="opt-maths" data-keywords="optional mathematics advanced maths class 8">
+                            <div class="note-icon"><i class="fas fa-square-root-alt"></i></div>
+                            <h3>Optional Maths</h3>
+                            <p>Advanced mathematics with detailed solutions</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 16 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 8', 'Optional Maths', 'class8-optmaths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 9 -->
+                <div class="class-group" data-class="9">
+                    <h2 class="class-heading">Class 9</h2>
+                    <div class="notes-grid">
+                        <div class="note-card" data-subject="nepali" data-keywords="nepali language grammar literature class 9">
+                            <div class="note-icon"><i class="fas fa-language"></i></div>
+                            <h3>Nepali</h3>
+                            <p>Complete notes with grammar and literature</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 16 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Nepali', 'class9-nepali')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="english" data-keywords="english grammar comprehension writing class 9">
+                            <div class="note-icon"><i class="fas fa-book"></i></div>
+                            <h3>English</h3>
+                            <p>Grammar, comprehension, and writing skills</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 14 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'English', 'class9-english')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="maths" data-keywords="mathematics maths algebra geometry class 9">
+                            <div class="note-icon"><i class="fas fa-calculator"></i></div>
+                            <h3>Mathematics</h3>
+                            <p>Complete solutions with formulas and examples</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 19 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Mathematics', 'class9-maths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="computer" data-keywords="computer programming database class 9">
+                            <div class="note-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h3>Computer</h3>
+                            <p>Programming and database fundamentals</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 12 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Computer', 'class9-computer')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="science" data-keywords="science physics chemistry biology class 9">
+                            <div class="note-icon"><i class="fas fa-atom"></i></div>
+                            <h3>Science</h3>
+                            <p>Physics, Chemistry, and Biology concepts</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 22 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Science', 'class9-science')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="opt-maths" data-keywords="optional mathematics advanced maths class 9">
+                            <div class="note-icon"><i class="fas fa-square-root-alt"></i></div>
+                            <h3>Optional Maths</h3>
+                            <p>Advanced mathematics with detailed solutions</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 17 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Optional Maths', 'class9-optmaths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="account" data-keywords="account accounting finance class 9">
+                            <div class="note-icon"><i class="fas fa-coins"></i></div>
+                            <h3>Account</h3>
+                            <p>Accounting principles and practical examples</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 14 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Account', 'class9-account')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="economics" data-keywords="economics economy business class 9">
+                            <div class="note-icon"><i class="fas fa-chart-line"></i></div>
+                            <h3>Economics</h3>
+                            <p>Economic theories and practical applications</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 13 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 9', 'Economics', 'class9-economics')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 10 -->
+                <div class="class-group" data-class="10">
+                    <h2 class="class-heading">Class 10</h2>
+                    <div class="notes-grid">
+                        <div class="note-card" data-subject="nepali" data-keywords="nepali language grammar literature class 10">
+                            <div class="note-icon"><i class="fas fa-language"></i></div>
+                            <h3>Nepali</h3>
+                            <p>Complete notes with grammar and literature</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 17 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Nepali', 'class10-nepali')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="english" data-keywords="english grammar comprehension writing class 10">
+                            <div class="note-icon"><i class="fas fa-book"></i></div>
+                            <h3>English</h3>
+                            <p>Grammar, comprehension, and writing skills</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 15 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'English', 'class10-english')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="maths" data-keywords="mathematics maths algebra geometry class 10">
+                            <div class="note-icon"><i class="fas fa-calculator"></i></div>
+                            <h3>Mathematics</h3>
+                            <p>Complete solutions with formulas and examples</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 20 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Mathematics', 'class10-maths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="computer" data-keywords="computer programming web development class 10">
+                            <div class="note-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h3>Computer</h3>
+                            <p>Programming and web development basics</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 13 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Computer', 'class10-computer')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="science" data-keywords="science physics chemistry biology class 10">
+                            <div class="note-icon"><i class="fas fa-atom"></i></div>
+                            <h3>Science</h3>
+                            <p>Physics, Chemistry, and Biology concepts</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 24 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Science', 'class10-science')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="opt-maths" data-keywords="optional mathematics advanced maths class 10">
+                            <div class="note-icon"><i class="fas fa-square-root-alt"></i></div>
+                            <h3>Optional Maths</h3>
+                            <p>Advanced mathematics with detailed solutions</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 18 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Optional Maths', 'class10-optmaths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="account" data-keywords="account accounting finance class 10">
+                            <div class="note-icon"><i class="fas fa-coins"></i></div>
+                            <h3>Account</h3>
+                            <p>Accounting principles and practical examples</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 15 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Account', 'class10-account')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="economics" data-keywords="economics economy business class 10">
+                            <div class="note-icon"><i class="fas fa-chart-line"></i></div>
+                            <h3>Economics</h3>
+                            <p>Economic theories and practical applications</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 14 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 10', 'Economics', 'class10-economics')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 11 -->
+                <div class="class-group" data-class="11">
+                    <h2 class="class-heading">Class 11</h2>
+                    <div class="notes-grid">
+                        <div class="note-card" data-subject="nepali" data-keywords="nepali language literature class 11">
+                            <div class="note-icon"><i class="fas fa-language"></i></div>
+                            <h3>Nepali</h3>
+                            <p>Advanced literature and composition</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 18 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'Nepali', 'class11-nepali')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="english" data-keywords="english grammar literature class 11">
+                            <div class="note-icon"><i class="fas fa-book"></i></div>
+                            <h3>English</h3>
+                            <p>Advanced grammar and literature analysis</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 16 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'English', 'class11-english')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="chemistry" data-keywords="chemistry organic inorganic class 11">
+                            <div class="note-icon"><i class="fas fa-flask"></i></div>
+                            <h3>Chemistry</h3>
+                            <p>Organic, inorganic, and physical chemistry</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 22 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'Chemistry', 'class11-chemistry')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="physics" data-keywords="physics mechanics thermodynamics class 11">
+                            <div class="note-icon"><i class="fas fa-atom"></i></div>
+                            <h3>Physics</h3>
+                            <p>Mechanics, thermodynamics, and modern physics</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 20 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'Physics', 'class11-physics')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="maths" data-keywords="mathematics calculus algebra class 11">
+                            <div class="note-icon"><i class="fas fa-calculator"></i></div>
+                            <h3>Mathematics</h3>
+                            <p>Calculus, algebra, and trigonometry</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 21 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'Mathematics', 'class11-maths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="computer" data-keywords="computer programming algorithms class 11">
+                            <div class="note-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h3>Computer</h3>
+                            <p>Programming, data structures, and algorithms</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 15 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'Computer', 'class11-computer')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="biology" data-keywords="biology botany zoology class 11">
+                            <div class="note-icon"><i class="fas fa-dna"></i></div>
+                            <h3>Biology</h3>
+                            <p>Botany, zoology, and human physiology</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 23 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 11', 'Biology', 'class11-biology')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 12 -->
+                <div class="class-group" data-class="12">
+                    <h2 class="class-heading">Class 12</h2>
+                    <div class="notes-grid">
+                        <div class="note-card" data-subject="nepali" data-keywords="nepali language literature class 12">
+                            <div class="note-icon"><i class="fas fa-language"></i></div>
+                            <h3>Nepali</h3>
+                            <p>Advanced literature and composition</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 19 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'Nepali', 'class12-nepali')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="english" data-keywords="english grammar literature class 12">
+                            <div class="note-icon"><i class="fas fa-book"></i></div>
+                            <h3>English</h3>
+                            <p>Advanced grammar and literature analysis</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 17 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'English', 'class12-english')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="chemistry" data-keywords="chemistry organic physical class 12">
+                            <div class="note-icon"><i class="fas fa-flask"></i></div>
+                            <h3>Chemistry</h3>
+                            <p>Advanced organic and physical chemistry</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 24 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'Chemistry', 'class12-chemistry')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="physics" data-keywords="physics electromagnetism optics quantum class 12">
+                            <div class="note-icon"><i class="fas fa-atom"></i></div>
+                            <h3>Physics</h3>
+                            <p>Electromagnetism, optics, and quantum physics</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 22 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'Physics', 'class12-physics')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="maths" data-keywords="mathematics calculus linear algebra class 12">
+                            <div class="note-icon"><i class="fas fa-calculator"></i></div>
+                            <h3>Mathematics</h3>
+                            <p>Advanced calculus and linear algebra</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 23 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'Mathematics', 'class12-maths')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="computer" data-keywords="computer programming database systems class 12">
+                            <div class="note-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h3>Computer</h3>
+                            <p>Advanced programming and database systems</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 16 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'Computer', 'class12-computer')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                        <div class="note-card" data-subject="biology" data-keywords="biology genetics evolution ecology class 12">
+                            <div class="note-icon"><i class="fas fa-dna"></i></div>
+                            <h3>Biology</h3>
+                            <p>Genetics, evolution, and ecology</p>
+                            <div class="note-meta">
+                                <span><i class="fas fa-file-alt"></i> 25 Chapters</span>
+                                <span><i class="fas fa-clock"></i> Updated: Jan 2024</span>
+                            </div>
+                            <button class="read-btn" onclick="openNoteReader('Class 12', 'Biology', 'class12-biology')">
+                                <i class="fas fa-book-open"></i> Read Notes
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="notes-grid" id="notesContainer">
-                <!-- Notes will be loaded dynamically -->
+            <!-- No Results Message -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No notes found</h3>
+                <p>Try searching with different keywords or browse all classes</p>
             </div>
         </div>
     </section>
 
+    <!-- Note Reader Modal -->
+    <div id="noteReaderModal" class="note-reader-modal">
+        <div class="note-reader-content">
+            <div class="reader-header">
+                <div class="reader-title">
+                    <h2 id="readerTitle">Note Title</h2>
+                    <p id="readerSubtitle">Class & Subject</p>
+                </div>
+                <div class="reader-actions">
+                    <button class="action-btn" onclick="downloadNote()" title="Download PDF">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="action-btn" onclick="shareNote()" title="Share">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                    <button class="action-btn" onclick="printNote()" title="Print">
+                        <i class="fas fa-print"></i>
+                    </button>
+                    <button class="close-reader" onclick="closeNoteReader()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="reader-body" id="readerBody">
+                <!-- Note content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Gyanu Notes</h3>
+                    <p>Your trusted companion for quality education materials from Class 8 to 12. We provide comprehensive notes and books to help students excel.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="notes.html">Notes</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Popular Classes</h3>
+                    <ul>
+                        <li><a href="notes.html?class=8">Class 8</a></li>
+                        <li><a href="notes.html?class=9">Class 9</a></li>
+                        <li><a href="notes.html?class=10">Class 10</a></li>
+                        <li><a href="notes.html?class=11">Class 11</a></li>
+                        <li><a href="notes.html?class=12">Class 12</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> info@gyanunotes.com</li>
+                        <li><i class="fas fa-phone"></i> +977 9800000000</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Structured Data for Educational Content -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Study Notes for Class 8-12 Nepal",
+  "description": "Complete study notes for all subjects from Class 8 to 12",
+  "itemListElement": [
+    {
+      "@type": "Course",
+      "position": 1,
+      "name": "Class 10 Physics Notes",
+      "description": "Complete physics notes for Class 10 SEE exam in Nepal",
+      "provider": {
+        "@type": "Organization",
+        "name": "Gyanu Notes",
+        "url": "https://nawarajgupta.com.np"
+      },
+      "educationalLevel": "Secondary Education",
+      "inLanguage": "en",
+      "availableLanguage": ["English", "Nepali"]
+    },
+    {
+      "@type": "Course",
+      "position": 2,
+      "name": "Class 10 Mathematics Notes",
+      "description": "Complete mathematics notes for Class 10 SEE exam",
+      "provider": {
+        "@type": "Organization",
+        "name": "Gyanu Notes",
+        "url": "https://nawarajgupta.com.np"
+      },
+      "educationalLevel": "Secondary Education",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Course",
+      "position": 3,
+      "name": "Class 10 Science Notes",
+      "description": "Complete science notes for Class 10 SEE exam",
+      "provider": {
+        "@type": "Organization",
+        "name": "Gyanu Notes",
+        "url": "https://nawarajgupta.com.np"
+      },
+      "educationalLevel": "Secondary Education",
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://nawarajgupta.com.np/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Notes",
+      "item": "https://nawarajgupta.com.np/notes.html"
+    }
+  ]
+}
+</script>
+
+    <script src="script.js"></script>
     <script src="notes.js"></script>
 </body>
 </html>

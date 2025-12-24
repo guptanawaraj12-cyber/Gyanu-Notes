@@ -1,732 +1,690 @@
-// Complete notes database with all subjects and classes
-const notesDatabase = {
-    // Physics Notes
-    physics: [
-        {
-            id: 1,
-            title: "Mechanics - Motion in a Straight Line",
-            description: "Complete notes on kinematics, equations of motion, and graphs",
-            class: "11",
-            date: "2024-01-15",
-            views: 2450,
-            tags: ["mechanics", "motion", "kinematics"]
-        },
-        {
-            id: 2,
-            title: "Newton's Laws of Motion",
-            description: "Detailed explanation of three laws with examples and problems",
-            class: "11",
-            date: "2024-01-20",
-            views: 2100,
-            tags: ["newton", "laws", "force"]
-        },
-        {
-            id: 3,
-            title: "Electricity and Magnetism",
-            description: "Electric field, magnetic field, and electromagnetic induction",
-            class: "12",
-            date: "2024-02-01",
-            views: 1890,
-            tags: ["electricity", "magnetism", "induction"]
-        },
-        {
-            id: 4,
-            title: "Modern Physics - Quantum Mechanics",
-            description: "Photoelectric effect, wave-particle duality, and atomic models",
-            class: "12",
-            date: "2024-02-10",
-            views: 1650,
-            tags: ["quantum", "modern physics", "atoms"]
-        },
-        {
-            id: 5,
-            title: "Thermodynamics Laws",
-            description: "First, second, and third laws of thermodynamics with applications",
-            class: "11",
-            date: "2024-02-15",
-            views: 1420,
-            tags: ["thermodynamics", "heat", "energy"]
-        },
-        {
-            id: 50,
-            title: "Waves - Sound and Light",
-            description: "Complete guide to wave motion, sound waves, light waves, interference and diffraction",
-            class: "11",
-            date: "2024-02-10",
-            views: 1850,
-            tags: ["waves", "sound", "light", "interference", "diffraction"]
-        },
-        {
-            id: 51,
-            title: "Optics - Ray and Wave Optics",
-            description: "Reflection, refraction, lenses, mirrors, interference, diffraction and polarizatio",
-            class: "12",
-            date: "2024-02-12",
-            views: 2150,
-            tags: ["optics", "light", "reflection", "refraction", "lenses"]
-        },
-        {
-            id: 52,
-            title: "Modern Physics - Atoms and Nuclei",
-            description: "Atomic models, radioactivity, nuclear reactions, and quantum physics",
-            class: "12",
-            date: "2024-02-14",
-            views: 1920,
-            tags: ["modern physics", "atoms", "nuclei", "radioactivity", "quantum"]
-        }
-    ],
+// ==================== NOTES PAGE FUNCTIONALITY ====================
 
-    // Chemistry Notes
-    chemistry: [
-        {
-            id: 6,
-            title: "Organic Chemistry - Hydrocarbons",
-            description: "Alkanes, alkenes, alkynes - nomenclature and reactions",
-            class: "12",
-            date: "2024-01-18",
-            views: 2200,
-            tags: ["organic", "hydrocarbons", "reactions"]
-        },
-        {
-            id: 7,
-            title: "Chemical Bonding",
-            description: "Ionic, covalent, and metallic bonds with examples",
-            class: "11",
-            date: "2024-01-25",
-            views: 1980,
-            tags: ["bonding", "ionic", "covalent"]
-        },
-        {
-            id: 8,
-            title: "Periodic Table and Trends",
-            description: "Periodic properties, trends, and element classification",
-            class: "11",
-            date: "2024-02-05",
-            views: 2350,
-            tags: ["periodic table", "trends", "elements"]
-        },
-        {
-            id: 9,
-            title: "Chemical Kinetics",
-            description: "Rate of reaction, order, and reaction mechanisms",
-            class: "12",
-            date: "2024-02-12",
-            views: 1560,
-            tags: ["kinetics", "rate", "reaction"]
-        },
-        {
-            id: 10,
-            title: "Electrochemistry",
-            description: "Redox reactions, electrochemical cells, and batteries",
-            class: "12",
-            date: "2024-02-18",
-            views: 1720,
-            tags: ["electrochemistry", "redox", "cells"]
-        }
-    ],
+let currentNoteData = {};
 
-    // Biology Notes
-    biology: [
-        {
-            id: 11,
-            title: "Cell Biology - Structure and Function",
-            description: "Cell organelles, membrane structure, and cell division",
-            class: "11",
-            date: "2024-01-22",
-            views: 2100,
-            tags: ["cell", "organelles", "mitosis"]
-        },
-        {
-            id: 12,
-            title: "Genetics and Heredity",
-            description: "Mendelian genetics, DNA structure, and inheritance patterns",
-            class: "12",
-            date: "2024-02-08",
-            views: 1890,
-            tags: ["genetics", "DNA", "heredity"]
-        },
-        {
-            id: 13,
-            title: "Plant Physiology",
-            description: "Photosynthesis, respiration, and plant hormones",
-            class: "11",
-            date: "2024-02-14",
-            views: 1650,
-            tags: ["plants", "photosynthesis", "hormones"]
-        },
-        {
-            id: 14,
-            title: "Human Physiology - Circulatory System",
-            description: "Heart structure, blood circulation, and cardiovascular diseases",
-            class: "12",
-            date: "2024-02-20",
-            views: 1780,
-            tags: ["human", "heart", "circulation"]
-        },
-        {
-            id: 15,
-            title: "Ecology and Environment",
-            description: "Ecosystems, food chains, and environmental conservation",
-            class: "12",
-            date: "2024-02-25",
-            views: 1520,
-            tags: ["ecology", "ecosystem", "environment"]
-        }
-    ],
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNotesPage();
+});
 
-    // Mathematics Notes
-    mathematics: [
-        {
-            id: 16,
-            title: "Calculus - Limits and Continuity",
-            description: "Complete guide to limits, continuity, and derivatives",
-            class: "11",
-            date: "2024-01-12",
-            views: 3200,
-            tags: ["calculus", "limits", "derivatives"]
-        },
-        {
-            id: 17,
-            title: "Trigonometry - Functions and Identities",
-            description: "All trigonometric functions, identities, and equations",
-            class: "11",
-            date: "2024-01-28",
-            views: 2850,
-            tags: ["trigonometry", "functions", "identities"]
-        },
-        {
-            id: 18,
-            title: "Vectors and 3D Geometry",
-            description: "Vector operations, dot product, cross product, and 3D geometry",
-            class: "12",
-            date: "2024-02-06",
-            views: 2450,
-            tags: ["vectors", "3d geometry", "operations"]
-        },
-        {
-            id: 19,
-            title: "Probability and Statistics",
-            description: "Probability theory, distributions, and statistical analysis",
-            class: "12",
-            date: "2024-02-16",
-            views: 2120,
-            tags: ["probability", "statistics", "distributions"]
-        },
-        {
-            id: 20,
-            title: "Linear Algebra - Matrices",
-            description: "Matrix operations, determinants, and linear transformations",
-            class: "bachelor",
-            date: "2024-02-22",
-            views: 1890,
-            tags: ["matrices", "linear algebra", "determinants"]
-        }
-    ],
-
-    // Computer Science Notes
-    computer: [
-        {
-            id: 21,
-            title: "Data Structures and Algorithms",
-            description: "Arrays, linked lists, stacks, queues, trees, and sorting algorithms",
-            class: "bachelor",
-            date: "2024-01-10",
-            views: 3500,
-            tags: ["dsa", "algorithms", "data structures"]
-        },
-        {
-            id: 22,
-            title: "Object-Oriented Programming in C++",
-            description: "Classes, objects, inheritance, polymorphism, and encapsulation",
-            class: "11",
-            date: "2024-01-24",
-            views: 2980,
-            tags: ["oop", "cpp", "programming"]
-        },
-        {
-            id: 23,
-            title: "Database Management Systems",
-            description: "SQL, normalization, ER diagrams, and database design",
-            class: "12",
-            date: "2024-02-04",
-            views: 2650,
-            tags: ["dbms", "sql", "database"]
-        },
-        {
-            id: 24,
-            title: "Web Technology - HTML, CSS, JavaScript",
-            description: "Complete web development guide with practical examples",
-            class: "12",
-            date: "2024-02-11",
-            views: 3120,
-            tags: ["web", "html", "css", "javascript"]
-        },
-        {
-            id: 25,
-            title: "Computer Networks",
-            description: "OSI model, TCP/IP, routing, and network protocols",
-            class: "bachelor",
-            date: "2024-02-19",
-            views: 2340,
-            tags: ["networks", "tcp/ip", "protocols"]
-        }
-    ],
-
-    // English Notes
-    english: [
-        {
-            id: 26,
-            title: "Grammar Essentials - Tenses",
-            description: "Complete guide to all English tenses with examples",
-            class: "11",
-            date: "2024-01-16",
-            views: 2450,
-            tags: ["grammar", "tenses", "english"]
-        },
-        {
-            id: 27,
-            title: "Essay Writing Techniques",
-            description: "How to write effective essays, paragraphs, and compositions",
-            class: "12",
-            date: "2024-02-03",
-            views: 2180,
-            tags: ["essay", "writing", "composition"]
-        },
-        {
-            id: 28,
-            title: "English Literature - Poetry Analysis",
-            description: "Analysis of famous poems and poetic devices",
-            class: "12",
-            date: "2024-02-13",
-            views: 1890,
-            tags: ["literature", "poetry", "analysis"]
-        },
-        {
-            id: 29,
-            title: "Business Communication",
-            description: "Professional writing, emails, reports, and presentations",
-            class: "bachelor",
-            date: "2024-02-21",
-            views: 2020,
-            tags: ["business", "communication", "professional"]
-        }
-    ],
-
-    // Nepali Notes
-    nepali: [
-        {
-            id: 30,
-            title: "नेपाली व्याकरण - संज्ञा र सर्वनाम",
-            description: "संज्ञा र सर्वनामका प्रकार र प्रयोग",
-            class: "11",
-            date: "2024-01-19",
-            views: 1980,
-            tags: ["व्याकरण", "संज्ञा", "सर्वनाम"]
-        },
-        {
-            id: 31,
-            title: "नेपाली साहित्य - कविता विश्लेषण",
-            description: "प्रसिद्ध कविताहरूको विश्लेषण र व्याख्या",
-            class: "12",
-            date: "2024-02-07",
-            views: 1750,
-            tags: ["साहित्य", "कविता", "विश्लेषण"]
-        },
-        {
-            id: 32,
-            title: "निबन्ध लेखन",
-            description: "प्रभावकारी निबन्ध लेख्ने तरिका",
-            class: "11",
-            date: "2024-02-17",
-            views: 1620,
-            tags: ["निबन्ध", "लेखन"]
-        }
-    ],
-
-    // Accountancy Notes
-    accountancy: [
-        {
-            id: 33,
-            title: "Financial Accounting - Journal Entries",
-            description: "Complete guide to journal entries and ledger posting",
-            class: "11",
-            date: "2024-01-14",
-            views: 2650,
-            tags: ["accounting", "journal", "ledger"]
-        },
-        {
-            id: 34,
-            title: "Final Accounts Preparation",
-            description: "Trading account, P&L account, and balance sheet",
-            class: "12",
-            date: "2024-02-02",
-            views: 2420,
-            tags: ["final accounts", "balance sheet", "p&l"]
-        },
-        {
-            id: 35,
-            title: "Cost Accounting",
-            description: "Material costing, labor costing, and overhead allocation",
-            class: "bachelor",
-            date: "2024-02-15",
-            views: 2180,
-            tags: ["cost accounting", "costing", "overhead"]
-        },
-        {
-            id: 36,
-            title: "Company Accounts",
-            description: "Share capital, debentures, and company final accounts",
-            class: "12",
-            date: "2024-02-23",
-            views: 1950,
-            tags: ["company", "shares", "debentures"]
-        }
-    ],
-
-    // Economics Notes
-    economics: [
-        {
-            id: 37,
-            title: "Microeconomics - Demand and Supply",
-            description: "Law of demand, supply, and market equilibrium",
-            class: "11",
-            date: "2024-01-17",
-            views: 2320,
-            tags: ["microeconomics", "demand", "supply"]
-        },
-        {
-            id: 38,
-            title: "Macroeconomics - National Income",
-            description: "GDP, GNP, NNP, and national income calculation",
-            class: "12",
-            date: "2024-02-09",
-            views: 2050,
-            tags: ["macroeconomics", "gdp", "national income"]
-        },
-        {
-            id: 39,
-            title: "Money and Banking",
-            description: "Functions of money, banking system, and central bank",
-            class: "12",
-            date: "2024-02-18",
-            views: 1880,
-            tags: ["money", "banking", "central bank"]
-        },
-        {
-            id: 40,
-            title: "Development Economics",
-            description: "Economic development, growth theories, and planning",
-            class: "bachelor",
-            date: "2024-02-24",
-            views: 1720,
-            tags: ["development", "growth", "planning"]
-        }
-    ],
-
-    // Business Studies Notes
-    business: [
-        {
-            id: 41,
-            title: "Principles of Management",
-            description: "Planning, organizing, staffing, directing, and controlling",
-            class: "bachelor",
-            date: "2024-01-11",
-            views: 2580,
-            tags: ["management", "principles", "functions"]
-        },
-        {
-            id: 42,
-            title: "Marketing Management",
-            description: "Marketing mix, segmentation, targeting, and positioning",
-            class: "bachelor",
-            date: "2024-01-26",
-            views: 2340,
-            tags: ["marketing", "4p", "segmentation"]
-        },
-        {
-            id: 43,
-            title: "Human Resource Management",
-            description: "Recruitment, training, performance appraisal, and compensation",
-            class: "bachelor",
-            date: "2024-02-12",
-            views: 2120,
-            tags: ["hrm", "recruitment", "training"]
-        },
-        {
-            id: 44,
-            title: "Strategic Management",
-            description: "Strategy formulation, implementation, and evaluation",
-            class: "master",
-            date: "2024-02-20",
-            views: 1890,
-            tags: ["strategy", "strategic management", "planning"]
-        }
-    ],
-
-    // Statistics Notes
-    statistics: [
-        {
-            id: 45,
-            title: "Descriptive Statistics",
-            description: "Mean, median, mode, variance, and standard deviation",
-            class: "11",
-            date: "2024-01-21",
-            views: 2180,
-            tags: ["statistics", "mean", "median", "mode"]
-        },
-        {
-            id: 46,
-            title: "Probability Theory",
-            description: "Basic probability, conditional probability, and Bayes theorem",
-            class: "12",
-            date: "2024-02-05",
-            views: 1950,
-            tags: ["probability", "bayes", "conditional"]
-        },
-        {
-            id: 47,
-            title: "Inferential Statistics",
-            description: "Hypothesis testing, confidence intervals, and t-tests",
-            class: "bachelor",
-            date: "2024-02-16",
-            views: 1780,
-            tags: ["inferential", "hypothesis", "testing"]
-        }
-    ],
-
-    // Social Studies Notes
-    social: [
-        {
-            id: 48,
-            title: "Ancient History of Nepal",
-            description: "Kirat, Lichhavi, and Malla periods",
-            class: "11",
-            date: "2024-01-23",
-            views: 1650,
-            tags: ["history", "nepal", "ancient"]
-        },
-        {
-            id: 49,
-            title: "Geography - Climate and Vegetation",
-            description: "Climate zones, vegetation types, and natural resources",
-            class: "11",
-            date: "2024-02-10",
-            views: 1520,
-            tags: ["geography", "climate", "vegetation"]
-        },
-        {
-            id: 50,
-            title: "Civics - Constitution of Nepal",
-            description: "Fundamental rights, duties, and government structure",
-            class: "12",
-            date: "2024-02-19",
-            views: 1420,
-            tags: ["civics", "constitution", "rights"]
-        }
-    ]
-};
-
-// Get URL parameters
-const urlParams = new URLSearchParams(window.location.search);
-const subject = urlParams.get('subject') || 'all';
-const classLevel = urlParams.get('class') || 'all';
-const searchQuery = urlParams.get('search') || '';
-
-// Subject names mapping
-const subjectNames = {
-    physics: 'Physics',
-    chemistry: 'Chemistry',
-    biology: 'Biology',
-    mathematics: 'Mathematics',
-    computer: 'Computer Science',
-    english: 'English',
-    nepali: 'Nepali',
-    accountancy: 'Accountancy',
-    economics: 'Economics',
-    business: 'Business Studies',
-    statistics: 'Statistics',
-    social: 'Social Studies'
-};
-
-// Class names mapping
-const classNames = {
-    '11': 'Class 11',
-    '12': 'Class 12',
-    'bachelor': "Bachelor's Level",
-    'master': "Master's Level"
-};
-
-// Update page title and breadcrumb
-function updatePageInfo() {
-    const subjectTitle = document.getElementById('subjectTitle');
-    const currentSubject = document.getElementById('currentSubject');
-
-    let title = 'All Notes';
-    
-    if (searchQuery) {
-        title = `Search Results for "${searchQuery}"`;
-    } else if (subject !== 'all' && classLevel !== 'all') {
-        title = `${subjectNames[subject]} - ${classNames[classLevel]}`;
-    } else if (subject !== 'all') {
-        title = `${subjectNames[subject]} Notes`;
-    } else if (classLevel !== 'all') {
-        title = `${classNames[classLevel]} Notes`;
-    }
-
-    subjectTitle.textContent = title;
-    currentSubject.textContent = title;
-    document.title = `${title} - Gyanu Note`;
+function initializeNotesPage() {
+    setupSmartSearch();
+    setupFilters();
+    animateNoteCards();
+    checkURLParams();
 }
 
-// Load and display notes
-function loadNotes() {
-    const notesContainer = document.getElementById('notesContainer');
-    let notes = [];
+// ==================== SMART SEARCH FUNCTIONALITY ====================
+function setupSmartSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    
+    if (!searchInput) return;
 
-    // Collect all notes
-    if (subject === 'all') {
-        Object.values(notesDatabase).forEach(subjectNotes => {
-            notes = notes.concat(subjectNotes);
+    // Real-time search
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        
+        if (searchTerm.length > 0) {
+            clearSearch.style.display = 'block';
+            performSmartSearch(searchTerm);
+        } else {
+            clearSearch.style.display = 'none';
+            resetSearch();
+        }
+    });
+
+    // Clear search button
+    if (clearSearch) {
+        clearSearch.addEventListener('click', function() {
+            searchInput.value = '';
+            this.style.display = 'none';
+            resetSearch();
+            searchInput.focus();
+        });
+    }
+}
+
+function performSmartSearch(searchTerm) {
+    const noteCards = document.querySelectorAll('.note-card');
+    const classGroups = document.querySelectorAll('.class-group');
+    const searchResultsInfo = document.getElementById('searchResultsInfo');
+    const noResults = document.getElementById('noResults');
+    let visibleCount = 0;
+
+    // Hide all class groups first
+    classGroups.forEach(group => {
+        group.style.display = 'none';
+    });
+
+    // Search through all note cards
+    noteCards.forEach(card => {
+        const subject = card.querySelector('h3').textContent.toLowerCase();
+        const description = card.querySelector('p').textContent.toLowerCase();
+        const keywords = card.getAttribute('data-keywords').toLowerCase();
+        const classGroup = card.closest('.class-group');
+        const classNumber = classGroup.getAttribute('data-class');
+        const className = `class ${classNumber}`;
+        
+        // Smart matching
+        const matchesSubject = subject.includes(searchTerm);
+        const matchesDescription = description.includes(searchTerm);
+        const matchesKeywords = keywords.includes(searchTerm);
+        const matchesClass = className.includes(searchTerm) || classNumber === searchTerm;
+        
+        // Check for "class 10" type searches
+        const classMatch = searchTerm.match(/class\s*(\d+)/i);
+        const matchesClassSearch = classMatch && classMatch[1] === classNumber;
+
+        if (matchesSubject || matchesDescription || matchesKeywords || matchesClass || matchesClassSearch) {
+            card.style.display = 'block';
+            classGroup.style.display = 'block';
+            visibleCount++;
+            
+            // Highlight animation
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'highlightCard 0.6s ease';
+            }, 10);
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Show/hide empty class groups
+    classGroups.forEach(group => {
+        const visibleCards = group.querySelectorAll('.note-card[style*="display: block"]');
+        if (visibleCards.length === 0) {
+            group.style.display = 'none';
+        }
+    });
+
+    // Update search results info
+    if (visibleCount > 0) {
+        searchResultsInfo.style.display = 'block';
+        document.getElementById('resultsCount').textContent = visibleCount;
+        noResults.style.display = 'none';
+    } else {
+        searchResultsInfo.style.display = 'none';
+        noResults.style.display = 'block';
+    }
+
+    // Scroll to results
+    const notesSection = document.querySelector('.notes-section');
+    if (notesSection && visibleCount > 0) {
+        notesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function resetSearch() {
+    const noteCards = document.querySelectorAll('.note-card');
+    const classGroups = document.querySelectorAll('.class-group');
+    const searchResultsInfo = document.getElementById('searchResultsInfo');
+    const noResults = document.getElementById('noResults');
+
+    // Show all cards and groups
+    noteCards.forEach(card => {
+        card.style.display = 'block';
+        card.style.animation = 'none';
+    });
+
+    classGroups.forEach(group => {
+        group.style.display = 'block';
+    });
+
+    searchResultsInfo.style.display = 'none';
+    noResults.style.display = 'none';
+
+    // Reset filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.filter-btn[data-class="all"]').classList.add('active');
+}
+
+// ==================== FILTER FUNCTIONALITY ====================
+function setupFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Clear search when using filters
+            const searchInput = document.getElementById('searchInput');
+            const clearSearch = document.getElementById('clearSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                clearSearch.style.display = 'none';
+            }
+
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Get selected class
+            const selectedClass = this.getAttribute('data-class');
+            filterByClass(selectedClass);
+        });
+    });
+}
+
+function filterByClass(classNumber) {
+    const classGroups = document.querySelectorAll('.class-group');
+    const searchResultsInfo = document.getElementById('searchResultsInfo');
+    const noResults = document.getElementById('noResults');
+    
+    searchResultsInfo.style.display = 'none';
+    noResults.style.display = 'none';
+
+    classGroups.forEach(group => {
+        const groupClass = group.getAttribute('data-class');
+        
+        if (classNumber === 'all' || groupClass === classNumber) {
+            group.style.display = 'block';
+            // Animate cards
+            const cards = group.querySelectorAll('.note-card');
+            cards.forEach((card, index) => {
+                card.style.display = 'block';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+        } else {
+            group.style.display = 'none';
+        }
+    });
+
+    // Scroll to notes section
+    const notesSection = document.querySelector('.notes-section');
+    if (notesSection) {
+        notesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// ==================== CHECK URL PARAMETERS ====================
+function checkURLParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const classParam = urlParams.get('class');
+    
+    if (classParam) {
+        // Activate the corresponding filter button
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            if (btn.getAttribute('data-class') === classParam) {
+                btn.click();
+            }
+        });
+    }
+}
+
+// ==================== NOTE READER FUNCTIONALITY ====================
+function openNoteReader(className, subject, noteId) {
+    const modal = document.getElementById('noteReaderModal');
+    const readerTitle = document.getElementById('readerTitle');
+    const readerSubtitle = document.getElementById('readerSubtitle');
+    const readerBody = document.getElementById('readerBody');
+
+    // Store current note data
+    currentNoteData = {
+        className: className,
+        subject: subject,
+        noteId: noteId
+    };
+
+    // Set title
+    readerTitle.textContent = subject;
+    readerSubtitle.textContent = className;
+
+    // Load note content
+    loadNoteContent(noteId, readerBody);
+
+    // Show modal
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Add animation
+    const content = modal.querySelector('.note-reader-content');
+    content.style.animation = 'slideUp 0.4s ease';
+}
+
+function closeNoteReader() {
+    const modal = document.getElementById('noteReaderModal');
+    const content = modal.querySelector('.note-reader-content');
+    
+    content.style.animation = 'slideDown 0.3s ease';
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+// Close modal on outside click
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('noteReaderModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeNoteReader();
+            }
+        });
+    }
+});
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('noteReaderModal');
+        if (modal && modal.style.display === 'flex') {
+            closeNoteReader();
+        }
+    }
+});
+
+// ==================== LOAD NOTE CONTENT ====================
+function loadNoteContent(noteId, container) {
+    // Show loading
+    container.innerHTML = `
+        <div class="loading-content">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading notes...</p>
+        </div>
+    `;
+
+    // Simulate loading (replace with actual content loading)
+    setTimeout(() => {
+        container.innerHTML = generateNoteContent(noteId);
+        
+        // Add smooth scroll to sections
+        const tocLinks = container.querySelectorAll('.toc-link');
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    }, 800);
+}
+
+function generateNoteContent(noteId) {
+    // This is sample content. Replace with actual note content from your database/files
+    return `
+        <div class="note-content">
+            <div class="table-of-contents">
+                <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                <ul>
+                    <li><a href="#chapter1" class="toc-link">Chapter 1: Introduction</a></li>
+                    <li><a href="#chapter2" class="toc-link">Chapter 2: Basic Concepts</a></li>
+                    <li><a href="#chapter3" class="toc-link">Chapter 3: Advanced Topics</a></li>
+                    <li><a href="#chapter4" class="toc-link">Chapter 4: Practice Problems</a></li>
+                    <li><a href="#chapter5" class="toc-link">Chapter 5: Summary</a></li>
+                </ul>
+            </div>
+
+            <div class="note-chapter" id="chapter1">
+                <h2>Chapter 1: Introduction</h2>
+                <p>This chapter provides a comprehensive introduction to the subject matter. Understanding the fundamentals is crucial for building a strong foundation in this topic.</p>
+                
+                <h3>1.1 Overview</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                
+                <div class="note-box info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Important Note:</strong>
+                        <p>Pay special attention to the key concepts highlighted throughout this chapter.</p>
+                    </div>
+                </div>
+
+                <h3>1.2 Key Definitions</h3>
+                <ul class="styled-list">
+                    <li><strong>Term 1:</strong> Definition and explanation of the first important term.</li>
+                    <li><strong>Term 2:</strong> Definition and explanation of the second important term.</li>
+                    <li><strong>Term 3:</strong> Definition and explanation of the third important term.</li>
+                </ul>
+            </div>
+
+            <div class="note-chapter" id="chapter2">
+                <h2>Chapter 2: Basic Concepts</h2>
+                <p>In this chapter, we'll explore the fundamental concepts that form the basis of this subject.</p>
+
+                <h3>2.1 Concept One</h3>
+                <p>Detailed explanation of the first concept with examples and illustrations.</p>
+
+                <div class="formula-box">
+                    <p><strong>Formula:</strong></p>
+                    <p class="formula">a² + b² = c²</p>
+                </div>
+
+                <h3>2.2 Concept Two</h3>
+                <p>Detailed explanation of the second concept with practical applications.</p>
+
+                <div class="example-box">
+                    <h4><i class="fas fa-lightbulb"></i> Example 1</h4>
+                    <p><strong>Problem:</strong> Sample problem statement goes here.</p>
+                    <p><strong>Solution:</strong> Step-by-step solution with detailed explanation.</p>
+                </div>
+            </div>
+
+            <div class="note-chapter" id="chapter3">
+                <h2>Chapter 3: Advanced Topics</h2>
+                <p>This chapter delves into more complex aspects of the subject matter.</p>
+
+                <h3>3.1 Advanced Concept</h3>
+                <p>Detailed explanation with real-world applications and case studies.</p>
+
+                <div class="note-box warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Common Mistake:</strong>
+                        <p>Students often confuse this concept with similar topics. Make sure to understand the key differences.</p>
+                    </div>
+                </div>
+
+                <h3>3.2 Practical Applications</h3>
+                <ol class="styled-list">
+                    <li>First practical application with detailed explanation</li>
+                    <li>Second practical application with examples</li>
+                    <li>Third practical application with case studies</li>
+                </ol>
+            </div>
+
+            <div class="note-chapter" id="chapter4">
+                <h2>Chapter 4: Practice Problems</h2>
+                <p>Test your understanding with these practice problems.</p>
+
+                <div class="practice-problem">
+                    <h4>Problem 1</h4>
+                    <p>Question statement goes here with all necessary details.</p>
+                    <button class="show-solution-btn" onclick="toggleSolution(this)">
+                        <i class="fas fa-eye"></i> Show Solution
+                    </button>
+                    <div class="solution" style="display: none;">
+                        <p><strong>Solution:</strong></p>
+                        <p>Detailed step-by-step solution with explanations.</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h4>Problem 2</h4>
+                    <p>Another practice problem with different difficulty level.</p>
+                    <button class="show-solution-btn" onclick="toggleSolution(this)">
+                        <i class="fas fa-eye"></i> Show Solution
+                    </button>
+                    <div class="solution" style="display: none;">
+                        <p><strong>Solution:</strong></p>
+                        <p>Detailed step-by-step solution with explanations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-chapter" id="chapter5">
+                <h2>Chapter 5: Summary</h2>
+                <p>Let's review the key points covered in this note.</p>
+
+                <div class="summary-box">
+                    <h3><i class="fas fa-check-circle"></i> Key Takeaways</h3>
+                    <ul>
+                        <li>First important point to remember</li>
+                        <li>Second crucial concept</li>
+                        <li>Third essential principle</li>
+                        <li>Fourth key learning outcome</li>
+                    </ul>
+                </div>
+
+                <div class="note-box success">
+                    <i class="fas fa-trophy"></i>
+                    <div>
+                        <strong>Congratulations!</strong>
+                        <p>You've completed this chapter. Practice regularly to master these concepts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function toggleSolution(button) {
+    const solution = button.nextElementSibling;
+    const icon = button.querySelector('i');
+    
+    if (solution.style.display === 'none') {
+        solution.style.display = 'block';
+        button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Solution';
+        solution.style.animation = 'fadeIn 0.3s ease';
+    } else {
+        solution.style.display = 'none';
+        button.innerHTML = '<i class="fas fa-eye"></i> Show Solution';
+    }
+}
+
+// ==================== DOWNLOAD FUNCTIONALITY ====================
+function downloadNote() {
+    const { className, subject, noteId } = currentNoteData;
+    
+    showNotification('Preparing PDF for download...', 'info');
+    
+    // Simulate download process
+    setTimeout(() => {
+        showNotification(`${subject} notes for ${className} downloaded successfully!`, 'success');
+        
+        // In real application, trigger actual PDF download
+        // window.location.href = `/downloads/${noteId}.pdf`;
+        console.log(`Downloading: ${noteId}.pdf`);
+    }, 1500);
+}
+
+// ==================== SHARE FUNCTIONALITY ====================
+function shareNote() {
+    const { className, subject } = currentNoteData;
+    const shareUrl = window.location.href;
+    const shareText = `Check out these ${subject} notes for ${className} on Gyanu Notes!`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: `${subject} - ${className}`,
+            text: shareText,
+            url: shareUrl
+        }).then(() => {
+            showNotification('Shared successfully!', 'success');
+        }).catch(err => {
+            if (err.name !== 'AbortError') {
+                copyToClipboard(shareUrl);
+            }
         });
     } else {
-        notes = notesDatabase[subject] || [];
+        copyToClipboard(shareUrl);
     }
-
-    // Filter by class
-    if (classLevel !== 'all') {
-        notes = notes.filter(note => note.class === classLevel);
-    }
-
-    // Filter by search query
-    if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        notes = notes.filter(note => 
-            note.title.toLowerCase().includes(query) ||
-            note.description.toLowerCase().includes(query) ||
-            note.tags.some(tag => tag.toLowerCase().includes(query))
-        );
-    }
-
-    // Display notes
-    if (notes.length === 0) {
-        notesContainer.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
-                <h3 style="color: var(--text-color); margin-bottom: 1rem;">No notes found</h3>
-                <p style="color: #64748b;">Try adjusting your filters or search query</p>
-                <a href="index.html" class="btn" style="margin-top: 1rem;">Back to Home</a>
-            </div>
-        `;
-        return;
-    }
-
-    notesContainer.innerHTML = notes.map(note => {
-        const subjectKey = Object.keys(notesDatabase).find(key => 
-            notesDatabase[key].includes(note)
-        );
-        
-        return `
-            <div class="note-card">
-                <div class="note-card-header">
-                    <span class="class-badge">${classNames[note.class]}</span>
-                    <h3>${note.title}</h3>
-                </div>
-                <div class="note-card-body">
-                    <p>${note.description}</p>
-                    <div class="note-meta-info">
-                        <span>📅 ${formatDate(note.date)}</span>
-                        <span>👁️ ${note.views}</span>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                        ${note.tags.slice(0, 3).map(tag => 
-                            `<span style="background: var(--light-color); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;">#${tag}</span>`
-                        ).join('')}
-                    </div>
-                    <a href="note-detail.html?id=${note.id}&subject=${subjectKey}&class=${note.class}" class="btn">Read More</a>
-                </div>
-            </div>
-        `;
-    }).join('');
 }
 
-// Format date
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-}
-
-// Search within notes page
-const notesSearch = document.getElementById('notesSearch');
-if (notesSearch) {
-    notesSearch.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        const noteCards = document.querySelectorAll('.note-card');
-        
-        noteCards.forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const description = card.querySelector('p').textContent.toLowerCase();
-            
-            if (title.includes(query) || description.includes(query)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showNotification('Link copied to clipboard!', 'success');
+    }).catch(() => {
+        showNotification('Failed to copy link', 'error');
     });
 }
 
-// Class filter
-const classFilter = document.getElementById('classFilter');
-if (classFilter) {
-    classFilter.value = classLevel;
-    classFilter.addEventListener('change', (e) => {
-        const newClass = e.target.value;
-        const newUrl = new URL(window.location);
-        if (newClass === 'all') {
-            newUrl.searchParams.delete('class');
-        } else {
-            newUrl.searchParams.set('class', newClass);
+// ==================== PRINT FUNCTIONALITY ====================
+function printNote() {
+    const readerBody = document.getElementById('readerBody');
+    const { className, subject } = currentNoteData;
+    
+    // Create print window
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>${subject} - ${className}</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                h1, h2, h3 { color: #667eea; }
+                .note-box, .formula-box, .example-box {
+                    border: 1px solid #ddd;
+                    padding: 15px;
+                    margin: 15px 0;
+                    border-radius: 5px;
+                }
+                .formula { font-size: 1.2em; text-align: center; }
+                @media print {
+                    .no-print { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>${subject}</h1>
+            <p><strong>${className}</strong></p>
+            <hr>
+            ${readerBody.innerHTML}
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    printWindow.focus();
+    
+    setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+    }, 250);
+    
+    showNotification('Opening print dialog...', 'info');
+}
+
+// ==================== NOTIFICATION SYSTEM ====================
+function showNotification(message, type = 'info') {
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        info: '#3b82f6'
+    };
+
+    const icons = {
+        success: 'check-circle',
+        error: 'exclamation-circle',
+        info: 'info-circle'
+    };
+
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${icons[type]}"></i>
+        <span>${message}</span>
+        <button class="notification-close"><i class="fas fa-times"></i></button>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${colors[type]};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 99999;
+        animation: slideInRight 0.3s ease;
+        max-width: 400px;
+    `;
+
+    document.body.appendChild(notification);
+
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.style.cssText = `
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 1.2rem;
+        padding: 0;
+        margin-left: auto;
+    `;
+    
+    closeBtn.addEventListener('click', () => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
         }
-        window.location.href = newUrl.toString();
-    });
+    }, 4000);
 }
 
-// Sort functionality
-const sortBy = document.getElementById('sortBy');
-if (sortBy) {
-    sortBy.addEventListener('change', (e) => {
-        const sortType = e.target.value;
-        const notesContainer = document.getElementById('notesContainer');
-        const noteCards = Array.from(notesContainer.children);
+// ==================== CARD ANIMATIONS ====================
+function animateNoteCards() {
+    const noteCards = document.querySelectorAll('.note-card');
+    
+    noteCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         
-        noteCards.sort((a, b) => {
-            if (sortType === 'popular') {
-                const viewsA = parseInt(a.querySelector('.note-meta-info span:last-child').textContent.match(/\d+/)[0]);
-                const viewsB = parseInt(b.querySelector('.note-meta-info span:last-child').textContent.match(/\d+/)[0]);
-                return viewsB - viewsA;
-            } else if (sortType === 'title') {
-                const titleA = a.querySelector('h3').textContent;
-                const titleB = b.querySelector('h3').textContent;
-                return titleA.localeCompare(titleB);
-            }
-            return 0; // recent (default order)
-        });
-        
-        noteCards.forEach(card => notesContainer.appendChild(card));
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 50);
     });
 }
 
-// Mobile menu
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
+// Add animations CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes highlightCard {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.03); box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3); }
+    }
+    
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+`;
+document.head.appendChild(style);
 
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    updatePageInfo();
-    loadNotes();
-});
+console.log('%c📚 Notes Page Loaded Successfully!', 'background: #667eea; color: white; padding: 5px 10px; border-radius: 3px;');

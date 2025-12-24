@@ -3,179 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Gyanu Note</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+ <title>Contact Us - Gyanu Notes</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="logo.svg" alt="Gyanu Note Logo" class="logo-img">
-                    <div class="logo-text">
-                        <h1>Gyanu Note</h1>
-                    </div>
-                </a>
-            </div>
-            <ul class="nav-links">
+    <!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Gyanu Notes</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#classes">Notes</a></li>
+                <li><a href="notes.html">Notes</a></li>
                 <li><a href="books.html">Books</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="hamburger">
+            <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
-    </nav>
-
-    <div class="page-header">
-        <div class="container">
-            <h1>Contact Us</h1>
-            <p>We'd love to hear from you</p>
-        </div>
     </div>
+</nav>
 
+    <!-- Page Header -->
+   <section class="page-header">
+    <div class="container">
+        <h1>Get In Touch</h1>
+        <p>We'd love to hear from you. Send us a message!</p>
+    </div>
+</section>
+
+    <!-- Contact Section -->
     <section class="contact-section">
-    <div class="contact-container">
-        <!-- Contact Info -->
-        <div class="contact-info">
-            <h2>Get in Touch</h2>
-            <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-            
-            <div class="contact-details">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div class="contact-item-content">
-                        <h3>Email</h3>
-                        <a href="mailto:guptagyanendra32@gmail.com">info@gyanunote.com</a>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div class="contact-item-content">
-                        <h3>Phone</h3>
-                        <p>+977 9814412941</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div class="contact-item-content">
-                        <h3>Address</h3>
-                        <p>Nawalparasi, Nepal</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="social-links">
-                <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-        </div>
-        
-        <!-- Contact Form -->
-        <form class="contact-form" id="contactForm" 
-      action="https://api.web3forms.com/submit" 
-      method="POST">
-    
-    <!-- Hidden field with your access key -->
-    <input type="hidden" name="access_key" value="1faf2630-a720-4238-b659-b8d1dc4a541b">
-    
-    <!-- Optional: Redirect after submission -->
-    <input type="hidden" name="redirect" value="https://yourwebsite.com/thank-you.html">
-    
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required placeholder="Your name">
-    </div>
-    
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required placeholder="your@email.com">
-    </div>
-    
-    <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" id="subject" name="subject" required placeholder="How can we help?">
-    </div>
-    
-    <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required placeholder="Your message..."></textarea>
-    </div>
-    
-    <button type="submit" class="submit-btn">
-        <i class="fas fa-paper-plane"></i>
-        Send Message
-    </button>
-</form>
-
-    <footer id="contact" class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Gyanu Note</h3>
-                    <p>Your Complete Study Companion</p>
-                    <div class="social-icons">
-                        <a href="https://www.facebook.com/share/1Be5qfJhsP/" target="_blank" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="https://www.instagram.com/itz.nawaraj?igsh=MXJsbGhvc2EzOXc1bQ==" target="_blank" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://youtube.com" target="_blank" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
+            <div class="contact-wrapper">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h2>Send Us a Message</h2>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                                <i class="fas fa-user form-icon"></i>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                                <i class="fas fa-user form-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                                <i class="fas fa-envelope form-icon"></i>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                                <i class="fas fa-phone form-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="notes">Notes Request</option>
+                                <option value="books">Books Request</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <i class="fas fa-list form-icon"></i>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                            <i class="fas fa-comment-dots form-icon"></i>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info-container">
+                    <h2>Contact Information</h2>
+                    <p>Feel free to reach out to us through any of these channels</p>
+
+                    <div class="contact-info-cards">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Address</h3>
+                                <p>Kathmandu, Nepal<br>Thamel, Ward No. 26</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Phone</h3>
+                                <p>+977 9800000000<br>+977 9811111111</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Email</h3>
+                                <p>info@edunotes.com<br>support@edunotes.com</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Working Hours</h3>
+                                <p>Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-connect">
+                        <h3>Connect With Us</h3>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-icon twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-icon youtube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="social-icon linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#classes">Notes</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Popular Classes</h3>
-                    <ul>
-                        <li><a href="class.html?class=11">Class 11 Notes</a></li>
-                        <li><a href="class.html?class=12">Class 12 Notes</a></li>
-                        <li><a href="class.html?class=bachelor">Bachelor's Notes</a></li>
-                        <li><a href="class.html?class=master">Master's Notes</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><a href="mailto:guptagyanendra32@gmail.com">info@gyanunote.com</a>
-                    <p><i class="fas fa-phone"></i> +977 9814412941</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Nawalparasi, Nepal</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <script src="contact.js"></script>
+    <!-- Map Section (Optional) -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title">Find Us On Map</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.0!2d85.3!3d27.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQyJzAwLjAiTiA4NcKwMTgnMDAuMCJF!5e0!3m2!1sen!2snp!4v1234567890" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Gyanu Notes</h3>
+                <p>Your trusted companion for quality education materials from Class 8 to 12. We provide comprehensive notes and books to help students excel.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="notes.html">Notes</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Popular Classes</h3>
+                <ul>
+                    <li><a href="notes.html?class=8">Class 8</a></li>
+                    <li><a href="notes.html?class=9">Class 9</a></li>
+                    <li><a href="notes.html?class=10">Class 10</a></li>
+                    <li><a href="notes.html?class=11">Class 11</a></li>
+                    <li><a href="notes.html?class=12">Class 12</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> info@gyanunotes.com</li>
+                    <li><i class="fas fa-phone"></i> +977 9800000000</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
     <script src="script.js"></script>
+    <script src="contact.js"></script>
 </body>
 </html>
