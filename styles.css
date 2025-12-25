@@ -4109,3 +4109,224 @@ input, textarea, select {
         justify-content: center;
     }
 }
+/* ==================== LEGAL PAGES STYLES ==================== */
+.legal-content-section {
+    padding: 4rem 0;
+    min-height: 60vh;
+}
+
+.legal-content {
+    background: var(--bg-card);
+    border-radius: var(--radius-2xl);
+    padding: 3rem;
+    box-shadow: var(--shadow-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.legal-meta {
+    background: rgba(102, 126, 234, 0.1);
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+}
+
+.legal-meta p {
+    margin: 0.3rem 0;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.legal-meta strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.legal-intro {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+}
+
+.legal-section {
+    margin-bottom: 3rem;
+}
+
+.legal-section h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 3px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.legal-section h2 i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.legal-section h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.legal-section h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.legal-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.legal-section ul,
+.legal-section ol {
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.legal-section li {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+
+.legal-section ul li::marker {
+    color: var(--primary-color);
+}
+
+.legal-section ol li::marker {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.legal-section strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.contact-box {
+    background: var(--bg-secondary);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.contact-box p {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.contact-box i {
+    color: var(--primary-color);
+    width: 20px;
+}
+
+.contact-box a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.contact-box a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.legal-notice {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.legal-notice h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.legal-notice p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+}
+
+.legal-notice strong {
+    color: var(--primary-color);
+}
+
+/* Responsive - Legal Pages */
+@media (max-width: 968px) {
+    .legal-content {
+        padding: 2rem;
+    }
+
+    .legal-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .legal-section h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .legal-content {
+        padding: 1.5rem;
+    }
+
+    .legal-section h2 {
+        font-size: 1.3rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .legal-section ul,
+    .legal-section ol {
+        margin-left: 1.5rem;
+    }
+
+    .contact-box {
+        padding: 1rem;
+    }
+
+    .contact-box p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+}
