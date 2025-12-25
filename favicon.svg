@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#grad1)"/>
+  
+  <!-- Graduation Cap -->
+  <!-- Cap Base -->
+  <polygon points="50,30 20,42 50,54 80,42" fill="#ffffff" opacity="0.95"/>
+  
+  <!-- Cap Top -->
+  <polygon points="50,30 35,36 50,42 65,36" fill="#ffffff"/>
+  
+  <!-- Cap Side -->
+  <path d="M 50 54 L 50 65 L 35 58 L 35 47 Z" fill="#ffffff" opacity="0.8"/>
+  <path d="M 50 54 L 50 65 L 65 58 L 65 47 Z" fill="#ffffff" opacity="0.6"/>
+  
+  <!-- Tassel -->
+  <line x1="65" y1="36" x2="72" y2="28" stroke="#ffd700" stroke-width="1.5"/>
+  <circle cx="72" cy="26" r="3" fill="#ffd700"/>
+  
+  <!-- Book -->
+  <rect x="42" y="68" width="16" height="12" rx="1" fill="#ffffff" opacity="0.9"/>
+  <line x1="50" y1="68" x2="50" y2="80" stroke="url(#grad1)" stroke-width="1"/>
+  <line x1="42" y1="71" x2="58" y2="71" stroke="url(#grad1)" stroke-width="0.5" opacity="0.5"/>
+  <line x1="42" y1="74" x2="58" y2="74" stroke="url(#grad1)" stroke-width="0.5" opacity="0.5"/>
+  <line x1="42" y1="77" x2="58" y2="77" stroke="url(#grad1)" stroke-width="0.5" opacity="0.5"/>
+</svg>

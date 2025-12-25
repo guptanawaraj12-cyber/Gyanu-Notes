@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Class Notes - Gyanu Note</title>
+    <meta name="description" content="Free study notes for all subjects. Comprehensive written notes for your class.">
+    <meta name="keywords" content="class notes, study notes, free notes, educational notes">
+    <meta name="author" content="Gyanu Note">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background">
+        <div class="gradient-bg"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Gyanu Note</h1>
+                        <span>Study Smart</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#classes" class="active"><i class="fas fa-book-open"></i> Notes</a></li>
+                <li><a href="books.html"><i class="fas fa-book"></i> Books</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="search-toggle" id="searchToggle" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content" data-aos="fade-up">
+                <div class="breadcrumb" id="breadcrumb">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <a href="index.html#classes">Notes</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span id="className">Class</span>
+                </div>
+                <h1 id="pageTitle">Class Notes</h1>
+                <p id="pageDescription">Comprehensive study notes for all subjects</p>
+            </div>
+        </div>
+        <div class="header-wave">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Notes Header with Filters -->
+    <section class="notes-header-section">
+        <div class="container">
+            <div class="notes-filter-bar">
+                <div class="filter-left">
+                    <div class="filter-group">
+                        <label for="subjectFilter"><i class="fas fa-filter"></i> Subject:</label>
+                        <select id="subjectFilter" class="filter-select">
+                            <option value="all">All Subjects</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="sortFilter"><i class="fas fa-sort"></i> Sort By:</label>
+                        <select id="sortFilter" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="title">Title (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="search-box-books">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchNotes" placeholder="Search notes...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notes Grid -->
+    <section class="notes-grid-section">
+        <div class="container">
+            <div class="notes-stats" style="margin-bottom: 2rem; text-align: center;">
+                <p style="font-size: 1.1rem; color: var(--text-secondary);">
+                    Showing <span id="notesCount" style="font-weight: 700; color: var(--primary-color);">0</span> notes
+                </p>
+            </div>
+
+            <div class="notes-grid" id="notesGrid">
+                <!-- Notes will be loaded here by JavaScript -->
+            </div>
+
+            <div class="no-notes-found" id="noNotesFound" style="display: none;">
+                <i class="fas fa-file-alt"></i>
+                <h3>No Notes Found</h3>
+                <p>Try adjusting your filters or search query</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Classes Section -->
+    <section class="related-classes-section">
+        <div class="container">
+            <div class="section-header-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Explore More</span>
+                </div>
+                <h2>Other Classes</h2>
+                <p>Browse notes for other classes</p>
+            </div>
+
+            <div class="related-classes-grid">
+                <a href="class-notes.html?class=8" class="related-class-link" data-aos="fade-up" data-aos-delay="100">
+                    <div class="related-class-card">
+                        <div class="related-class-icon">8</div>
+                        <h4>Class 8</h4>
+                        <p>45+ Notes</p>
+                    </div>
+                </a>
+                <a href="class-notes.html?class=9" class="related-class-link" data-aos="fade-up" data-aos-delay="200">
+                    <div class="related-class-card">
+                        <div class="related-class-icon">9</div>
+                        <h4>Class 9</h4>
+                        <p>50+ Notes</p>
+                    </div>
+                </a>
+                <a href="class-notes.html?class=10" class="related-class-link" data-aos="fade-up" data-aos-delay="300">
+                    <div class="related-class-card">
+                        <div class="related-class-icon">10</div>
+                        <h4>Class 10</h4>
+                        <p>60+ Notes</p>
+                    </div>
+                </a>
+                <a href="class-notes.html?class=11" class="related-class-link" data-aos="fade-up" data-aos-delay="400">
+                    <div class="related-class-card">
+                        <div class="related-class-icon">11</div>
+                        <h4>Class 11</h4>
+                        <p>55+ Notes</p>
+                    </div>
+                </a>
+                <a href="class-notes.html?class=12" class="related-class-link" data-aos="fade-up" data-aos-delay="500">
+                    <div class="related-class-card">
+                        <div class="related-class-icon">12</div>
+                        <h4>Class 12</h4>
+                        <p>65+ Notes</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-background">
+            <div class="cta-shape shape-1"></div>
+            <div class="cta-shape shape-2"></div>
+            <div class="cta-shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Need Textbooks?</h2>
+                <p>Download textbooks and guide books for your class</p>
+                <div class="cta-buttons">
+                    <a href="class-books.html?class=" id="ctaBooksLink" class="btn-cta-primary">
+                        <i class="fas fa-book"></i>
+                        <span>View Books</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="contact.html" class="btn-cta-secondary">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h3>Gyanu Note</h3>
+                            <span>Study Smart</span>
+                        </div>
+                    </div>
+                    <p class="footer-tagline">Empowering students with quality education materials for academic excellence</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="index.html#classes"><i class="fas fa-chevron-right"></i> Notes</a></li>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Books</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Popular Classes</h3>
+                    <ul>
+                        <li><a href="class-notes.html?class=8"><i class="fas fa-chevron-right"></i> Class 8 Notes</a></li>
+                        <li><a href="class-notes.html?class=9"><i class="fas fa-chevron-right"></i> Class 9 Notes</a></li>
+                        <li><a href="class-notes.html?class=10"><i class="fas fa-chevron-right"></i> Class 10 Notes</a></li>
+                        <li><a href="class-notes.html?class=11"><i class="fas fa-chevron-right"></i> Class 11 Notes</a></li>
+                        <li><a href="class-notes.html?class=12"><i class="fas fa-chevron-right"></i> Class 12 Notes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Textbooks</a></li>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Guide Books</a></li>
+                        <li><a href="index.html#updates"><i class="fas fa-chevron-right"></i> Latest Updates</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Study Tips</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Exam Preparation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@gyanunote.com">info@gyanunote.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+9779800000000">+977 9800000000</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kathmandu, Nepal</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <span>|</span>
+                        <a href="#">Terms of Service</a>
+                        <span>|</span>
+                        <a href="#">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="notes-data.js"></script>
+    <script src="class-notes.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

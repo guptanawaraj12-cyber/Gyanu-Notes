@@ -4,48 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags -->
-    <title>Textbooks PDF - Class 8 to 12 All Subjects Nepal | Gyanu Notes</title>
-    <meta name="description" content="Download free textbooks PDF for Class 8, 9, 10, 11, 12 in Nepal. Complete CDC textbooks for Physics, Chemistry, Biology, Maths, English, Nepali. SEE and +2 books available.">
-    <meta name="keywords" content="class 10 textbook pdf nepal, class 10 physics book, class 10 maths book, class 9 science book, CDC textbooks, SEE books pdf, +2 books pdf nepal">
-    <meta name="author" content="Nawaraj Gupta - Gyanu Notes">
+    <title>Books - Gyanu Note | Textbooks & Guide Books for All Classes</title>
+    <meta name="description" content="Download free textbooks and guide books for Class 8 to 12. Complete collection of educational books for all subjects.">
+    <meta name="keywords" content="textbooks, guide books, class books, study books, Nepal education books">
+    <meta name="author" content="Gyanu Note">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://nawarajgupta.com.np/books.html">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="Textbooks PDF - Class 8 to 12 Nepal">
-    <meta property="og:description" content="Download free CDC textbooks PDF for all subjects">
-    <meta property="og:url" content="https://nawarajgupta.com.np/books.html">
-    <meta property="og:image" content="https://nawarajgupta.com.np/images/books-og.jpg">
-    
-    <!-- Geo Tags -->
-    <meta name="geo.region" content="NP">
-    <meta name="geo.placename" content="Nepal">
-    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Animated Background -->
+    <div class="animated-background">
+        <div class="gradient-bg"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="container">
-            <div class="nav-wrapper">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Gyanu Notes</span>
+            <div class="logo">
+                <a href="index.html">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Gyanu Note</h1>
+                        <span>Study Smart</span>
+                    </div>
                 </a>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="notes.html">Notes</a></li>
-                    <li><a href="books.html" class="active">Books</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#classes"><i class="fas fa-book-open"></i> Notes</a></li>
+                <li><a href="books.html" class="active"><i class="fas fa-book"></i> Books</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="search-toggle" id="searchToggle" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -53,505 +76,477 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1>Textbooks</h1>
-            <p>Preview and download complete textbooks for all subjects</p>
+            <div class="page-header-content" data-aos="fade-up">
+                <div class="breadcrumb">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span>Books</span>
+                </div>
+                <h1>Textbooks & Guide Books</h1>
+                <p>Complete collection of books for all classes and subjects</p>
+            </div>
+        </div>
+        <div class="header-wave">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+            </svg>
         </div>
     </section>
 
-    <!-- Search & Filter Section -->
-    <section class="search-section">
+    <!-- Books Info Section -->
+    <section class="books-info-section">
         <div class="container">
-            <div class="search-wrapper">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search by class, subject, or book name (e.g., 'class 10', 'physics', 'chemistry')...">
-                    <button class="clear-search" id="clearSearch" style="display: none;">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-class="all">All Classes</button>
-                    <button class="filter-btn" data-class="8">Class 8</button>
-                    <button class="filter-btn" data-class="9">Class 9</button>
-                    <button class="filter-btn" data-class="10">Class 10</button>
-                    <button class="filter-btn" data-class="11">Class 11</button>
-                    <button class="filter-btn" data-class="12">Class 12</button>
-                </div>
-            </div>
-            <!-- Search Results Info -->
-            <div class="search-results-info" id="searchResultsInfo" style="display: none;">
-                <p><span id="resultsCount">0</span> books found</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Books Content -->
-    <section class="books-section">
-        <div class="container">
-            <div id="booksContainer">
-                <!-- Class 8 Books -->
-                <div class="class-group" data-class="8">
-                    <h2 class="class-heading">Class 8 Textbooks</h2>
-                    <div class="books-grid">
-                        <div class="book-card" data-subject="nepali" data-keywords="nepali language textbook class 8">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Nepali Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 250 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 15.2 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 8', 'Nepali Textbook', 'class8-nepali-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="english" data-keywords="english textbook class 8">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>English Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 220 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 12.8 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 8', 'English Textbook', 'class8-english-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="maths" data-keywords="mathematics maths textbook class 8">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Mathematics Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 300 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 18.5 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 8', 'Mathematics Textbook', 'class8-maths-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="computer" data-keywords="computer science textbook class 8">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Computer Science</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 180 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 10.3 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 8', 'Computer Science', 'class8-computer-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="science" data-keywords="science textbook class 8">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Science Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 320 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 22.1 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 8', 'Science Textbook', 'class8-science-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="opt-maths" data-keywords="optional mathematics textbook class 8">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Optional Mathematics</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 280 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 16.7 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 8', 'Optional Mathematics', 'class8-optmaths-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
+            <div class="books-info-grid">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-icon">
+                        <i class="fas fa-book"></i>
                     </div>
+                    <h3>200+ Books</h3>
+                    <p>Comprehensive collection of textbooks and guides</p>
                 </div>
 
-                <!-- Class 9 Books -->
-                <div class="class-group" data-class="9">
-                    <h2 class="class-heading">Class 9 Textbooks</h2>
-                    <div class="books-grid">
-                        <div class="book-card" data-subject="nepali" data-keywords="nepali language textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Nepali Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 260 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 16.3 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Nepali Textbook', 'class9-nepali-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="english" data-keywords="english textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>English Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 230 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 13.5 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'English Textbook', 'class9-english-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="maths" data-keywords="mathematics maths textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Mathematics Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 310 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 19.2 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Mathematics Textbook', 'class9-maths-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="computer" data-keywords="computer science textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Computer Science</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 190 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 11.4 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Computer Science', 'class9-computer-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="science" data-keywords="science textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Science Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 340 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 23.8 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Science Textbook', 'class9-science-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="opt-maths" data-keywords="optional mathematics textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Optional Mathematics</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 290 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 17.5 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Optional Mathematics', 'class9-optmaths-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="account" data-keywords="account accounting textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Account Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 200 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 12.1 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Account Textbook', 'class9-account-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="book-card" data-subject="economics" data-keywords="economics textbook class 9">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Economics Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 180 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 10.8 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 9', 'Economics Textbook', 'class9-economics-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 10 Books -->
-                <div class="class-group" data-class="10">
-                    <h2 class="class-heading">Class 10 Textbooks</h2>
-                    <div class="books-grid">
-                        <!-- Add all Class 10 books similar to above -->
-                        <div class="book-card" data-subject="nepali" data-keywords="nepali language textbook class 10">
-                            <div class="book-cover">
-                                <i class="fas fa-book"></i>
-                                <span class="book-badge">PDF</span>
-                            </div>
-                            <div class="book-info">
-                                <h3>Nepali Textbook</h3>
-                                <p class="book-author">CDC Nepal</p>
-                                <div class="book-meta">
-                                    <span><i class="fas fa-file-pdf"></i> PDF</span>
-                                    <span><i class="fas fa-file"></i> 270 Pages</span>
-                                </div>
-                                <div class="book-size">
-                                    <i class="fas fa-hdd"></i> 17.2 MB
-                                </div>
-                                <button class="read-book-btn" onclick="openBookReader('Class 10', 'Nepali Textbook', 'class10-nepali-book.pdf')">
-                                    <i class="fas fa-book-reader"></i> Read Book
-                                </button>
-                            </div>
-                        </div>
-                        <!-- Add remaining Class 10 books -->
-                    </div>
-                </div>
-
-                <!-- Class 11 Books -->
-                <div class="class-group" data-class="11">
-                    <h2 class="class-heading">Class 11 Textbooks</h2>
-                    <div class="books-grid">
-                        <!-- Add all Class 11 books -->
-                    </div>
-                </div>
-
-                <!-- Class 12 Books -->
-                <div class="class-group" data-class="12">
-                    <h2 class="class-heading">Class 12 Textbooks</h2>
-                    <div class="books-grid">
-                        <!-- Add all Class 12 books -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- No Results Message -->
-            <div id="noResults" class="no-results" style="display: none;">
-                <i class="fas fa-search"></i>
-                <h3>No books found</h3>
-                <p>Try searching with different keywords or browse all classes</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Book Reader Modal -->
-    <div id="bookReaderModal" class="book-reader-modal">
-        <div class="book-reader-content">
-            <div class="reader-header">
-                <div class="reader-title">
-                    <h2 id="readerTitle">Book Title</h2>
-                    <p id="readerSubtitle">Class & Subject</p>
-                </div>
-                <div class="reader-actions">
-                    <button class="action-btn" onclick="downloadBook()" title="Download PDF">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-icon">
                         <i class="fas fa-download"></i>
-                    </button>
-                    <button class="action-btn" onclick="shareBook()" title="Share">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                    <button class="action-btn" onclick="printBook()" title="Print">
-                        <i class="fas fa-print"></i>
-                    </button>
-                    <button class="action-btn" onclick="toggleFullscreen()" title="Fullscreen">
-                        <i class="fas fa-expand"></i>
-                    </button>
-                    <button class="close-reader" onclick="closeBookReader()">
-                        <i class="fas fa-times"></i>
-                    </button>
+                    </div>
+                    <h3>Easy Download</h3>
+                    <p>Direct download links via Google Drive</p>
                 </div>
-            </div>
-            <div class="pdf-controls">
-                <button class="pdf-control-btn" onclick="previousPage()">
-                    <i class="fas fa-chevron-left"></i> Previous
-                </button>
-                <span class="page-info">
-                    Page <span id="currentPage">1</span> of <span id="totalPages">1</span>
-                </span>
-                <button class="pdf-control-btn" onclick="nextPage()">
-                    Next <i class="fas fa-chevron-right"></i>
-                </button>
-                <div class="zoom-controls">
-                    <button class="zoom-btn" onclick="zoomOut()">
-                        <i class="fas fa-search-minus"></i>
-                    </button>
-                    <span id="zoomLevel">100%</span>
-                    <button class="zoom-btn" onclick="zoomIn()">
-                        <i class="fas fa-search-plus"></i>
-                    </button>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Quality Content</h3>
+                    <p>Official curriculum-based books</p>
                 </div>
-            </div>
-            <div class="reader-body" id="bookReaderBody">
-                <iframe id="pdfViewer" frameborder="0"></iframe>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="info-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3>Regular Updates</h3>
+                    <p>New books added frequently</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Classes Books Section -->
+    <section class="classes-books-section">
+        <div class="container">
+            <div class="section-header-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-book"></i>
+                    <span>Browse by Class</span>
+                </div>
+                <h2>Select Your Class</h2>
+                <p>Choose your class to view available textbooks and guide books</p>
+            </div>
+
+            <div class="classes-books-grid">
+                <!-- Class 8 -->
+                <div class="class-book-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="class-book-header">
+                        <div class="class-book-icon">
+                            <span>8</span>
+                        </div>
+                        <div class="class-book-badge">
+                            <i class="fas fa-book"></i>
+                            <span>12 Books</span>
+                        </div>
+                    </div>
+                    <div class="class-book-content">
+                        <h3>Class 8 Books</h3>
+                        <p>Textbooks and guide books for all subjects</p>
+                        <div class="book-subjects">
+                            <span><i class="fas fa-check"></i> Science</span>
+                            <span><i class="fas fa-check"></i> Mathematics</span>
+                            <span><i class="fas fa-check"></i> English</span>
+                            <span><i class="fas fa-check"></i> Nepali</span>
+                            <span><i class="fas fa-check"></i> Social Studies</span>
+                        </div>
+                        <a href="class-books.html?class=8" class="btn-view-books">
+                            <i class="fas fa-book-open"></i>
+                            <span>View Books</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Class 9 -->
+                <div class="class-book-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="class-book-header">
+                        <div class="class-book-icon">
+                            <span>9</span>
+                        </div>
+                        <div class="class-book-badge">
+                            <i class="fas fa-book"></i>
+                            <span>15 Books</span>
+                        </div>
+                    </div>
+                    <div class="class-book-content">
+                        <h3>Class 9 Books</h3>
+                        <p>Comprehensive study materials for Class 9</p>
+                        <div class="book-subjects">
+                            <span><i class="fas fa-check"></i> Science</span>
+                            <span><i class="fas fa-check"></i> Mathematics</span>
+                            <span><i class="fas fa-check"></i> English</span>
+                            <span><i class="fas fa-check"></i> Nepali</span>
+                            <span><i class="fas fa-check"></i> Social Studies</span>
+                            <span><i class="fas fa-check"></i> Computer</span>
+                        </div>
+                        <a href="class-books.html?class=9" class="btn-view-books">
+                            <i class="fas fa-book-open"></i>
+                            <span>View Books</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Class 10 -->
+                <div class="class-book-card featured" data-aos="fade-up" data-aos-delay="300">
+                    <div class="featured-ribbon">
+                        <i class="fas fa-star"></i>
+                        <span>SEE</span>
+                    </div>
+                    <div class="class-book-header">
+                        <div class="class-book-icon">
+                            <span>10</span>
+                        </div>
+                        <div class="class-book-badge">
+                            <i class="fas fa-book"></i>
+                            <span>18 Books</span>
+                        </div>
+                    </div>
+                    <div class="class-book-content">
+                        <h3>Class 10 Books</h3>
+                        <p>Complete SEE preparation materials</p>
+                        <div class="book-subjects">
+                            <span><i class="fas fa-check"></i> Science</span>
+                            <span><i class="fas fa-check"></i> Mathematics</span>
+                            <span><i class="fas fa-check"></i> English</span>
+                            <span><i class="fas fa-check"></i> Nepali</span>
+                            <span><i class="fas fa-check"></i> Social Studies</span>
+                            <span><i class="fas fa-check"></i> Optional Math</span>
+                        </div>
+                        <a href="class-books.html?class=10" class="btn-view-books">
+                            <i class="fas fa-book-open"></i>
+                            <span>View Books</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Class 11 -->
+                <div class="class-book-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="class-book-header">
+                        <div class="class-book-icon">
+                            <span>11</span>
+                        </div>
+                        <div class="class-book-badge">
+                            <i class="fas fa-book"></i>
+                            <span>20 Books</span>
+                        </div>
+                    </div>
+                    <div class="class-book-content">
+                        <h3>Class 11 Books</h3>
+                        <p>NEB curriculum textbooks and guides</p>
+                        <div class="book-subjects">
+                            <span><i class="fas fa-check"></i> Physics</span>
+                            <span><i class="fas fa-check"></i> Chemistry</span>
+                            <span><i class="fas fa-check"></i> Biology</span>
+                            <span><i class="fas fa-check"></i> Mathematics</span>
+                            <span><i class="fas fa-check"></i> English</span>
+                            <span><i class="fas fa-check"></i> Nepali</span>
+                        </div>
+                        <a href="class-books.html?class=11" class="btn-view-books">
+                            <i class="fas fa-book-open"></i>
+                            <span>View Books</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Class 12 -->
+                <div class="class-book-card featured" data-aos="fade-up" data-aos-delay="500">
+                    <div class="featured-ribbon">
+                        <i class="fas fa-star"></i>
+                        <span>Board</span>
+                    </div>
+                    <div class="class-book-header">
+                        <div class="class-book-icon">
+                            <span>12</span>
+                        </div>
+                        <div class="class-book-badge">
+                            <i class="fas fa-book"></i>
+                            <span>22 Books</span>
+                        </div>
+                    </div>
+                    <div class="class-book-content">
+                        <h3>Class 12 Books</h3>
+                        <p>Complete board exam preparation</p>
+                        <div class="book-subjects">
+                            <span><i class="fas fa-check"></i> Physics</span>
+                            <span><i class="fas fa-check"></i> Chemistry</span>
+                            <span><i class="fas fa-check"></i> Biology</span>
+                            <span><i class="fas fa-check"></i> Mathematics</span>
+                            <span><i class="fas fa-check"></i> English</span>
+                            <span><i class="fas fa-check"></i> Computer</span>
+                        </div>
+                        <a href="class-books.html?class=12" class="btn-view-books">
+                            <i class="fas fa-book-open"></i>
+                            <span>View Books</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Types Section -->
+    <section class="book-types-section">
+        <div class="container">
+            <div class="section-header-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Book Categories</span>
+                </div>
+                <h2>Types of Books Available</h2>
+                <p>We offer different types of educational materials</p>
+            </div>
+
+            <div class="book-types-grid">
+                <div class="book-type-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="book-type-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Textbooks</h3>
+                    <p>Official curriculum textbooks approved by the education board</p>
+                    <ul class="book-type-features">
+                        <li><i class="fas fa-check"></i> Complete syllabus coverage</li>
+                        <li><i class="fas fa-check"></i> Chapter-wise organization</li>
+                        <li><i class="fas fa-check"></i> Practice exercises</li>
+                    </ul>
+                </div>
+
+                <div class="book-type-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="book-type-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3>Guide Books</h3>
+                    <p>Comprehensive guides with solutions and explanations</p>
+                    <ul class="book-type-features">
+                        <li><i class="fas fa-check"></i> Detailed solutions</li>
+                        <li><i class="fas fa-check"></i> Extra practice questions</li>
+                        <li><i class="fas fa-check"></i> Exam tips & tricks</li>
+                    </ul>
+                </div>
+
+                <div class="book-type-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="book-type-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Reference Books</h3>
+                    <p>Additional reference materials for deeper understanding</p>
+                    <ul class="book-type-features">
+                        <li><i class="fas fa-check"></i> Advanced concepts</li>
+                        <li><i class="fas fa-check"></i> Multiple examples</li>
+                        <li><i class="fas fa-check"></i> Competitive exam prep</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Download Section -->
+    <section class="how-to-section">
+        <div class="container">
+            <div class="section-header-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Easy Process</span>
+                </div>
+                <h2>How to Download Books</h2>
+                <p>Simple steps to access your study materials</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h3>Select Your Class</h3>
+                    <p>Choose your class from the options above</p>
+                </div>
+
+                <div class="step-arrow" data-aos="fade-up" data-aos-delay="150">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Browse Books</h3>
+                    <p>Find the book you need from the list</p>
+                </div>
+
+                <div class="step-arrow" data-aos="fade-up" data-aos-delay="250">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Download</h3>
+                    <p>Click download to get the book via Google Drive</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-background">
+            <div class="cta-shape shape-1"></div>
+            <div class="cta-shape shape-2"></div>
+            <div class="cta-shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Looking for Study Notes?</h2>
+                <p>We also have comprehensive notes for all subjects and classes</p>
+                <div class="cta-buttons">
+                    <a href="index.html#classes" class="btn-cta-primary">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Browse Notes</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="contact.html" class="btn-cta-secondary">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Gyanu Notes</h3>
-                    <p>Your trusted companion for quality education materials from Class 8 to 12. We provide comprehensive notes and books to help students excel.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h3>Gyanu Note</h3>
+                            <span>Study Smart</span>
+                        </div>
+                    </div>
+                    <p class="footer-tagline">Empowering students with quality education materials for academic excellence</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
+
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="notes.html">Notes</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="index.html#classes"><i class="fas fa-chevron-right"></i> Notes</a></li>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Books</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-section">
                     <h3>Popular Classes</h3>
                     <ul>
-                        <li><a href="books.html?class=8">Class 8</a></li>
-                        <li><a href="books.html?class=9">Class 9</a></li>
-                        <li><a href="books.html?class=10">Class 10</a></li>
-                        <li><a href="books.html?class=11">Class 11</a></li>
-                        <li><a href="books.html?class=12">Class 12</a></li>
+                        <li><a href="class-notes.html?class=8"><i class="fas fa-chevron-right"></i> Class 8 Notes</a></li>
+                        <li><a href="class-notes.html?class=9"><i class="fas fa-chevron-right"></i> Class 9 Notes</a></li>
+                        <li><a href="class-notes.html?class=10"><i class="fas fa-chevron-right"></i> Class 10 Notes</a></li>
+                        <li><a href="class-notes.html?class=11"><i class="fas fa-chevron-right"></i> Class 11 Notes</a></li>
+                        <li><a href="class-notes.html?class=12"><i class="fas fa-chevron-right"></i> Class 12 Notes</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-section">
-                    <h3>Contact</h3>
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Textbooks</a></li>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Guide Books</a></li>
+                        <li><a href="index.html#updates"><i class="fas fa-chevron-right"></i> Latest Updates</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Study Tips</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Exam Preparation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
                     <ul class="contact-info">
-                        <li><i class="fas fa-envelope"></i> info@gyanunotes.com</li>
-                        <li><i class="fas fa-phone"></i> +977 9800000000</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@gyanunote.com">info@gyanunote.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+9779800000000">+977 9800000000</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kathmandu, Nepal</span>
+                        </li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
-                <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <span>|</span>
+                        <a href="#">Terms of Service</a>
+                        <span>|</span>
+                        <a href="#">Disclaimer</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
-    <script src="books.js"></script>
 </body>
 </html>

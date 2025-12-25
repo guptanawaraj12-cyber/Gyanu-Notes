@@ -3,236 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Contact Us - Gyanu Notes</title>
+    
+    <title>Contact Us - Gyanu Note | Get in Touch</title>
+    <meta name="description" content="Contact Gyanu Note for any questions, feedback, or support. We're here to help you with your educational needs.">
+    <meta name="keywords" content="contact gyanu note, support, feedback, help">
+    <meta name="author" content="Gyanu Note">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 <body>
-    <!-- Navigation -->
-<nav class="navbar">
-    <div class="container">
-        <div class="nav-wrapper">
-            <a href="index.html" class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Gyanu Notes</span>
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="notes.html">Notes</a></li>
-                <li><a href="books.html">Books</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+    <!-- Animated Background -->
+    <div class="animated-background">
+        <div class="gradient-bg"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Gyanu Note</h1>
+                        <span>Study Smart</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#classes"><i class="fas fa-book-open"></i> Notes</a></li>
+                <li><a href="books.html"><i class="fas fa-book"></i> Books</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="search-toggle" id="searchToggle" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Page Header -->
-   <section class="page-header">
-    <div class="container">
-        <h1>Get In Touch</h1>
-        <p>We'd love to hear from you. Send us a message!</p>
-    </div>
-</section>
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content" data-aos="fade-up">
+                <div class="breadcrumb">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <span>Contact Us</span>
+                </div>
+                <h1>Get in Touch</h1>
+                <p>We'd love to hear from you! Send us a message</p>
+            </div>
+        </div>
+        <div class="header-wave">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+            </svg>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section class="contact-section">
         <div class="container">
-            <div class="contact-wrapper">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info-section" data-aos="fade-right">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Visit Us</h3>
+                        <p>Kathmandu, Nepal<br>Bagmati Province</p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Call Us</h3>
+                        <p>
+                            <a href="tel:+9779800000000">+977 9800000000</a><br>
+                            <a href="tel:+9779811111111">+977 9811111111</a>
+                        </p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email Us</h3>
+                        <p>
+                            <a href="mailto:info@gyanunote.com">info@gyanunote.com</a><br>
+                            <a href="mailto:support@gyanunote.com">support@gyanunote.com</a>
+                        </p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Working Hours</h3>
+                        <p>
+                            Monday - Friday: 9:00 AM - 6:00 PM<br>
+                            Saturday: 10:00 AM - 4:00 PM<br>
+                            Sunday: Closed
+                        </p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <h3>Follow Us</h3>
+                        <div class="social-icons" style="margin-top: 1rem;">
+                            <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://youtube.com" target="_blank" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Contact Form -->
-                <div class="contact-form-container">
+                <div class="contact-form-section" data-aos="fade-left">
                     <h2>Send Us a Message</h2>
+                    <p>Fill out the form below and we'll get back to you as soon as possible</p>
+
                     <form id="contactForm" class="contact-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="firstName">First Name *</label>
-                                <input type="text" id="firstName" name="firstName" required>
-                                <i class="fas fa-user form-icon"></i>
+                                <label for="firstName">First Name <span>*</span></label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" placeholder="John" required>
                             </div>
                             <div class="form-group">
-                                <label for="lastName">Last Name *</label>
-                                <input type="text" id="lastName" name="lastName" required>
-                                <i class="fas fa-user form-icon"></i>
+                                <label for="lastName">Last Name <span>*</span></label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Doe" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required>
-                                <i class="fas fa-envelope form-icon"></i>
+                                <label for="email">Email Address <span>*</span></label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone">
-                                <i class="fas fa-phone form-icon"></i>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+977 9800000000">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <select id="subject" name="subject" required>
+                            <label for="subject">Subject <span>*</span></label>
+                            <select id="subject" name="subject" class="form-select" required>
                                 <option value="">Select a subject</option>
                                 <option value="general">General Inquiry</option>
-                                <option value="notes">Notes Request</option>
-                                <option value="books">Books Request</option>
-                                <option value="technical">Technical Support</option>
+                                <option value="support">Technical Support</option>
                                 <option value="feedback">Feedback</option>
+                                <option value="content">Content Request</option>
+                                <option value="partnership">Partnership</option>
                                 <option value="other">Other</option>
                             </select>
-                            <i class="fas fa-list form-icon"></i>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" rows="6" required></textarea>
-                            <i class="fas fa-comment-dots form-icon"></i>
+                            <label for="message">Message <span>*</span></label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Write your message here..." required></textarea>
                         </div>
 
-                        <button type="submit" class="submit-btn">
-                            <span>Send Message</span>
+                        <button type="submit" class="btn-submit">
                             <i class="fas fa-paper-plane"></i>
+                            <span>Send Message</span>
                         </button>
                     </form>
-                </div>
 
-                <!-- Contact Info -->
-                <div class="contact-info-container">
-                    <h2>Contact Information</h2>
-                    <p>Feel free to reach out to us through any of these channels</p>
-
-                    <div class="contact-info-cards">
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="info-content">
-                                <h3>Address</h3>
-                                <p>Kathmandu, Nepal<br>Thamel, Ward No. 26</p>
-                            </div>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="info-content">
-                                <h3>Phone</h3>
-                                <p>+977 9800000000<br>+977 9811111111</p>
-                            </div>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="info-content">
-                                <h3>Email</h3>
-                                <p>info@edunotes.com<br>support@edunotes.com</p>
-                            </div>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="info-content">
-                                <h3>Working Hours</h3>
-                                <p>Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="social-connect">
-                        <h3>Connect With Us</h3>
-                        <div class="social-icons">
-                            <a href="#" class="social-icon facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-icon instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-icon twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-icon youtube">
-                                <i class="fab fa-youtube"></i>
-                            </a>
-                            <a href="#" class="social-icon linkedin">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                    </div>
+                    <div id="formMessage" class="form-message" style="display: none;"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Map Section (Optional) -->
+    <!-- Map Section -->
     <section class="map-section">
         <div class="container">
-            <h2 class="section-title">Find Us On Map</h2>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.0!2d85.3!3d27.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQyJzAwLjAiTiA4NcKwMTgnMDAuMCJF!5e0!3m2!1sen!2snp!4v1234567890" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="section-header-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Find Us</span>
+                </div>
+                <h2>Our Location</h2>
+                <p>Visit us at our office in Kathmandu</p>
+            </div>
+
+            <div class="map-container" data-aos="fade-up">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.1234567890!2d85.3240!3d27.7172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQzJzAyLjAiTiA4NcKwMTknMjYuNCJF!5e0!3m2!1sen!2snp!4v1234567890"
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </section>
 
-   <!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About Gyanu Notes</h3>
-                <p>Your trusted companion for quality education materials from Class 8 to 12. We provide comprehensive notes and books to help students excel.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQ</span>
+                </div>
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <button class="faq-question">
+                        <span>How can I access the study materials?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Simply browse to your class section, select your subject, and you can view or download the notes directly. All materials are free to access!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <button class="faq-question">
+                        <span>Are all the notes and books free?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! All notes are completely free. Most books are also free, while some premium guide books may have purchase links to support the authors.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <button class="faq-question">
+                        <span>How often is new content added?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We regularly update our content and add new notes and books. Check our "Latest Updates" section on the homepage to see what's new!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <button class="faq-question">
+                        <span>Can I request specific notes or topics?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! Use the contact form above and select "Content Request" as the subject. We'll do our best to add the requested content.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                    <button class="faq-question">
+                        <span>Do you offer any tutoring or teaching services?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Currently, we focus on providing study materials. However, we're planning to introduce interactive learning features in the future. Stay tuned!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                    <button class="faq-question">
+                        <span>How can I report an error in the content?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Please use the contact form and select "Feedback" as the subject. Provide details about the error, and we'll correct it as soon as possible.
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="notes.html">Notes</a></li>
-                    <li><a href="books.html">Books</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Popular Classes</h3>
-                <ul>
-                    <li><a href="notes.html?class=8">Class 8</a></li>
-                    <li><a href="notes.html?class=9">Class 9</a></li>
-                    <li><a href="notes.html?class=10">Class 10</a></li>
-                    <li><a href="notes.html?class=11">Class 11</a></li>
-                    <li><a href="notes.html?class=12">Class 12</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <ul class="contact-info">
-                    <li><i class="fas fa-envelope"></i> info@gyanunotes.com</li>
-                    <li><i class="fas fa-phone"></i> +977 9800000000</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</li>
-                </ul>
-            </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Gyanu Notes. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
+    </section>
 
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-background">
+            <div class="cta-shape shape-1"></div>
+            <div class="cta-shape shape-2"></div>
+            <div class="cta-shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Ready to Start Learning?</h2>
+                <p>Access thousands of study materials and join our learning community</p>
+                <div class="cta-buttons">
+                    <a href="index.html#classes" class="btn-cta-primary">
+                        <i class="fas fa-rocket"></i>
+                        <span>Browse Notes</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="books.html" class="btn-cta-secondary">
+                        <i class="fas fa-book"></i>
+                        <span>View Books</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,58.7C960,64,1056,64,1152,58.7C1248,53,1344,43,1392,37.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h3>Gyanu Note</h3>
+                            <span>Study Smart</span>
+                        </div>
+                    </div>
+                    <p class="footer-tagline">Empowering students with quality education materials for academic excellence</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="index.html#classes"><i class="fas fa-chevron-right"></i> Notes</a></li>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Books</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Popular Classes</h3>
+                    <ul>
+                        <li><a href="class-notes.html?class=8"><i class="fas fa-chevron-right"></i> Class 8 Notes</a></li>
+                        <li><a href="class-notes.html?class=9"><i class="fas fa-chevron-right"></i> Class 9 Notes</a></li>
+                        <li><a href="class-notes.html?class=10"><i class="fas fa-chevron-right"></i> Class 10 Notes</a></li>
+                        <li><a href="class-notes.html?class=11"><i class="fas fa-chevron-right"></i> Class 11 Notes</a></li>
+                        <li><a href="class-notes.html?class=12"><i class="fas fa-chevron-right"></i> Class 12 Notes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Textbooks</a></li>
+                        <li><a href="books.html"><i class="fas fa-chevron-right"></i> Guide Books</a></li>
+                        <li><a href="index.html#updates"><i class="fas fa-chevron-right"></i> Latest Updates</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Study Tips</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Exam Preparation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@gyanunote.com">info@gyanunote.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+9779800000000">+977 9800000000</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kathmandu, Nepal</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 Gyanu Note. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <span>|</span>
+                        <a href="#">Terms of Service</a>
+                        <span>|</span>
+                        <a href="#">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
-    <script src="contact.js"></script>
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formMessage = document.getElementById('formMessage');
+            formMessage.style.display = 'block';
+            formMessage.style.padding = '1rem';
+            formMessage.style.borderRadius = 'var(--radius-lg)';
+            formMessage.style.marginTop = '1rem';
+            formMessage.style.textAlign = 'center';
+            formMessage.style.fontWeight = '600';
+            
+            // Simulate form submission
+            formMessage.style.background = 'rgba(16, 185, 129, 0.1)';
+            formMessage.style.color = 'var(--success-color)';
+            formMessage.innerHTML = '<i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
+            
+            // Reset form
+            this.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        });
+    </script>
 </body>
 </html>
