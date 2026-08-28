@@ -113,10 +113,26 @@
     signInWithPopup,
     onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
   async function redirectAfterLogin(user) {
-    var profile = await getDoc(doc(db, 'users', user.uid));
+    var profileRef = doc(db, 'users', user.uid);
+    var profile = await getDoc(profileRef);
+    if (!profile.exists()) {
+      // Social sign-in from the login page skips the signup form, so create
+      // the profile here. Field list must match the users create rule.
+      try {
+        await setDoc(profileRef, {
+          name: user.displayName || (user.email ? user.email.split('@')[0] : 'Student'),
+          email: user.email || '',
+          classLevel: null,
+          createdAt: new Date().toISOString()
+        });
+        profile = await getDoc(profileRef);
+      } catch (err) {
+        // Non-fatal: without a profile the account simply has no admin flag.
+      }
+    }
     window.location.href = profile.data()?.admin === true ? '/admin/' : '/dashboard/';
   }
 
