@@ -1,0 +1,102 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+    }
+
+    // Public catalogue used by the website. Only an administrator can change it.
+    match /siteContent/current {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // A user may read and edit only their own profile. They can never create
+    // or alter the admin field; administrators set it from the Console or the
+    // privileged Cloud Function.
+    match /users/{userId} {
+      allow read: if signedIn() && request.auth.uid == userId || isAdmin();
+      allow create: if signedIn() && request.auth.uid == userId &&
+        request.resource.data.keys().hasOnly(['name', 'classLevel', 'email', 'createdAt']) &&
+        request.resource.data.name is string &&
+        request.resource.data.email is string &&
+        (request.resource.data.classLevel is string || request.resource.data.classLevel == null) &&
+        request.resource.data.createdAt is string;
+      allow update: if isAdmin() ||
+        (signedIn() && request.auth.uid == userId &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['name', 'classLevel', 'email']) &&
+          request.resource.data.name is string &&
+          request.resource.data.email is string &&
+          (request.resource.data.classLevel is string || request.resource.data.classLevel == null));
+      allow delete: if signedIn() && request.auth.uid == userId || isAdmin();
+    }
+
+    // Browsing history is private to its owner.
+    match /history/{userId}/items/{itemId} {
+      allow read: if signedIn() && request.auth.uid == userId;
+      allow create: if signedIn() && request.auth.uid == userId &&
+        request.resource.data.keys().hasOnly(['title', 'url', 'type', 'viewedAt']) &&
+        request.resource.data.title is string &&
+        request.resource.data.url is string &&
+        request.resource.data.type in ['note', 'paper'] &&
+        request.resource.data.viewedAt == request.time;
+      allow update: if false;
+      allow delete: if signedIn() && request.auth.uid == userId;
+    }
+
+    // Bookmarks are private to their owner. The document id is the note/paper
+    // id, so saving acts as an idempotent add/remove toggle.
+    match /bookmarks/{userId}/items/{itemId} {
+      allow read: if signedIn() && request.auth.uid == userId;
+      allow create: if signedIn() && request.auth.uid == userId &&
+        request.resource.data.keys().hasOnly(['title', 'url', 'type', 'savedAt']) &&
+        request.resource.data.title is string &&
+        request.resource.data.url is string &&
+        request.resource.data.type in ['note', 'paper'] &&
+        request.resource.data.savedAt == request.time;
+      allow update: if false;
+      allow delete: if signedIn() && request.auth.uid == userId;
+    }
+
+    // Site notices shown on the homepage notice board. Public read;
+    // administrators publish and remove them.
+    match /notices/{noticeId} {
+      allow read: if true;
+      allow create: if isAdmin() &&
+        request.resource.data.keys().hasOnly(['title', 'body', 'url', 'pinned', 'createdAt', 'createdBy']) &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 200 &&
+        request.resource.data.body is string &&
+        request.resource.data.body.size() <= 4000 &&
+        (request.resource.data.url is string || request.resource.data.url == null) &&
+        request.resource.data.pinned is bool &&
+        request.resource.data.createdAt == request.time &&
+        request.resource.data.createdBy == request.auth.uid;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Full note content for a chapter (document id = chapter id). Public read
+    // so any visitor can study; only administrators write the HTML.
+    match /chapterContent/{chapterId} {
+      allow read: if true;
+      allow create, update: if isAdmin() &&
+        request.resource.data.keys().hasOnly(['html', 'updatedAt', 'updatedBy']) &&
+        request.resource.data.html is string &&
+        request.resource.data.html.size() <= 500000 &&
+        request.resource.data.updatedAt == request.time &&
+        request.resource.data.updatedBy == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

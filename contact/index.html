@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact Us — Gyanu Notes</title>
+<meta name="description" content="Get in touch with the Gyanu Notes team — questions, feedback, or requests for notes and past papers.">
+<link rel="canonical" href="https://nawarajgupta.com.np/contact/" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/utilities.css">
+
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <img src="/assets/images/logo.jpeg" alt="Gyanu Notes logo" class="brand-mark">
+      Gyanu Notes
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/notes/">Notes</a></li>
+      <li><a href="/papers/">Papers</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="login-menu">
+        <a href="/login/" class="btn btn-outline login-trigger">Login</a>
+        <div class="login-panel"></div>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-hero text-center">
+    <div class="container">
+      <span class="eyebrow">Contact us</span>
+      <h1>We'd love to hear from you</h1>
+      <p class="lead">Questions, feedback, or a note/paper you can't find? Send us a message.</p>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="info-card">
+          <div class="info-row">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg>
+            </div>
+            <div>
+              <h4>Email</h4>
+              <a href="mailto:gyanuunotes@gmail.com">gyanuunotes@gmail.com</a>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <h4>Phone</h4>
+              <a href="tel:9814412941">9814412941</a>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h4>Location</h4>
+              <p>Nawalparasi, Nepal</p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <h4>Hours</h4>
+              <p>Mon&ndash;Fri: 8:00 AM&ndash;6:00 PM</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-message" id="form-message"></div>
+
+          <form id="contact-form">
+            <!-- Web3Forms access key (web3forms.com) — delivered to the site owner's email -->
+            <input type="hidden" name="access_key" value="1faf2630-a720-4238-b659-b8d1dc4a541b">
+            <!-- honeypot spam trap, keep hidden -->
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="subject" value="New message from Gyanu Notes contact form">
+            <input type="hidden" name="from_name" value="Gyanu Notes Website">
+
+            <div class="field">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" placeholder="Full name" required>
+            </div>
+            <div class="field">
+              <label for="email">Your email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="topic">What's this about?</label>
+              <select id="topic" name="topic">
+                <option value="General question">General question</option>
+                <option value="Request a note/paper">Request a note or paper</option>
+                <option value="Report a problem">Report a problem</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary contact-submit" id="contact-submit">Send message</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h5>Gyanu Notes</h5>
+        <p>Free study notes, textbooks, and past question papers for Class 8&ndash;12 students in Nepal.</p>
+      </div>
+      <div>
+        <h5>Quick links</h5>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/notes/">Notes</a></li>
+          <li><a href="/papers/">Past papers</a></li>
+          <li><a href="/about/">About us</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>By class</h5>
+        <ul>
+          <li><a href="/notes/class-8/">Class 8 notes</a></li>
+          <li><a href="/notes/class-9/">Class 9 notes</a></li>
+          <li><a href="/notes/class-10/">Class 10 notes</a></li>
+          <li><a href="/notes/class-11/">Class 11 notes</a></li>
+          <li><a href="/notes/class-12/">Class 12 notes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:gyanuunotes@gmail.com">gyanuunotes@gmail.com</a></li>
+          <li><a href="tel:9814412941">9814412941</a></li>
+          <li>Nawalparasi, Nepal</li>
+          <li>Mon&ndash;Fri: 8:00 AM&ndash;6:00 PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Gyanu Notes. All rights reserved.</span>
+      <div class="legal-links">
+        <a href="/privacy/">Privacy policy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/disclaimer/">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script type="module" src="/assets/js/auth-state.js"></script>
+<script src="/assets/js/contact-form.js"></script>
+</body>
+</html>

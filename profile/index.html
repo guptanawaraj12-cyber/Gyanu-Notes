@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile settings — Gyanu Notes</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/utilities.css">
+  
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="/" class="brand">
+        <img src="/assets/images/logo.jpeg" alt="Gyanu Notes logo" class="brand-mark">
+        Gyanu Notes
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/notes/">Notes</a></li>
+        <li><a href="/papers/">Papers</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="login-menu">
+          <a href="/login/" class="btn btn-outline login-trigger">Login</a>
+          <div class="login-panel"></div>
+        </div>
+        <button class="nav-toggle" aria-label="Open menu">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="container" style="padding: 48px 24px 28px;">
+        <span class="eyebrow">Profile</span>
+        <h1>Profile settings</h1>
+        <p class="lead">Update your personal details, password, or account.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container settings-grid">
+
+        <article class="settings-card">
+          <h2>Account details</h2>
+          <p>Your name and class are shown on your dashboard.</p>
+
+          <form id="profile-form">
+            <div class="field">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" readonly />
+              <p style="font-size: 0.78rem; color: var(--ink-faint); margin-top: 5px;">You sign in with this address, so it can't be changed.</p>
+            </div>
+            <div class="field">
+              <label for="class-level">Class</label>
+              <select id="class-level" name="class-level">
+                <option value="">Select your class</option>
+                <option value="8">Class 8</option>
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit" id="profile-submit">Save changes</button>
+          </form>
+          <div class="form-message" id="profile-message"></div>
+        </article>
+<article class="settings-card" id="password-card">
+          <h2>Change password</h2>
+          <p>Only shown for email/password accounts.</p>
+          <form id="password-form">
+            <div class="field">
+              <label for="current-password">Current password</label>
+              <input type="password" id="current-password" name="current-password" autocomplete="current-password" />
+            </div>
+            <div class="field">
+              <label for="new-password">New password</label>
+              <input type="password" id="new-password" name="new-password" minlength="6" autocomplete="new-password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit" id="password-submit">Update password</button>
+          </form>
+          <div class="form-message" id="password-message"></div>
+        </article>
+
+        <article class="settings-card full">
+          <h2>Danger zone</h2>
+          <p style="margin-bottom: 14px;">Deleting your account removes your profile and history permanently. This can't be undone.</p>
+          <button type="button" class="btn-danger" id="delete-account-btn">Delete account</button>
+
+          <div class="delete-confirm-box" id="delete-confirm-box">
+            <div class="field">
+              <label for="delete-password">Enter your password to confirm</label>
+              <input type="password" id="delete-password" autocomplete="current-password" />
+            </div>
+            <div class="delete-actions">
+              <button type="button" class="btn btn-danger" id="confirm-delete-btn">Yes, permanently delete</button>
+              <button type="button" class="btn btn-outline" id="cancel-delete-btn">Cancel</button>
+            </div>
+            <div class="form-message" id="delete-message"></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+<footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 Gyanu Notes. All rights reserved.</span>
+        <div class="legal-links">
+          <a href="/privacy/">Privacy policy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/disclaimer/">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/auth-state.js"></script>
+  <script type="module" src="/assets/js/profile.js"></script>
+</body>
+</html>

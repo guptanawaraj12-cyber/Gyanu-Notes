@@ -1,0 +1,386 @@
+import { auth, db } from "/assets/js/firebase-config.js";
+import { getSiteContent } from "/assets/js/content-store.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { doc, getDoc, setDoc, deleteDoc, addDoc, collection, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-functions.js";
+
+const contentRef = doc(db, "siteContent", "current");
+let content = null;
+
+function message(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = "form-message " + type;
+}
+
+function validNotes(data) {
+  return Array.isArray(data.classes) && Array.isArray(data.subjects) && Array.isArray(data.notes);
+}
+
+function validPapers(data) {
+  return Array.isArray(data.classExamTypes) && Array.isArray(data.subjects) && Array.isArray(data.papers);
+}
+
+function updateStats() {
+  const notes = content.notes.notes.reduce((sum, entry) => sum + (entry.chapters?.length || 0), 0);
+  const papers = content.papers.papers.reduce((sum, entry) => sum + (entry.sets?.length || 0), 0);
+  document.getElementById("notes-count").textContent = notes;
+  document.getElementById("papers-count").textContent = papers;
+}
+
+function fillEditors() {
+  document.getElementById("notes-editor").value = JSON.stringify(content.notes, null, 2);
+  document.getElementById("papers-editor").value = JSON.stringify(content.papers, null, 2);
+  updateStats();
+  fillSelects();
+  fillContentPickers(true);
+}
+
+function fillSelect(selectId, items, labelKey, valueKey) {
+  const select = document.getElementById(selectId);
+  const chosen = select.value;
+  select.innerHTML = '';
+  items.forEach((item) => {
+    const option = document.createElement('option');
+    option.value = item[valueKey];
+    option.textContent = item[labelKey];
+    select.appendChild(option);
+  });
+  if (chosen) select.value = chosen;
+}
+
+function fillSelects() {
+  fillSelect('note-class', content.notes.classes, 'label', 'slug');
+  fillSelect('note-subject', content.notes.subjects, 'label', 'slug');
+  fillSelect('paper-class', content.papers.classExamTypes, 'label', 'classSlug');
+  fillSelect('paper-subject', content.papers.subjects, 'label', 'slug');
+}
+
+function makeId(parts) {
+  return parts
+    .concat(Date.now().toString(36))
+    .concat(Math.random().toString(36).slice(2, 10))
+    .join('-')
+    .replace(/[^a-z0-9-]/gi, '')
+    .toLowerCase();
+}
+
+async function saveContent() {
+  await setDoc(contentRef, {
+    notes: content.notes,
+    papers: content.papers,
+    updatedAt: serverTimestamp(),
+    updatedBy: auth.currentUser.uid
+  });
+  document.getElementById("source-state").textContent = "Firestore";
+  message("catalogue-message", "Published successfully.", "success");
+}
+
+async function saveEditor(kind) {
+  const editor = document.getElementById(kind + "-editor");
+  try {
+    const parsed = JSON.parse(editor.value);
+    if ((kind === "notes" && !validNotes(parsed)) || (kind === "papers" && !validPapers(parsed))) {
+      throw new Error("The catalogue has the wrong structure.");
+    }
+    content[kind] = parsed;
+    await saveContent();
+    fillEditors();
+  } catch (error) {
+    message("catalogue-message", "Not saved: " + error.message, "error");
+  }
+}
+
+async function loadAdmin() {
+  const snapshot = await getDoc(contentRef);
+  content = await getSiteContent();
+  document.getElementById("source-state").textContent = snapshot.exists() ? "Firestore" : "Bundled JSON";
+  fillEditors();
+  fillContentPickers();
+  loadNoticesList();
+}
+
+document.getElementById("save-notes").addEventListener("click", () => saveEditor("notes"));
+document.getElementById("save-papers").addEventListener("click", () => saveEditor("papers"));
+document.getElementById('add-note-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const classSlug = document.getElementById('note-class').value;
+  const subjectSlug = document.getElementById('note-subject').value;
+  const title = document.getElementById('note-title').value.trim();
+  const driveFileId = document.getElementById('note-drive-id').value.trim();
+  const entry = content.notes.notes.find((note) => note.classSlug === classSlug && note.subjectSlug === subjectSlug);
+  const chapter = { id: makeId([classSlug, subjectSlug, 'chapter']), title, driveFileId };
+  if (entry) entry.chapters.push(chapter);
+  else content.notes.notes.push({ classSlug, subjectSlug, chapters: [chapter] });
+  try {
+    await saveContent();
+    fillEditors();
+    event.target.reset();
+    message('catalogue-message', `Published “${title}”.`, 'success');
+  } catch (error) { message('catalogue-message', 'Could not publish note: ' + error.message, 'error'); }
+});
+
+document.getElementById('add-paper-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const classSlug = document.getElementById('paper-class').value;
+  const subjectSlug = document.getElementById('paper-subject').value;
+  const year = document.getElementById('paper-year').value.trim();
+  const label = document.getElementById('paper-label').value.trim();
+  const driveFileId = document.getElementById('paper-drive-id').value.trim();
+  const entry = content.papers.papers.find((paper) => paper.classSlug === classSlug && paper.subjectSlug === subjectSlug && paper.year === year);
+  const set = { id: makeId([classSlug, subjectSlug, year, 'paper']), label, driveFileId };
+  if (entry) entry.sets.push(set);
+  else content.papers.papers.push({ classSlug, year, subjectSlug, sets: [set] });
+  try {
+    await saveContent();
+    fillEditors();
+    event.target.reset();
+    message('catalogue-message', `Published “${label}”.`, 'success');
+  } catch (error) { message('catalogue-message', 'Could not publish paper: ' + error.message, 'error'); }
+});
+document.getElementById("import-bundled").addEventListener("click", async () => {
+  try {
+    if ((await getDoc(contentRef)).exists()) {
+      message("catalogue-message", "Firestore already has live content; import was not run.", "error");
+      return;
+    }
+    await saveContent();
+    fillEditors();
+  } catch (error) {
+    message("catalogue-message", "Import failed: " + error.message, "error");
+  }
+});
+
+async function setRole(enabled) {
+  const email = document.getElementById("role-email").value.trim();
+  if (!email) return message("role-message", "Enter the account email first.", "error");
+  try {
+    const setAdminRole = httpsCallable(getFunctions(), "setAdminRole");
+    await setAdminRole({ email, enabled });
+    message("role-message", enabled ? "Administrator role granted." : "Administrator role revoked.", "success");
+  } catch (error) {
+    message("role-message", "Role update failed: " + (error.message || "try again."), "error");
+  }
+}
+
+document.getElementById("grant-admin").addEventListener("click", () => setRole(true));
+document.getElementById("revoke-admin").addEventListener("click", () => setRole(false));
+
+onAuthStateChanged(auth, async (user) => {
+  const denied = document.getElementById("access-denied");
+  if (!user) {
+    denied.style.display = "block";
+    document.getElementById("access-message").textContent = "Log in with an administrator account to continue.";
+    return;
+  }
+  const profile = await getDoc(doc(db, "users", user.uid));
+  if (profile.data()?.admin !== true) {
+    denied.style.display = "block";
+    document.getElementById("access-message").textContent = "This account does not have the administrator role.";
+    return;
+  }
+  document.getElementById("admin-email").textContent = user.email || "administrator";
+  document.getElementById("admin-app").hidden = false;
+  try { await loadAdmin(); }
+  catch (error) { message("catalogue-message", "Could not load catalogue: " + error.message, "error"); }
+});
+
+// ---------------------------------------------------------------------------
+// Chapter notes content — manages the Firestore chapterContent/{id} documents
+// that the chapter viewer renders in preference to bundled files.
+// ---------------------------------------------------------------------------
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function fillSelectWith(select, options) {
+  if (!select) return;
+  const previous = select.value;
+  select.innerHTML = "";
+  options.forEach((option) => {
+    const element = document.createElement("option");
+    element.value = option.value;
+    element.textContent = option.label;
+    select.appendChild(element);
+  });
+  if (previous && options.some((option) => option.value === previous)) select.value = previous;
+}
+
+function contentEntry() {
+  const classSlug = document.getElementById("content-class").value;
+  const subjectSlug = document.getElementById("content-subject").value;
+  return content.notes.notes.find(
+    (entry) => entry.classSlug === classSlug && entry.subjectSlug === subjectSlug
+  );
+}
+
+function fillContentSubjects(silent) {
+  const classSlug = document.getElementById("content-class").value;
+  const available = content.notes.subjects.filter((subject) =>
+    content.notes.notes.some((entry) => entry.classSlug === classSlug && entry.subjectSlug === subject.slug)
+  );
+  fillSelectWith(
+    document.getElementById("content-subject"),
+    available.map((subject) => ({ value: subject.slug, label: subject.label }))
+  );
+  fillContentChapters(silent);
+}
+
+function fillContentChapters(silent) {
+  const entry = contentEntry();
+  fillSelectWith(
+    document.getElementById("content-chapter"),
+    (entry?.chapters || []).map((chapter) => ({ value: chapter.id, label: chapter.title }))
+  );
+  if (silent !== true) loadChapterDoc();
+}
+
+function fillContentPickers(silent) {
+  const classSel = document.getElementById("content-class");
+  if (!classSel || !content) return;
+  fillSelectWith(
+    classSel,
+    content.notes.classes.map((item) => ({ value: item.slug, label: item.label }))
+  );
+  fillContentSubjects(silent);
+}
+
+async function loadChapterDoc() {
+  const chapterId = document.getElementById("content-chapter")?.value;
+  const editor = document.getElementById("content-editor");
+  if (!chapterId || !editor) return;
+  editor.value = "";
+  editor.placeholder = "Loading…";
+  try {
+    const snapshot = await getDoc(doc(db, "chapterContent", chapterId));
+    if (snapshot.exists()) {
+      editor.value = snapshot.data().html || "";
+      editor.placeholder = "Chapter HTML…";
+      message("content-message", "Loaded the published Firestore version. Edit and publish to update it.", "success");
+      return;
+    }
+    const response = await fetch("/assets/content/" + encodeURIComponent(chapterId) + ".html");
+    editor.value = response.ok ? await response.text() : "";
+    editor.placeholder = response.ok
+      ? "Chapter HTML…"
+      : "No content yet — write the chapter HTML here and publish.";
+    message(
+      "content-message",
+      response.ok
+        ? "No Firestore version yet; loaded the bundled file. Publishing copies it into Firestore."
+        : "This chapter has no content yet. Write the HTML below and publish.",
+      "success"
+    );
+  } catch (error) {
+    editor.placeholder = "Could not load content.";
+    message("content-message", "Could not load content: " + error.message, "error");
+  }
+}
+
+document.getElementById("content-class")?.addEventListener("change", () => fillContentSubjects());
+document.getElementById("content-subject")?.addEventListener("change", () => fillContentChapters());
+document.getElementById("content-chapter")?.addEventListener("change", loadChapterDoc);
+
+document.getElementById("save-content")?.addEventListener("click", async () => {
+  const chapterId = document.getElementById("content-chapter").value;
+  const html = document.getElementById("content-editor").value;
+  if (!chapterId) return message("content-message", "Choose a chapter first.", "error");
+  if (!html.trim()) return message("content-message", "Write some content before publishing.", "error");
+  try {
+    await setDoc(doc(db, "chapterContent", chapterId), {
+      html,
+      updatedAt: serverTimestamp(),
+      updatedBy: auth.currentUser.uid
+    });
+    message("content-message", "Published. The chapter page now shows this content.", "success");
+  } catch (error) {
+    message("content-message", "Could not publish: " + error.message, "error");
+  }
+});
+
+document.getElementById("delete-content")?.addEventListener("click", async () => {
+  const chapterId = document.getElementById("content-chapter").value;
+  if (!chapterId) return message("content-message", "Choose a chapter first.", "error");
+  try {
+    await deleteDoc(doc(db, "chapterContent", chapterId));
+    message("content-message", "Published content removed. The chapter falls back to its bundled file (if any).", "success");
+    loadChapterDoc();
+  } catch (error) {
+    message("content-message", "Could not remove: " + error.message, "error");
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Notice board — publishes and manages Firestore notices shown on the homepage.
+// ---------------------------------------------------------------------------
+
+async function loadNoticesList() {
+  const list = document.getElementById("notice-list");
+  if (!list) return;
+  try {
+    const snapshot = await getDocs(query(collection(db, "notices"), orderBy("createdAt", "desc"), limit(20)));
+    if (!snapshot.size) {
+      list.innerHTML = '<p class="muted">No notices published yet.</p>';
+      return;
+    }
+    list.innerHTML = "";
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const row = document.createElement("div");
+      row.className = "notice-item";
+      row.innerHTML =
+        '<div class="notice-info">' +
+        "<strong>" + escapeHtml(data.title || "") +
+        (data.pinned ? ' <span class="tag tag-pin">Pinned</span>' : "") +
+        "</strong>" +
+        "<p>" + escapeHtml(data.body || "") + "</p>" +
+        "</div>" +
+        '<button class="btn btn-outline notice-del" data-id="' + escapeHtml(docSnap.id) + '" type="button">Delete</button>';
+      list.appendChild(row);
+    });
+  } catch (error) {
+    list.innerHTML = '<p class="muted">Could not load notices: ' + escapeHtml(error.message) + "</p>";
+  }
+}
+
+document.getElementById("notice-form")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const title = document.getElementById("notice-title").value.trim();
+  const body = document.getElementById("notice-body").value.trim();
+  const url = document.getElementById("notice-url").value.trim();
+  const pinned = document.getElementById("notice-pinned").checked;
+  if (!title || !body) return message("notice-message", "Title and details are required.", "error");
+  try {
+    await addDoc(collection(db, "notices"), {
+      title,
+      body,
+      url: url || null,
+      pinned,
+      createdAt: serverTimestamp(),
+      createdBy: auth.currentUser.uid
+    });
+    event.target.reset();
+    message("notice-message", "Notice published to the homepage.", "success");
+    loadNoticesList();
+  } catch (error) {
+    message("notice-message", "Could not publish the notice: " + error.message, "error");
+  }
+});
+
+document.getElementById("notice-list")?.addEventListener("click", async (event) => {
+  const button = event.target.closest?.(".notice-del");
+  if (!button) return;
+  try {
+    await deleteDoc(doc(db, "notices", button.dataset.id));
+    message("notice-message", "Notice deleted.", "success");
+    loadNoticesList();
+  } catch (error) {
+    message("notice-message", "Could not delete the notice: " + error.message, "error");
+  }
+});

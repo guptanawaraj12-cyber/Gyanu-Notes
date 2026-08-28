@@ -1,0 +1,57 @@
+{
+  "_readme": "Placeholder data. Replace driveFileId with real Google Drive file IDs once papers are uploaded.",
+
+  "classExamTypes": [
+    { "classSlug": "class-8", "label": "Class 8", "examType": "Terminal Exam" },
+    { "classSlug": "class-9", "label": "Class 9", "examType": "Terminal Exam" },
+    { "classSlug": "class-10", "label": "Class 10", "examType": "SEE" },
+    { "classSlug": "class-11", "label": "Class 11", "examType": "NEB" },
+    { "classSlug": "class-12", "label": "Class 12", "examType": "NEB" }
+  ],
+
+  "subjects": [
+    { "slug": "mathematics", "label": "Mathematics" },
+    { "slug": "physics", "label": "Physics" },
+    { "slug": "chemistry", "label": "Chemistry" },
+    { "slug": "biology", "label": "Biology" },
+    { "slug": "computer-science", "label": "Computer Science" },
+    { "slug": "english-literature", "label": "English Literature" }
+  ],
+
+  "papers": [
+    {
+      "classSlug": "class-10",
+      "year": "2081",
+      "subjectSlug": "mathematics",
+      "sets": [
+        { "id": "c10-math-2081-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
+        { "id": "c10-math-2081-model", "label": "Model Paper", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+      ]
+    },
+    {
+      "classSlug": "class-10",
+      "year": "2080",
+      "subjectSlug": "mathematics",
+      "sets": [
+        { "id": "c10-math-2080-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+      ]
+    },
+    {
+      "classSlug": "class-10",
+      "year": "2081",
+      "subjectSlug": "physics",
+      "sets": [
+        { "id": "c10-phy-2081-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
+        { "id": "c10-phy-2081-preboard", "label": "Pre-board", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+      ]
+    },
+    {
+      "classSlug": "class-12",
+      "year": "2081",
+      "subjectSlug": "physics",
+      "sets": [
+        { "id": "c12-phy-2081-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+      ]
+    }
+  ]
+}

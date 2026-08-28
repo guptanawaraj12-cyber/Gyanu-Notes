@@ -1,0 +1,67 @@
+/* ============================================================
+   Gyanu Notes — Design Tokens (the only place you re-theme)
+   Direction: minimal light · soft neutrals · single blue-cyan
+   ============================================================ */
+:root {
+  /* ---- Color: neutrals (soft, cool-gray editorial) ---- */
+  --bg:            #ffffff;
+  --bg-soft:       #f6f7f8;
+  --ink-strong:    #1b1f24;
+  --ink:           #23272e;
+  --ink-soft:      #5c636e;
+  --ink-faint:     #9aa1ac;
+
+  /* ---- Color: accent (deep blue-cyan) ---- */
+  --accent:        #0e7490;
+  --accent-dark:   #155e75;
+  --accent-light:  #e7f4f7;
+  --accent-glow:   rgba(14, 116, 144, 0.16);
+
+  /* ---- Color: borders ---- */
+  --border:        #e6e8eb;
+  --border-strong: #cfd4da;
+
+  /* ---- Color: feedback ---- */
+  --success:       #1a7f4b;
+  --success-bg:    #e9faf1;
+  --danger:        #b42318;
+  --danger-bg:     #fdf0ef;
+
+  /* ---- Surface fill for white cards on tinted bands ---- */
+  --card:          #ffffff;
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius:    14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation (restrained) ---- */
+  --shadow-sm:   0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow:      0 6px 24px rgba(16, 24, 40, 0.07);
+  --shadow-lg:   0 16px 48px rgba(16, 24, 40, 0.10);
+
+  /* ---- Layout ---- */
+  --max-width:    1200px;
+  --prose-width:  720px;
+  --gutter:       24px;
+  --header-h:     68px;
+  --section-y:    96px;
+
+  /* ---- Typography (2 webfont families; mono = system) ---- */
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body:    'Inter', 'Segoe UI', sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, monospace;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Breakpoints used consistently across this stylesheet:
+   600px  — small phones      ·  stack 2-col grids
+   760px  — large phones      ·  stack 3-col grids / settings
+   900px  — tablets           ·  collapse navbar
+   960px  — small desktop
+   1160px — default           ·  single column prose centering
+*/

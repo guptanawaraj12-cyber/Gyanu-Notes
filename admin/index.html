@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Gyanu Notes</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/utilities.css">
+  
+</head>
+<body>
+  <header class="site-header"><nav class="navbar">
+    <a href="/" class="brand"><span class="brand-mark">GN</span>Gyanu Notes</a>
+    <ul class="nav-links"><li><a href="/dashboard/">Dashboard</a></li><li><a href="/notes/">Notes</a></li><li><a href="/papers/">Papers</a></li></ul>
+    <div class="nav-actions"><div class="login-menu"><a href="/login/" class="btn btn-outline login-trigger">Login</a><div class="login-panel"></div></div><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+  </nav></header>
+  <main>
+    <section id="access-denied" class="admin-card"><span class="eyebrow">Restricted area</span><h1>Administrator access required</h1><p id="access-message">Checking your account…</p><a class="btn btn-primary" href="/login/">Log in</a></section>
+    <div id="admin-app" hidden>
+      <section class="admin-hero"><div class="container"><span class="eyebrow">Administration</span><h1>Manage Gyanu Notes</h1><p class="lead">Signed in as <strong id="admin-email"></strong>. Changes publish immediately to the site.</p></div></section>
+      <section><div class="container admin-grid">
+        <article class="admin-card full"><h2>Catalogue status</h2><p>The live site uses Firestore content after import; bundled JSON remains the fallback.</p><div class="admin-stats"><div class="admin-stat"><strong id="notes-count">—</strong>chapters</div><div class="admin-stat"><strong id="papers-count">—</strong>paper sets</div><div class="admin-stat"><strong id="source-state">—</strong>source</div></div><div class="form-message" id="catalogue-message"></div></article>
+        <article class="admin-card"><h2>Add a note chapter</h2><p>Publish one study chapter without editing JSON.</p><form id="add-note-form"><div class="field"><label for="note-class">Class</label><select id="note-class" required></select></div><div class="field"><label for="note-subject">Subject</label><select id="note-subject" required></select></div><div class="field"><label for="note-title">Chapter title</label><input id="note-title" required placeholder="Ch 01 — Real Numbers"></div><div class="field"><label for="note-drive-id">Google Drive file ID</label><input id="note-drive-id" required placeholder="Drive file ID"></div><p><button class="btn btn-primary" type="submit">Add and publish note</button></p></form></article>
+        <article class="admin-card"><h2>Add a past paper</h2><p>Publish an exam paper or model set in a few fields.</p><form id="add-paper-form"><div class="field"><label for="paper-class">Class</label><select id="paper-class" required></select></div><div class="field"><label for="paper-subject">Subject</label><select id="paper-subject" required></select></div><div class="field"><label for="paper-year">Year</label><input id="paper-year" required inputmode="numeric" placeholder="2081"></div><div class="field"><label for="paper-label">Paper type</label><input id="paper-label" required placeholder="Real Exam or Model Paper"></div><div class="field"><label for="paper-drive-id">Google Drive file ID</label><input id="paper-drive-id" required placeholder="Drive file ID"></div><p><button class="btn btn-primary" type="submit">Add and publish paper</button></p></form></article>
+        <article class="admin-card full"><h2>Chapter notes content</h2><p>Write or update the full HTML notes for any chapter. Published content appears on the chapter page immediately and takes priority over bundled files. Pick a chapter below — its current content loads into the editor.</p><div class="admin-grid three"><div class="field"><label for="content-class">Class</label><select id="content-class"></select></div><div class="field"><label for="content-subject">Subject</label><select id="content-subject"></select></div><div class="field"><label for="content-chapter">Chapter</label><select id="content-chapter"></select></div></div><textarea id="content-editor" class="content-editor" aria-label="Chapter content HTML" spellcheck="false" placeholder="Select a chapter to load its content…"></textarea><p><button class="btn btn-primary" id="save-content" type="button">Publish content</button> <button class="btn btn-outline" id="delete-content" type="button">Remove published content</button></p><div class="form-message" id="content-message"></div></article>
+        <article class="admin-card"><h2>Notice board</h2><p>Publish a notice on the homepage notice board. Pinned notices appear first.</p><form id="notice-form"><div class="field"><label for="notice-title">Title</label><input id="notice-title" required maxlength="200" placeholder="SEE 2081 exam routine published"></div><div class="field"><label for="notice-body">Details</label><textarea id="notice-body" required maxlength="4000" placeholder="Short description shown on the homepage…"></textarea></div><div class="field"><label for="notice-url">Link (optional)</label><input id="notice-url" type="url" placeholder="/notes/class-10/"></div><div class="field checkbox-field"><label for="notice-pinned"><input type="checkbox" id="notice-pinned"> Pin to top</label></div><p><button class="btn btn-primary" type="submit">Publish notice</button></p></form><div class="notice-list" id="notice-list"><p class="muted">Published notices will appear here.</p></div><div class="form-message" id="notice-message"></div></article>
+        <article class="admin-card full"><details><summary><strong>Advanced catalogue editor</strong> — use for bulk edits only</summary><p>Edit valid JSON carefully. The normal forms above are safer for everyday additions.</p><div class="admin-grid"><div><h3>Notes data</h3><textarea id="notes-editor" aria-label="Notes catalogue JSON" spellcheck="false"></textarea><button class="btn btn-outline" id="save-notes" type="button">Save notes JSON</button></div><div><h3>Papers data</h3><textarea id="papers-editor" aria-label="Papers catalogue JSON" spellcheck="false"></textarea><button class="btn btn-outline" id="save-papers" type="button">Save papers JSON</button></div></div></details></article>
+        <article class="admin-card full"><h2>First-time import</h2><p>If Firestore has no catalogue yet, import the checked-in JSON once. This never overwrites an existing live catalogue.</p><button class="btn btn-outline" id="import-bundled">Import bundled data</button></article>
+        <article class="admin-card full"><h2>Administrator roles</h2><p>Grant or revoke another account’s role. The account must already exist. The affected user must sign out and back in.</p><div class="field"><label for="role-email">Account email</label><input id="role-email" type="email" placeholder="teacher@example.com"></div><p><button class="btn btn-primary" id="grant-admin">Grant admin</button> <button class="btn btn-outline" id="revoke-admin">Revoke admin</button></p><div class="form-message" id="role-message"></div></article>
+      </div></section>
+    </div>
+  </main>
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/auth-state.js"></script>
+  <script type="module" src="/assets/js/admin.js"></script>
+</body>
+</html>

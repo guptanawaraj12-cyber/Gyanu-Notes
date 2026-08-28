@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — Gyanu Notes</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/utilities.css">
+
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="brand-mark">GN</span>
+      Gyanu Notes
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/notes/">Notes</a></li>
+      <li><a href="/papers/">Papers</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="login-menu">
+        <a href="/login/" class="btn btn-outline login-trigger">Login</a>
+        <div class="login-panel">
+          <a href="/dashboard/">Dashboard</a>
+          <a href="/notes/?filter=mine">My notes</a>
+          <a href="/papers/?filter=mine">My papers</a>
+          <a href="/profile/">Profile settings</a>
+          <a href="#" data-action="logout">Logout</a>
+        </div>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="dash-hero">
+    <div class="container">
+      <span class="eyebrow">Dashboard</span>
+      <h1 id="welcome-heading">Welcome back</h1>
+      <span class="dash-class-tag" id="class-tag" style="display: none;"></span>
+
+      <div class="verify-banner" id="verify-banner" style="display: none;">
+        <div class="verify-text">
+          <span class="verify-icon">✉</span>
+          <span><strong>Verify your email</strong> to unlock downloads of notes and past papers.</span>
+        </div>
+        <button type="button" class="btn btn-outline" id="verify-resend">Resend verification</button>
+      </div>
+
+      <div class="continue-card" id="continue-card" style="display: none;">
+        <div>
+          <div class="label">Continue where you left off</div>
+          <div class="title" id="continue-title"></div>
+        </div>
+        <a href="#" class="btn" id="continue-link">Continue</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <div class="dash-stats">
+        <div class="stat-tile"><span class="st-num" id="stat-bookmarks">0</span><span class="st-label">Bookmarks</span></div>
+        <div class="stat-tile"><span class="st-num" id="stat-notes">0</span><span class="st-label">Notes viewed</span></div>
+        <div class="stat-tile"><span class="st-num" id="stat-papers">0</span><span class="st-label">Papers viewed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <span class="eyebrow">Quick access</span>
+      <h2>Jump back in</h2>
+      <div class="quick-links">
+        <a href="/notes/" class="quick-link-card">
+          <h4>Browse notes</h4>
+          <p>Study notes for Class 8&ndash;12, all subjects.</p>
+        </a>
+        <a href="/papers/" class="quick-link-card">
+          <h4>Browse papers</h4>
+          <p>SEE and NEB past papers by year.</p>
+        </a>
+        <a href="/profile/" class="quick-link-card">
+          <h4>Edit profile</h4>
+          <p>Update your name, class, or password.</p>
+        </a>
+      </div>
+
+      <div id="class-links" style="display: none;"></div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <span class="eyebrow">Saved</span>
+      <h2>Your bookmarks</h2>
+      <div class="bookmarks-list" id="bookmarks-list">
+        <div class="loading-state">Loading your bookmarks…</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <span class="eyebrow">Activity</span>
+      <h2>Recently viewed</h2>
+      <div class="history-list" id="history-list">
+        <div class="loading-state">Loading your activity…</div>
+      </div>
+      <div class="clear-history-wrap">
+        <button type="button" class="btn btn-outline" id="clear-history" style="display: none;">Clear viewing history</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Gyanu Notes. All rights reserved.</span>
+      <div class="legal-links">
+        <a href="/privacy/">Privacy policy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/disclaimer/">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script type="module" src="/assets/js/auth-state.js"></script>
+<script type="module" src="/assets/js/verify-email.js"></script>
+<script type="module" src="/assets/js/dashboard.js"></script>
+</body>
+</html>

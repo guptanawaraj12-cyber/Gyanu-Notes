@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="page-title">Notes — Gyanu Notes</title>
+<meta name="description" content="Free study notes and chapter-wise PDFs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/utilities.css">
+
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <img src="/assets/images/logo.jpeg" alt="Gyanu Notes logo" class="brand-mark">
+      Gyanu Notes
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/notes/" class="active">Notes</a></li>
+      <li><a href="/papers/">Papers</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="login-menu">
+        <a href="/login/" class="btn btn-outline login-trigger">Login</a>
+        <div class="login-panel"></div>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section style="padding: 48px 0 80px;">
+    <div class="container">
+      <div class="breadcrumb"><a href="/notes/">Notes</a> <span id="breadcrumb-trail"></span></div>
+      <h1 id="chapter-heading">Loading…</h1>
+      <p class="lead" id="chapter-sub"></p>
+
+      <div class="chapter-list" id="chapter-list"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Gyanu Notes. All rights reserved.</span>
+      <div class="legal-links">
+        <a href="/privacy/">Privacy policy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/disclaimer/">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script type="module" src="/assets/js/auth-state.js"></script>
+<script type="module" src="/assets/js/notes-chapters.js"></script>
+</body>
+</html>

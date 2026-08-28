@@ -1,0 +1,206 @@
+<div class="chapter-badge">NEB Class 12 · Physics</div>
+<div class="chapter-badge">Unit 1 · Mechanics</div>
+
+<h2>1. Chapter Overview</h2>
+<p><strong>What this chapter is about.</strong> Until now you have treated every object as a point. Real objects — wheels, fans, flywheels, planets — are <em>extended bodies</em> that can <strong>rotate</strong>. Rotational dynamics answers three questions: what makes a body start spinning (<strong>torque</strong>), what resists a change in its spin (<strong>moment of inertia</strong>), and what stays conserved while it spins (<strong>angular momentum</strong>).</p>
+<p><strong>Why it matters in NEB exams.</strong> This unit regularly supplies one long question (almost always a derivation: rod MOI, K<sub>E</sub> of rotation, or conservation of angular momentum) plus short conceptual questions and at least one easy numerical. Master the derivations here and you secure marks predictably.</p>
+<p><strong>What you must be able to do after this chapter:</strong></p>
+<ul>
+  <li>Define moment of inertia, radius of gyration, torque, angular momentum — in one clean line each.</li>
+  <li>Derive I for a uniform rod about both standard axes by integration.</li>
+  <li>Derive rotational KE = ½Iω² and τ = Iα from first principles.</li>
+  <li>State and explain conservation of angular momentum with real examples.</li>
+  <li>Solve numericals mixing ω–θ–t, energy, and L-conservation.</li>
+</ul>
+<p><strong>Prerequisite:</strong> Class 11 circular motion (ω, centripetal acceleration) — this chapter reuses those ideas constantly.</p>
+
+<h2>2. Important Definitions</h2>
+<p>Learn each of these as a single memorisable sentence — NEB short questions lift their wording directly.</p>
+
+<div class="definition-box"><span class="def-term">Rigid body</span><p>A body whose particles keep fixed distances between themselves; it does not deform while moving. Every particle of a rigid body rotating about a fixed axis has the same angular velocity ω.</p></div>
+
+<div class="definition-box"><span class="def-term">Moment of inertia (I)</span><p>The inability of a body to change its state of rest or uniform rotation by itself — i.e. the inertia of a body in rotational motion. Numerically, I = Σmr², the sum of each particle's mass times the square of its distance from the axis. Unit: kg·m².</p></div>
+
+<div class="definition-box"><span class="def-term">Radius of gyration (k)</span><p>The perpendicular distance from the axis of rotation to a point where the whole mass of the body may be supposed to be concentrated so that I = Mk². It measures how far, on average, the mass sits from the axis. Unit: metre.</p></div>
+
+<div class="definition-box"><span class="def-term">Torque (τ)</span><p>The turning effect of a force about an axis: τ = rF sin θ, the product of the force and the perpendicular distance from the axis to its line of action (moment arm). Unit: N·m.</p></div>
+
+<div class="definition-box"><span class="def-term">Angular momentum (L)</span><p>The quantity of rotational motion possessed by a body: L = Iω, the rotational analogue of linear momentum mv. Unit: kg·m²/s.</p></div>
+
+<div class="definition-box"><span class="def-term">Conservation of angular momentum</span><p>If no net external torque acts on a system, its total angular momentum remains constant: I₁ω₁ = I₂ω₂.</p></div>
+
+<h2>3. Key Concepts Explained Simply</h2>
+
+<h3>3.1 Why do we need "moment of inertia" at all?</h3>
+<p>Push an empty trolley and it moves; push a loaded one and it resists. That resistance is mass. Now spin two wheels of the same mass — one a light-rimmed ring, one with the weight near the axle. The ring is much harder to start and stop spinning. <strong>Mass alone can't explain this; what matters is how far that mass sits from the axis.</strong> Moment of inertia captures exactly that: I = Σmr². Because of the r², doubling a particle's distance quadruples its contribution. This is why a flywheel puts its rim far out, and why a figure skater spins faster just by folding her arms inward.</p>
+
+<h3>3.2 Torque is force's turning twin</h3>
+<p>To slide a crate you need force. To swing a door you need force applied <em>the right way</em>: far from the hinge and pushing across it. The same push near the hinge does almost nothing. Torque bundles those three intuitions into one number:</p>
+<div class="formula-box"><p>τ = r F sin θ</p><span class="formula-label">r = distance from axis · θ = angle between r and F</span></div>
+<ul>
+  <li>Push perpendicular, at maximum distance → biggest τ.</li>
+  <li>Push along the line through the axis (θ = 0°) → τ = 0, no turn at all.</li>
+  <li>A pair of equal-and-opposite forces whose lines don't meet forms a <strong>couple</strong>, which produces pure rotation with zero net force.</li>
+</ul>
+
+<h3>3.3 Newton's laws, translated to rotation</h3>
+<p>Every linear law has a rotational twin. Replace force F by torque τ, mass m by moment of inertia I, acceleration a by angular acceleration α, momentum mv by angular momentum Iω:</p>
+<table class="chapter-table">
+  <thead><tr><th>Linear motion</th><th>Rotational motion</th></tr></thead>
+  <tbody>
+    <tr><td>v = u + at</td><td>ω = ω₀ + αt</td></tr>
+    <tr><td>s = ut + ½at²</td><td>θ = ω₀t + ½αt²</td></tr>
+    <tr><td>F = ma</td><td>τ = Iα</td></tr>
+    <tr><td>p = mv</td><td>L = Iω</td></tr>
+    <tr><td>K = ½mv²</td><td>K = ½Iω²</td></tr>
+    <tr><td>W = Fs · P = Fv</td><td>W = τθ · P = τω</td></tr>
+  </tbody>
+</table>
+<p>If you remember this table, half the chapter is already memorised — every derivation below is just one row being proved.</p>
+
+<h2>4. All Important Formulas</h2>
+<table class="chapter-table">
+  <thead><tr><th>#</th><th>Quantity / Relation</th><th>Formula</th><th>Unit</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Angular velocity</td><td>ω = Δθ/Δt &nbsp;(= 2πn if n turns per second)</td><td>rad/s</td></tr>
+    <tr><td>2</td><td>Linear–angular link</td><td>v = rω , &nbsp;a<sub>t</sub> = rα</td><td>m/s, m/s²</td></tr>
+    <tr><td>3</td><td>Moment of inertia</td><td>I = Σmr² = Mk²</td><td>kg·m²</td></tr>
+    <tr><td>4</td><td>Torque</td><td>τ = rF sin θ = Iα</td><td>N·m</td></tr>
+    <tr><td>5</td><td>Rotational KE</td><td>K = ½Iω²</td><td>J</td></tr>
+    <tr><td>6</td><td>Work by torque/couple</td><td>W = τθ</td><td>J</td></tr>
+    <tr><td>7</td><td>Power</td><td>P = τω</td><td>W</td></tr>
+    <tr><td>8</td><td>Angular momentum</td><td>L = Iω</td><td>kg·m²/s</td></tr>
+    <tr><td>9</td><td>L-conservation</td><td>I₁ω₁ = I₂ω₂</td><td>—</td></tr>
+    <tr><td>10</td><td>Rod about centre</td><td>I = ML²/12</td><td>kg·m²</td></tr>
+    <tr><td>11</td><td>Rod about one end</td><td>I = ML²/3</td><td>kg·m²</td></tr>
+  </tbody>
+</table>
+<div class="highlight-box"><strong>Memorise cold:</strong> the six standard moments of inertia — ring MR² · disc ½MR² · solid sphere (2/5)MR² · hollow sphere (2/3)MR² · rod centre ML²/12 · rod end ML²/3.</div>
+
+<h2>5. Derivations (NEB long-question favourites)</h2>
+
+<h3>Derivation 1 — Relation between linear and angular quantities: v = rω</h3>
+<p>A particle at distance r from the axis moves along a circle. When the body turns through angle θ (in radians), the arc length travelled is s = rθ.</p>
+<p class="step">Differentiating with respect to time (r is constant):</p>
+<div class="formula-box"><p>ds/dt = r·dθ/dt &nbsp;⟹&nbsp; v = rω</p></div>
+<p>Differentiating again gives the tangential acceleration a<sub>t</sub> = rα. This little relation is used inside almost every later proof, so it comes first.</p>
+
+<h3>Derivation 2 — τ = Iα (Newton's second law for rotation)</h3>
+<p class="step">Consider one particle of mass m at distance r in a rigid body rotating with angular acceleration α. Its tangential acceleration is a = rα.</p>
+<p class="step">Newton's second law on this particle: F = ma = m(rα).</p>
+<p class="step">The torque of this force about the axis: τ = rF = r(mrα) = mr²α.</p>
+<p class="step">Every particle shares the same α. Summing over all particles:</p>
+<div class="formula-box"><p>Στ = Σmr²α = (Σmr²) α = I α</p><span class="formula-label">since Σmr² = I</span></div>
+<p><strong>Conclusion:</strong> net torque = moment of inertia × angular acceleration — the exact rotational image of F = ma. A given torque produces less α for a larger I.</p>
+
+<h3>Derivation 3 — Kinetic energy of a rotating body: K = ½Iω²</h3>
+<p class="step">Let the rigid body rotate with angular velocity ω. A particle m₁ at distance r₁ moves with speed v₁ = r₁ω (all points share the same ω).</p>
+<p class="step">Its kinetic energy: K₁ = ½m₁v₁² = ½m₁(r₁ω)² = ½m₁r₁²ω².</p>
+<p class="step">Total kinetic energy is the sum over all particles:</p>
+<p class="step">K = ½m₁r₁²ω² + ½m₂r₂²ω² + … = ½(Σmr²) ω²</p>
+<div class="formula-box"><p>K = ½ I ω²</p><span class="formula-label">rotational kinetic energy of a rigid body</span></div>
+<p><strong>Note for exams:</strong> write the sum symbol (Σ) explicitly before collapsing it into I — examiners award marks for that step.</p>
+
+<h3>Derivation 4 — Moment of inertia of a uniform rod about a perpendicular axis through its centre: I = Ml²/12</h3>
+<p class="step">Let the rod have mass M and length l, with axis YY′ through the centre C, perpendicular to its length.</p>
+<p class="step">Mass per unit length = M/l. Take a tiny element of length dx at distance x from C. Its mass: dm = (M/l)dx.</p>
+<p class="step">Its contribution to I about the axis: dI = dm·x² = (M/l)x²dx.</p>
+<p class="step">Integrate x from −l/2 to +l/2 to cover the whole rod:</p>
+<div class="formula-box"><p>I = (M/l) ∫<sub>−l/2</sub><sup>l/2</sup> x² dx = (M/l)[x³/3] from −l/2 to l/2</p></div>
+<p class="step">I = (M/l)·[(l³/8)/3 − (−l³/8)/3] = (M/l)(l³/12)</p>
+<div class="formula-box"><p>I = Ml²/12</p><span class="formula-label">axis through centre, ⊥ to length</span></div>
+
+<h3>Derivation 5 — Same rod about an axis through one end: I = Ml²/3</h3>
+<p class="step">Same setup, but now integrate x from 0 to l (the axis passes through end A):</p>
+<p class="step">I = (M/l)∫₀ˡ x² dx = (M/l)(l³/3)</p>
+<div class="formula-box"><p>I = Ml²/3</p><span class="formula-label">axis through one end, ⊥ to length</span></div>
+<p class="step"><strong>Shortcut check:</strong> by the parallel-axis theorem I<sub>end</sub> = I<sub>cm</sub> + Md² = Ml²/12 + M(l/2)² = Ml²/12 + Ml²/4 = Ml²/3 ✓ — quoting this cross-check in exams earns credit.</p>
+
+<h3>Derivation 6 — Angular momentum L = Iω and its conservation</h3>
+<p class="step">A particle m₁ at r₁ has linear momentum p₁ = m₁v₁ = m₁r₁ω. Its angular momentum about the axis is L₁ = p₁r₁ = m₁r₁²ω.</p>
+<p class="step">Summing over all particles: L = Σmr²ω = ω Σmr² (ω is same for every particle).</p>
+<div class="formula-box"><p>L = I ω</p><span class="formula-label">angular momentum of a rigid body</span></div>
+<p class="step">Differentiate: dL/dt = d(Iω)/dt = I(dω/dt) = Iα = τ.</p>
+<p class="step">So <strong>τ = dL/dt</strong> — torque is the rate of change of angular momentum, exactly like F = dp/dt.</p>
+<p class="step">If the net external torque is zero (τ = 0), then dL/dt = 0, hence:</p>
+<div class="formula-box"><p>I₁ω₁ = I₂ω₂ = constant</p><span class="formula-label">law of conservation of angular momentum</span></div>
+<div class="highlight-box"><strong>Three classic illustrations (learn any two for the exam):</strong><br>
+① <strong>Spinning skater:</strong> arms pulled in → I decreases → ω increases so Iω stays fixed; she spins faster without any push.<br>
+② <strong>Diver:</strong> tucking the body reduces I mid-air, increasing spin rate for somersaults.<br>
+③ <strong>Planets:</strong> a planet moves faster near the Sun (smaller r) — Kepler's second law is L-conservation in disguise.</div>
+
+<h2>6. Important Numerical Types</h2>
+<p>NEB numericals from this chapter fall into five repeating patterns. Master one example of each and you can solve any variant.</p>
+
+<h3>Type 1 — ω–θ–t kinematics (easiest marks)</h3>
+<p class="step"><strong>Example:</strong> A flywheel initially at rest gains an angular acceleration of 4 rad/s². Find its angular velocity and angular displacement after 5 s, and the number of turns completed.</p>
+<p class="step"><strong>Solution:</strong> ω = ω₀ + αt = 0 + 4×5 = <strong>20 rad/s</strong>.<br>
+θ = ω₀t + ½αt² = 0 + ½×4×5² = <strong>50 rad</strong>.<br>
+Turns = θ/2π = 50/(2×3.1416) ≈ <strong>7.96 ≈ 8 turns</strong>.</p>
+<p class="step"><em>Pattern to recognise:</em> "starts from rest / constant acceleration" → use the three rotational equations exactly like linear ones.</p>
+
+<h3>Type 2 — Unit conversion: rpm ↔ rad/s</h3>
+<p class="step"><strong>Example:</strong> A wheel rotates at 300 rpm. Find ω in rad/s.</p>
+<p class="step"><strong>Solution:</strong> ω = 2πn/60 = 2π(300)/60 = <strong>10π ≈ 31.4 rad/s</strong>.</p>
+<p class="step"><em>Pattern:</em> any question giving "revolutions per minute" — convert first, always.</p>
+
+<h3>Type 3 — Rotational kinetic energy</h3>
+<p class="step"><strong>Example:</strong> A disc of mass 2 kg and radius 0.5 m spins at 10 rad/s about its central axis. Find I and K.</p>
+<p class="step"><strong>Solution:</strong> I = ½MR² = ½×2×0.25 = <strong>0.25 kg·m²</strong>. K = ½Iω² = ½×0.25×100 = <strong>12.5 J</strong>.</p>
+<p class="step"><em>Pattern:</em> pick the correct MOI from the six-value list, then one substitution.</p>
+
+<h3>Type 4 — Conservation of angular momentum</h3>
+<p class="step"><strong>Example:</strong> A skater spins at 2 rad/s with I = 6 kg·m². She pulls her arms in and I becomes 2 kg·m². Find her new angular velocity and compare KE.</p>
+<p class="step"><strong>Solution:</strong> I₁ω₁ = I₂ω₂ → 6×2 = 2×ω₂ → ω₂ = <strong>6 rad/s</strong>.<br>
+K₁ = ½×6×4 = 12 J; K₂ = ½×2×36 = 36 J → KE <strong>triples</strong>. The extra energy comes from her muscles doing work pulling the arms in.</p>
+<p class="step"><em>Pattern:</em> any "arms in / child walks on merry-go-round" problem — write I₁ω₁ = I₂ω₂ before anything else.</p>
+
+<h3>Type 5 — Work done by torque / power</h3>
+<p class="step"><strong>Example:</strong> An engine applies a constant torque of 50 N·m while a shaft turns through 20 rad. Find the work done; if this took 4 s, find the power.</p>
+<p class="step"><strong>Solution:</strong> W = τθ = 50×20 = <strong>1000 J</strong>. P = W/t = 250 W (equivalently P = τω with ω = 20/4 = 5 rad/s → 50×5 = <strong>250 W</strong>). ✓ both routes agree.</p>
+
+<h2>7. Exam-Focused Questions (with model answers)</h2>
+
+<h3>Short-answer questions (2–3 marks each)</h3>
+<p class="step"><strong>Q1. Why is it easier to open a door by pushing at its outer edge, perpendicular to the door?</strong><br>
+<strong>Answer:</strong> Torque τ = rF sin θ is the turning effect of force. At the outer edge r is maximum and pushing perpendicular gives sin θ = 1, so τ is maximum for the same applied force — producing the largest angular acceleration of the door.</p>
+<p class="step"><strong>Q2. Define radius of gyration and write its physical significance.</strong><br>
+<strong>Answer:</strong> It is the perpendicular distance from the axis of rotation to a point at which the whole mass of the body may be considered concentrated so that I = Mk². Physically it measures how far the body's mass is, on average, distributed from the axis: a larger k means mass lies farther out and the body resists rotational change more strongly.</p>
+<p class="step"><strong>Q3. Why does a solid sphere roll down an incline faster than a ring of the same mass and radius?</strong><br>
+<strong>Answer:</strong> For rolling, a = g sin θ / (1 + I/MR²). The ring has I = MR² while the sphere has I = (2/5)MR², so the sphere's denominator is smaller and its acceleration larger. Less of the sphere's mass rotates far from its axis, so a smaller share of the potential energy goes into rotation and more into forward speed.</p>
+<p class="step"><strong>Q4. A planet moves faster when closer to the Sun. Explain using angular momentum.</strong><br>
+<strong>Answer:</strong> The Sun's gravitational pull acts along the line joining their centres, so external torque about the Sun is zero and L = mvr stays constant. As orbital radius r decreases near the Sun, v must increase to keep L constant.</p>
+
+<h3>Long questions (derivations — 5+ marks)</h3>
+<p class="step"><strong>Q5. Show that the kinetic energy of a rotating rigid body is ½Iω².</strong> → <em>Write Derivation 3 above in full.</em></p>
+<p class="step"><strong>Q6. Derive an expression for the moment of inertia of a uniform rod about an axis through one end perpendicular to its length.</strong> → <em>Derivation 5 (add Derivation 4 as the centre case if asked "about both axes").</em></p>
+<p class="step"><strong>Q7. State and prove the law of conservation of angular momentum. Give one example.</strong> → <em>Derivation 6 + any skater/diver/planet illustration.</em></p>
+<p class="step"><strong>Q8. Prove τ = Iα.</strong> → <em>Derivation 2.</em></p>
+
+<div class="highlight-box"><strong>Answer-writing tips:</strong> start derivations by defining every symbol; keep the Σ step visible before replacing it with I; draw the rod-with-axis sketch for MOI questions (1 mark is often for the figure); end numericals with units boxed in the final answer.</div>
+
+<h2>8. Very Short Revision Notes</h2>
+<ul>
+  <li>Rigid body → all points share same ω and α; linear speeds differ as v = rω.</li>
+  <li>I = Σmr² · unit kg·m² · depends on axis chosen and mass distribution.</li>
+  <li>k = √(I/M) · I = Mk².</li>
+  <li>Torque: τ = rF sin θ · couple → pure rotation · W = τθ · P = τω.</li>
+  <li>τ = Iα ⇔ F = ma · τ<sub>net</sub> = dL/dt.</li>
+  <li>K<sub>rot</sub> = ½Iω² · L = Iω · conservation: I₁ω₁ = I₂ω₂ when τ<sub>ext</sub> = 0.</li>
+  <li>Six MOIs: ring MR² · disc ½MR² · solid sphere (2/5)MR² · hollow sphere (2/3)MR² · rod centre ML²/12 · rod end ML²/3.</li>
+  <li>Rolling without slipping: v = Rω · K = ½Mv² + ½Iω² · race order on incline: sphere &gt; disc &gt; ring.</li>
+  <li>1 rpm = 2π/60 rad/s · always convert rpm before kinematics formulas.</li>
+  <li>Skater pulls arms in → I↓ → ω↑ → L constant (KE rises: muscle work).</li>
+  <li>Parallel-axis theorem: I = I<sub>cm</sub> + Md² (cross-checks rod results).</li>
+  <li>Most-asked derivations: K = ½Iω² · τ = Iα · rod MOI (both axes) · L-conservation statement + example.</li>
+</ul>
+
+<div class="key-takeaway">
+  <div class="takeaway-icon">🎯</div>
+  <p><strong>Last-minute strategy:</strong> memorise Section 4's table cold, rehearse Derivations 3–6 on paper twice, and re-solve Types 1–5 numericals once the night before the exam. That combination has historically covered nearly every question NEB asks from this unit.</p>
+</div>
+
+
+
+
+
