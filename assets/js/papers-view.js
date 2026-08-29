@@ -5,7 +5,7 @@ import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.c
 import { logView } from "/assets/js/history.js";
 import { getPapersData } from "/assets/js/content-store.js";
 import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js";
-import { secureDownload } from "/assets/js/secure-download.js";
+import { secureDownload } from "/assets/js/secure-download.js?v=2";
 
 document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);
@@ -144,11 +144,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!currentUser || !currentSet || !currentUser.emailVerified) return;
     var downloadBtn = document.getElementById('download-btn');
 
-    // Secure download: same flow as notes-view.js — only the paper id
-    // leaves the browser; the Drive file id is resolved server-side.
+    // Direct Drive download (login-gated client-side, same as notes-view.js).
     downloadBtn.disabled = true;
     downloadBtn.textContent = 'Preparing download…';
-    secureDownload({ type: 'paper', id: currentSet.id, name: currentTitleText })
+    secureDownload({ fileId: currentSet.driveFileId, name: currentTitleText })
       .catch(function (error) {
         window.alert(error.message || 'Download failed. Please try again later.');
       })

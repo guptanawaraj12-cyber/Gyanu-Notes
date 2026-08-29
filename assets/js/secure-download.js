@@ -1,48 +1,47 @@
-// Gyanu Notes — secure, server-gated downloads.
-// The Cloud Function verifies the caller's ID token and verified email,
-// resolves the real Drive file server-side, and streams the file. The
-// browser never receives a reusable Drive download link.
+// Gyanu Notes — download gate (client-side, free-plan friendly).
+// Downloads are allowed only for signed-in visitors with a verified email.
+// The chapter/paper Drive file IDs are already public: the same IDs power
+// the on-page preview iframes, so this flow exposes nothing new — it simply
+// packages the file as a one-click download instead of a preview.
+//
+// The earlier design streamed bytes through a Cloud Function so the Drive
+// ID never reached the browser. That requires Firebase's paid Blaze plan;
+// on the free Spark plan the function cannot deploy, so downloads point
+// straight at Drive's public download endpoint instead.
 
 import { auth } from "/assets/js/firebase-config.js";
 
-// gen-1 HTTP function URL (region us-central1). If you deploy the
-// function to another region, update this path to match.
-var DOWNLOAD_URL = "https://us-central1-gyanu-notes-6f6d8.cloudfunctions.net/downloadFile";
+var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;
 
 export async function secureDownload(options) {
-  var type = options && (options.type === "paper" || options.type === "noteHandwritten") ? options.type : "note";
-  var id = String((options && options.id) || "");
+  var fileId = String((options && options.fileId) || "");
   var name = String((options && options.name) || "");
-  if (!id) throw new Error("Nothing to download.");
-
-  var user = auth.currentUser;
-  if (!user) throw new Error("Sign in to download files.");
-
-  var token = await user.getIdToken();
-  var response = await fetch(
-    DOWNLOAD_URL +
-      "?type=" + encodeURIComponent(type) +
-      "&id=" + encodeURIComponent(id) +
-      "&name=" + encodeURIComponent(name),
-    { headers: { Authorization: "Bearer " + token } }
-  );
-
-  if (!response.ok) {
-    var message = "Download failed. Please try again later.";
-    try {
-      var payload = await response.json();
-      if (payload && payload.error) message = payload.error;
-    } catch (error) { /* keep the generic message */ }
-    throw new Error(message);
+  if (!DRIVE_ID_PATTERN.test(fileId)) {
+    throw new Error("This file is not available for download yet.");
   }
 
-  var blob = await response.blob();
-  var url = URL.createObjectURL(blob);
+  // Defence in depth: every caller also gates its own button, but the
+  // download re-checks the account state first.
+  var user = auth.currentUser;
+  if (!user) throw new Error("Sign in to download files.");
+  if (!user.emailVerified) throw new Error("Verify your email address before downloading.");
+
+  // Drive's usercontent endpoint serves the raw file with a download
+  // disposition; confirm=t skips the "can't scan for viruses" interstitial
+  // for large files. Opening in a new tab keeps the notes page intact even
+  // if Drive decides to show its own download page instead. The download
+  // attribute is ignored cross-origin, so Drive's original filename is kept.
+  var url =
+    "https://drive.usercontent.google.com/download?id=" +
+    encodeURIComponent(fileId) +
+    "&export=download&confirm=t";
+
   var link = document.createElement("a");
   link.href = url;
-  link.download = name ? name + ".pdf" : "gyanu-notes.pdf";
+  link.target = "_blank";
+  link.rel = "noopener";
+  if (name) link.download = name;
   document.body.appendChild(link);
   link.click();
   link.remove();
-  setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
 }

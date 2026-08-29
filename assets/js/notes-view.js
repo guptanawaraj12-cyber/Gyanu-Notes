@@ -6,7 +6,7 @@ import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.c
 import { logView } from "/assets/js/history.js";
 import { getNotesData } from "/assets/js/content-store.js";
 import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js";
-import { secureDownload } from "/assets/js/secure-download.js";
+import { secureDownload } from "/assets/js/secure-download.js?v=2";
 
 document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);
@@ -326,10 +326,10 @@ document.addEventListener('DOMContentLoaded', function () {
       printBrandedNotesPdf();
       return;
     }
-    // Fallback for file-only chapters: secure Drive download.
+    // Fallback for file-only chapters: direct Drive download (login-gated).
     var item = this;
     item.disabled = true;
-    secureDownload({ type: 'note', id: currentChapter.id, name: currentChapter.title })
+    secureDownload({ fileId: currentChapter.driveFileId, name: currentChapter.title })
       .catch(function (error) {
         window.alert(error.message || 'Download failed. Please try again later.');
       })
@@ -343,10 +343,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (this.disabled || !currentUser || !currentUser.emailVerified) return;
     var item = this;
     item.disabled = true;
-    // Secure download: the browser only sends the chapter id. The Cloud
-    // Function verifies the caller, looks up the handwritten Drive file
-    // server-side, and streams the bytes through.
-    secureDownload({ type: 'noteHandwritten', id: currentChapter.id, name: currentChapter.title + ' handwritten' })
+    // Direct Drive download of the handwritten PDF (login-gated client-side).
+    secureDownload({ fileId: currentChapter.handwrittenDriveId, name: currentChapter.title + ' handwritten' })
       .catch(function (error) {
         window.alert(error.message || 'Download failed. Please try again later.');
       })
