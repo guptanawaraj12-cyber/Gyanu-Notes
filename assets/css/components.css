@@ -554,6 +554,20 @@
   font-weight: 600;
 }
 
+.update-main {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.update-body {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  overflow-wrap: break-word;
+}
+
 .update-title .tag {
   font-size: 0.66rem;
   font-weight: 600;

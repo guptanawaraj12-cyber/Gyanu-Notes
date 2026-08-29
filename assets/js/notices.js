@@ -63,7 +63,10 @@ async function renderNotices() {
       : "";
     return '<div class="update-row' + (notice.pinned === true ? " pinned" : "") + '">' +
       '<span class="update-date">' + formatDate(notice.createdAt) + '</span>' +
-      '<span class="update-title">' + tag + escapeHtml(notice.title) + '</span>' +
+      '<div class="update-main">' +
+        '<span class="update-title">' + tag + escapeHtml(notice.title) + '</span>' +
+        (notice.body ? '<p class="update-body">' + escapeHtml(notice.body) + '</p>' : "") +
+      '</div>' +
       link +
       '</div>';
   }).join("");
