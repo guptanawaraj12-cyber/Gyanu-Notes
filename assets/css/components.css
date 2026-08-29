@@ -2104,6 +2104,96 @@
   background: var(--accent-light);
 }
 
+/* ---------- Notice popup (homepage notice board) ---------- */
+.update-row.notice-clickable { cursor: pointer; }
+
+.update-row .update-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.update-read {
+  align-self: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.notice-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.notice-modal[hidden] { display: none; }
+
+.notice-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 32, 0.55);
+}
+
+.notice-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 28px;
+  animation: notice-pop 0.18s var(--ease);
+}
+
+@keyframes notice-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.notice-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.notice-modal-close:hover { color: var(--ink); border-color: var(--border-strong); }
+
+.notice-modal-meta { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; }
+.notice-modal-date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-faint); }
+
+.notice-modal-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin: 0 0 12px;
+  padding-right: 30px;
+}
+
+.notice-modal-body p { color: var(--ink); line-height: 1.7; margin: 0 0 10px; }
+
+.notice-modal-actions { margin: 18px 0 0; }
+
+@media (max-width: 600px) {
+  .notice-modal { padding: 12px; }
+  .notice-modal-card { padding: 22px 18px; }
+}
+
 /* ============================================================
    BLOG — card grid (/blog/ + homepage), post page, share row
    ============================================================ */
