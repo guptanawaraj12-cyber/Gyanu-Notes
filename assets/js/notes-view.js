@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var hasInlineContent = false;
   var inlineHtml = null;
   var currentFileLabel = 'gyanu-notes';
+  var currentMeta = '';
   var bookmarkBtn = document.getElementById('bookmark-btn');
   var bookmarkActive = false;
 
@@ -75,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var subjectInfo = data.subjects.find(function (s) { return s.slug === found.subjectSlug; });
     var classLabel = classInfo ? classInfo.label : found.classSlug;
     var subjectLabel = subjectInfo ? subjectInfo.label : found.subjectSlug;
+    currentMeta = classLabel + ' · ' + subjectLabel;
 
     document.title = currentChapter.title + ' — Gyanu Notes';
     document.getElementById('page-title').textContent = currentChapter.title + ' — Gyanu Notes';
@@ -174,25 +176,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     downloadBtn.parentElement.style.display = 'inline-flex';
 
-    // Item 1 — the written notes: a free HTML file when the chapter is
+    // Item 1 — the written notes as a branded PDF when the chapter is
     // written on the site, otherwise the chapter's Drive PDF.
+    // Every download is for signed-in, verified accounts.
     dlNotes.style.display = htmlOk || pdfOk ? 'block' : 'none';
-    dlNotes.disabled = notesIsPdf && !verified;
+    dlNotes.disabled = !verified;
     dlNotes.innerHTML = notesIsPdf
       ? 'Download notes (PDF)<small>The full PDF of this chapter from Drive</small>'
-      : 'Download notes<small>The written notes on this page, as a file</small>';
+      : 'Download notes (PDF)<small>The written notes, branded and page-formatted</small>';
 
     // Item 2 — the handwritten Drive PDF (only when a link is set).
     dlHand.style.display = handOk ? 'block' : 'none';
     dlHand.disabled = !verified;
 
-    if (verified || htmlOk) {
+    if (verified) {
       gate.style.display = 'none';
     } else {
       gate.style.display = 'flex';
       gate.querySelector('p').textContent = currentUser
-        ? 'Verify your email address before downloading the Drive files.'
-        : 'Log in to download the Drive files. Viewing the preview above is free for everyone.';
+        ? 'Verify your email address before downloading.'
+        : 'Log in to download the notes. Viewing the preview above is free for everyone.';
       var verifyLink = gate.querySelector('a');
       if (currentUser) {
         verifyLink.textContent = 'Send verification email';
@@ -242,31 +245,88 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  function saveBlob(blob, filename) {
-    var url = URL.createObjectURL(blob);
-    var link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-  }
+  // Written notes → branded PDF. A static site cannot emit a real PDF file
+  // client-side without heavy rasterising libraries, so we build a clean A4
+  // print document (Gyanu Notes header + chapter content + footer) in a
+  // hidden iframe and open the print dialog — whose destination defaults to
+  // "Save as PDF" in Chrome and Edge.
+  function printBrandedNotesPdf() {
+    if (!inlineHtml || !currentChapter) return;
+    var title = currentChapter.title || 'Chapter notes';
+    var frame = document.createElement('iframe');
+    frame.setAttribute('aria-hidden', 'true');
+    frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden;';
+    document.body.appendChild(frame);
 
-  function safeFileName(title, extension) {
-    var clean = String(title || 'gyanu-notes').replace(/[^a-zA-Z0-9 ._-]/g, '').trim().slice(0, 80);
-    return (clean || 'gyanu-notes') + extension;
+    var doc = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
+      '<title>' + title + ' — Gyanu Notes</title><style>' +
+      '@page { size: A4; margin: 16mm 14mm; }' +
+      '* { box-sizing: border-box; }' +
+      'body { font-family: "Segoe UI", Arial, sans-serif; color: #1b1f24; margin: 0; line-height: 1.6; }' +
+      '.pdf-head { border-bottom: 2px solid #0e7490; padding-bottom: 10px; margin-bottom: 16px; }' +
+      '.brand-row img { height: 32px; vertical-align: middle; border-radius: 6px; }' +
+      '.brand-name { font-size: 19px; font-weight: 700; color: #0e7490; margin-left: 8px; vertical-align: middle; }' +
+      '.brand-tag { float: right; font-size: 10px; color: #5c636e; padding-top: 9px; }' +
+      '.pdf-head h1 { font-size: 20px; margin: 10px 0 2px; }' +
+      '.pdf-meta { font-size: 11px; color: #5c636e; margin: 0; }' +
+      'h2 { font-size: 16px; border-top: 1px solid #dfe3e8; margin: 18px 0 6px; padding-top: 10px; page-break-after: avoid; }' +
+      'h3 { font-size: 13.5px; margin: 13px 0 4px; page-break-after: avoid; }' +
+      'h4 { font-size: 12.5px; margin: 11px 0 4px; }' +
+      'p { font-size: 12px; margin: 6px 0; }' +
+      'ul, ol { font-size: 12px; margin: 6px 0; padding-left: 22px; }' +
+      'li { margin: 3px 0; }' +
+      'strong { color: #1b1f24; }' +
+      'sub, sup { font-size: 9px; }' +
+      '.formula-box, .definition-box, .highlight-box, .key-takeaway, .example-box, .note-box { border: 1px solid #dfe3e8; border-radius: 6px; padding: 8px 10px; margin: 10px 0; page-break-inside: avoid; background: #f7f9fa; }' +
+      '.key-takeaway { background: #e7f4f7; border-color: #0e7490; }' +
+      '.formula-box p { font-family: Georgia, "Times New Roman", serif; font-style: italic; }' +
+      '.def-term { font-weight: 700; color: #0e7490; }' +
+      'table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11.5px; page-break-inside: avoid; }' +
+      'th, td { border: 1px solid #cfd4da; padding: 5px 7px; text-align: left; }' +
+      'th { background: #eef2f4; }' +
+      'figure { margin: 12px auto; text-align: center; page-break-inside: avoid; }' +
+      'figure svg, figure img { max-width: 100%; height: auto; }' +
+      'figcaption { font-size: 10px; color: #5c636e; }' +
+      '.pdf-foot { margin-top: 22px; border-top: 1px solid #dfe3e8; padding-top: 7px; font-size: 9.5px; color: #5c636e; }' +
+      '</style></head><body>' +
+      '<header class="pdf-head">' +
+      '<div class="brand-row"><img src="/assets/images/logo.jpeg" alt="Gyanu Notes">' +
+      '<span class="brand-name">Gyanu Notes</span>' +
+      '<span class="brand-tag">Free notes &amp; past papers · nawarajgupta.com.np</span></div>' +
+      '<h1>' + title + '</h1>' +
+      '<p class="pdf-meta">' + (currentMeta ? currentMeta + ' — Chapter notes' : 'Chapter notes') + '</p>' +
+      '</header>' +
+      '<div class="pdf-body">' + inlineHtml + '</div>' +
+      '<footer class="pdf-foot">Downloaded from nawarajgupta.com.np — © 2026 Gyanu Notes. Free for personal study use.</footer>' +
+      '</body></html>';
+
+    frame.onload = function () {
+      var win = frame.contentWindow;
+      var cleaned = false;
+      var cleanup = function () {
+        if (cleaned) return;
+        cleaned = true;
+        setTimeout(function () { if (frame.parentNode) frame.parentNode.removeChild(frame); }, 400);
+      };
+      win.addEventListener('afterprint', cleanup);
+      setTimeout(cleanup, 120000); // safety net if afterprint never fires
+      win.focus();
+      win.print();
+    };
+    frame.srcdoc = doc;
   }
 
   document.getElementById('dl-notes').addEventListener('click', function () {
     if (this.disabled) return;
-    // Written notes: a free HTML file — no login needed, matches the page.
+    // Every download is for signed-in, verified accounts.
+    if (!currentUser || !currentUser.emailVerified) return;
+    // Written notes: build a branded, page-formatted PDF via the browser's
+    // save-as-PDF print flow.
     if (hasInlineContent && inlineHtml) {
-      saveBlob(new Blob([inlineHtml], { type: 'text/html;charset=utf-8' }), safeFileName(currentChapter.title, '.html'));
+      printBrandedNotesPdf();
       return;
     }
-    // Fallback for file-only chapters: secure Drive download (gated).
-    if (!currentUser || !currentUser.emailVerified) return;
+    // Fallback for file-only chapters: secure Drive download.
     var item = this;
     item.disabled = true;
     secureDownload({ type: 'note', id: currentChapter.id, name: currentChapter.title })
