@@ -98,6 +98,7 @@ async function loadAdmin() {
   fillEditors();
   fillContentPickers();
   loadNoticesList();
+  loadBlogList();
 }
 
 document.getElementById("save-notes").addEventListener("click", () => saveEditor("notes"));
@@ -382,5 +383,188 @@ document.getElementById("notice-list")?.addEventListener("click", async (event) 
     loadNoticesList();
   } catch (error) {
     message("notice-message", "Could not delete the notice: " + error.message, "error");
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Blog — full articles at /blog/. Doc id = url slug. Drafts stay private;
+// live posts are public. Publishing can also push a homepage notice.
+// ---------------------------------------------------------------------------
+
+let editingSlug = null;
+let slugTouched = false;
+
+function slugify(text) {
+  return String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+async function uniqueSlug(base) {
+  let candidate = base;
+  for (let n = 2; n < 30; n++) {
+    const snap = await getDoc(doc(db, "blogPosts", candidate));
+    if (!snap.exists()) return candidate;
+    candidate = base + "-" + n;
+  }
+  return base + "-" + Date.now().toString(36);
+}
+
+function resetBlogForm() {
+  editingSlug = null;
+  slugTouched = false;
+  document.getElementById("blog-form").reset();
+  document.getElementById("blog-slug").readOnly = false;
+  document.getElementById("blog-publish").textContent = "Publish post";
+  document.getElementById("blog-cancel").hidden = true;
+}
+
+async function saveBlogPost(published) {
+  const title = document.getElementById("blog-title").value.trim();
+  const excerpt = document.getElementById("blog-excerpt").value.trim();
+  const html = document.getElementById("blog-html").value;
+  const category = document.getElementById("blog-category").value;
+  const alsoNotice = document.getElementById("blog-notice").checked;
+  if (!title || !excerpt || (!editingSlug && !slugify(document.getElementById("blog-slug").value || title))) {
+    return message("blog-message", "Title, excerpt, and body are required.", "error");
+  }
+  try {
+    let slug;
+    let publishedAt;
+    if (editingSlug) {
+      slug = editingSlug;
+      const current = await getDoc(doc(db, "blogPosts", slug));
+      publishedAt = current.exists() ? current.data().publishedAt : serverTimestamp();
+    } else {
+      slug = await uniqueSlug(slugify(document.getElementById("blog-slug").value || title));
+      publishedAt = serverTimestamp();
+    }
+    await setDoc(doc(db, "blogPosts", slug), {
+      title,
+      slug,
+      excerpt,
+      html,
+      category,
+      published,
+      publishedAt,
+      updatedAt: serverTimestamp(),
+      createdBy: auth.currentUser.uid
+    });
+    let noticeNote = "";
+    if (published && alsoNotice) {
+      try {
+        await addDoc(collection(db, "notices"), {
+          title,
+          body: excerpt,
+          url: "/blog/post/?slug=" + slug,
+          pinned: false,
+          createdAt: serverTimestamp(),
+          createdBy: auth.currentUser.uid
+        });
+        loadNoticesList();
+        noticeNote = " A short notice was also added to the homepage board.";
+      } catch (noticeError) {
+        noticeNote = " The homepage notice failed: " + noticeError.message;
+      }
+    }
+    message("blog-message", published
+      ? "Published at /blog/post/?slug=" + slug + "." + noticeNote
+      : "Draft saved — it is not visible to visitors yet.", "success");
+    resetBlogForm();
+    loadBlogList();
+  } catch (error) {
+    message("blog-message", "Could not save the post: " + error.message, "error");
+  }
+}
+
+async function loadBlogList() {
+  const list = document.getElementById("blog-list");
+  if (!list) return;
+  try {
+    const snapshot = await getDocs(query(collection(db, "blogPosts"), orderBy("updatedAt", "desc"), limit(50)));
+    if (!snapshot.size) {
+      list.innerHTML = '<p class="muted">No posts yet. Write the first one above.</p>';
+      return;
+    }
+    list.innerHTML = "";
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const row = document.createElement("div");
+      row.className = "notice-item";
+      row.innerHTML =
+        '<div class="notice-info">' +
+        "<strong>" + escapeHtml(data.title || "") + "</strong>" +
+        ' <span class="tag">' + escapeHtml(data.category || "Blog") + "</span>" +
+        (data.published ? ' <span class="tag tag-live">Live</span>' : ' <span class="tag">Draft</span>') +
+        "<p>" + escapeHtml(data.excerpt || "") + "</p>" +
+        "</div>" +
+        '<div class="blog-admin-actions">' +
+        (data.published ? '<a class="btn btn-outline" href="/blog/post/?slug=' + encodeURIComponent(docSnap.id) + '">View</a>' : "") +
+        '<button class="btn btn-outline blog-edit" data-id="' + escapeHtml(docSnap.id) + '" type="button">Edit</button>' +
+        '<button class="btn btn-outline blog-del" data-id="' + escapeHtml(docSnap.id) + '" type="button">Delete</button>' +
+        "</div>";
+      list.appendChild(row);
+    });
+  } catch (error) {
+    list.innerHTML = '<p class="muted">Could not load posts: ' + escapeHtml(error.message) + "</p>";
+  }
+}
+
+document.getElementById("blog-title")?.addEventListener("input", () => {
+  if (!editingSlug && !slugTouched) {
+    document.getElementById("blog-slug").value = slugify(document.getElementById("blog-title").value);
+  }
+});
+
+document.getElementById("blog-slug")?.addEventListener("input", () => { slugTouched = true; });
+
+document.getElementById("blog-form")?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  saveBlogPost(true);
+});
+
+document.getElementById("blog-draft")?.addEventListener("click", () => saveBlogPost(false));
+
+document.getElementById("blog-cancel")?.addEventListener("click", () => {
+  resetBlogForm();
+  message("blog-message", "Editing cancelled.", "success");
+});
+
+document.getElementById("blog-list")?.addEventListener("click", async (event) => {
+  const edit = event.target.closest?.(".blog-edit");
+  const del = event.target.closest?.(".blog-del");
+  if (edit) {
+    try {
+      const snapshot = await getDoc(doc(db, "blogPosts", edit.dataset.id));
+      if (!snapshot.exists()) return message("blog-message", "That post no longer exists.", "error");
+      const data = snapshot.data();
+      editingSlug = snapshot.id;
+      document.getElementById("blog-title").value = data.title || "";
+      document.getElementById("blog-category").value = data.category || "Notice";
+      document.getElementById("blog-slug").value = snapshot.id;
+      document.getElementById("blog-slug").readOnly = true;
+      document.getElementById("blog-excerpt").value = data.excerpt || "";
+      document.getElementById("blog-html").value = data.html || "";
+      document.getElementById("blog-publish").textContent = "Update & publish";
+      document.getElementById("blog-cancel").hidden = false;
+      message("blog-message", "Editing “" + (data.title || snapshot.id) + "”. The URL slug stays fixed.", "success");
+      document.getElementById("blog-form").scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch (error) {
+      message("blog-message", "Could not load the post: " + error.message, "error");
+    }
+    return;
+  }
+  if (del) {
+    if (!window.confirm("Delete this blog post? This cannot be undone.")) return;
+    try {
+      await deleteDoc(doc(db, "blogPosts", del.dataset.id));
+      if (editingSlug === del.dataset.id) resetBlogForm();
+      message("blog-message", "Post deleted.", "success");
+      loadBlogList();
+    } catch (error) {
+      message("blog-message", "Could not delete the post: " + error.message, "error");
+    }
   }
 });

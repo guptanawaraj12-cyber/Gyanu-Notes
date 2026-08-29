@@ -1,11 +1,17 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Notes — Class 8 to 12 | Gyanu Notes</title>
-<meta name="description" content="Browse free study notes for Class 8-12 by class or subject. Mathematics, Physics, Chemistry, Biology, Computer Science, and English Literature.">
-<link rel="canonical" href="https://nawarajgupta.com.np/notes/" />
+<title>Blog post — Gyanu Notes</title>
+<meta name="description" content="Exam routines, results updates, notices, and study guides for Class 8-12 students in Nepal — from the Gyanu Notes team.">
+<link rel="canonical" href="https://nawarajgupta.com.np/blog/post/" />
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Gyanu Notes">
+<meta property="og:title" content="Blog post — Gyanu Notes">
+<meta property="og:description" content="Exam routines, results updates, notices, and study guides for Class 8-12 students in Nepal.">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/assets/images/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +20,6 @@
 <link rel="stylesheet" href="/assets/css/layout.css">
 <link rel="stylesheet" href="/assets/css/components.css">
 <link rel="stylesheet" href="/assets/css/utilities.css">
-
 </head>
 <body>
 
@@ -26,8 +31,9 @@
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/notes/" class="active">Notes</a></li>
-      <li><a href="/papers/">Papers</a></li><li><a href="/blog/">Blog</a></li>
+      <li><a href="/notes/">Notes</a></li>
+      <li><a href="/papers/">Papers</a></li>
+      <li><a href="/blog/" class="active">Blog</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
@@ -41,48 +47,29 @@
   </nav>
 </header>
 
-<main>
+<main class="page">
+  <div class="container prose-wrap">
+    <p class="crumbs"><a href="/blog/">&larr; All posts</a></p>
 
-  <section class="page-hero">
-    <div class="container">
-      <span class="eyebrow">Notes library</span>
-      <h1>Study notes for Class 8&ndash;12</h1>
-      <p class="lead">Pick a class or a subject below to see every chapter available.</p>
-
-      <form class="search-bar wide" role="search" style="margin-top: 26px; max-width: 480px;">
-        <label for="notes-search" class="sr-only">Search notes</label>
-        <input type="text" id="notes-search" placeholder="Search chapters, e.g. &quot;optics&quot; or &quot;polynomials&quot;">
-        <button type="submit">Search</button>
-      </form>
-    </div>
-  </section>
-
-  <section class="browse reveal">
-    <div class="container">
-      <div class="browse-grid">
-        <div class="browse-panel">
-          <h3>By class <span class="count">grade 8&ndash;12</span></h3>
-          <div class="ticket-grid" id="class-grid"></div>
-        </div>
-
-        <div class="browse-panel">
-          <h3>By subject <span class="count">6 subjects</span></h3>
-          <div class="subject-list" id="subject-list"></div>
-        </div>
+    <article id="post-article" hidden>
+      <p><span class="tag" id="post-category">Blog</span></p>
+      <h1 id="post-title"></h1>
+      <p class="blog-post-meta"><span id="post-date"></span></p>
+      <div class="chapter-content" id="post-body"></div>
+      <div class="share-row" id="share-row">
+        <button class="btn btn-outline" id="share-native" type="button">Share</button>
+        <button class="btn btn-outline" id="share-copy" type="button">Copy link</button>
+        <a class="btn btn-outline" id="share-x" href="#" target="_blank" rel="noopener">Share on X</a>
+        <a class="btn btn-outline" id="share-fb" href="#" target="_blank" rel="noopener">Facebook</a>
       </div>
-    </div>
-  </section>
+    </article>
 
-  <section class="updates reveal">
-    <div class="container">
-      <span class="eyebrow">Recently added</span>
-      <h2>Latest notes</h2>
-      <div class="updates-list" id="recent-notes-list">
-        <p style="color: var(--ink-faint); font-size: 0.92rem;">Loading recent notes…</p>
-      </div>
+    <div id="post-missing" hidden>
+      <h2>Post not found</h2>
+      <p>This post may have been removed, or the link is incomplete.</p>
+      <a class="btn btn-primary" href="/blog/">&larr; Back to the blog</a>
     </div>
-  </section>
-
+  </div>
 </main>
 
 <footer class="site-footer">
@@ -97,14 +84,21 @@
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/notes/">Notes</a></li>
-          <li><a href="/papers/">Past papers</a></li><li><a href="/blog/">Blog</a></li>
+          <li><a href="/papers/">Past papers</a></li>
+          <li><a href="/blog/">Blog</a></li>
           <li><a href="/about/">About us</a></li>
           <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
       <div>
         <h5>By class</h5>
-        <ul id="footer-class-links"></ul>
+        <ul>
+          <li><a href="/notes/class-8/">Class 8 notes</a></li>
+          <li><a href="/notes/class-9/">Class 9 notes</a></li>
+          <li><a href="/notes/class-10/">Class 10 notes</a></li>
+          <li><a href="/notes/class-11/">Class 11 notes</a></li>
+          <li><a href="/notes/class-12/">Class 12 notes</a></li>
+        </ul>
       </div>
       <div>
         <h5>Contact</h5>
@@ -116,6 +110,7 @@
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
       <span>© 2026 Gyanu Notes. All rights reserved.</span>
       <div class="legal-links">
@@ -129,6 +124,6 @@
 
 <script src="/assets/js/main.js"></script>
 <script type="module" src="/assets/js/auth-state.js"></script>
-<script type="module" src="/assets/js/notes-index.js"></script>
+<script type="module" src="/assets/js/blog.js"></script>
 </body>
 </html>
