@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/layout.css">
-<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/components.css?v=3">
 <link rel="stylesheet" href="/assets/css/utilities.css">
 
 </head>
@@ -49,7 +49,14 @@
       <div id="viewer-holder"></div>
 
       <div class="viewer-actions">
-        <button class="btn btn-primary" id="download-btn">Download PDF</button>
+        <div class="download-menu">
+          <button class="btn btn-primary" id="download-btn" aria-haspopup="true" aria-expanded="false" aria-controls="download-panel">Download ▾</button>
+          <div class="download-panel" id="download-panel">
+            <button class="dl-item" id="dl-notes" type="button">Download notes<small>The written notes on this page, as a file</small></button>
+            <button class="dl-item" id="dl-handwritten" type="button" style="display:none;">Download handwritten notes<small>The handwritten version of this chapter</small></button>
+          </div>
+        </div>
+        <button class="btn btn-outline" id="share-btn" type="button">Share</button>
         <button class="btn btn-outline" id="bookmark-btn" aria-pressed="false" style="display:none;">
           <span class="bm-star">☆</span> <span class="bm-label">Save</span>
         </button>
@@ -78,6 +85,6 @@
 
 <script src="/assets/js/main.js"></script>
 <script type="module" src="/assets/js/auth-state.js"></script>
-<script type="module" src="/assets/js/notes-view.js"></script>
+<script type="module" src="/assets/js/notes-view.js?v=2"></script>
 </body>
 </html>

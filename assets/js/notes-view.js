@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentChapter = null;
   var hasLoggedView = false;
   var hasInlineContent = false;
+  var inlineHtml = null;
+  var currentFileLabel = 'gyanu-notes';
   var bookmarkBtn = document.getElementById('bookmark-btn');
   var bookmarkActive = false;
 
@@ -62,7 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!found) {
       heading.textContent = 'Note not found';
       holder.innerHTML = '<div class="empty-state" style="padding: 40px 0; color: var(--ink-faint);">This chapter could not be found. It may have been moved or removed.</div>';
-      downloadBtn.style.display = 'none';
+      downloadBtn.parentElement.style.display = 'none';
+      var shareBtn = document.getElementById('share-btn');
+      if (shareBtn) shareBtn.style.display = 'none';
       return;
     }
 
@@ -85,12 +89,15 @@ document.addEventListener('DOMContentLoaded', function () {
     loadInlineContent().then(function (html) {
       if (html) {
         hasInlineContent = true;
+        inlineHtml = html;
         holder.innerHTML = '<div class="chapter-content">' + html + '</div>';
-        updateDownloadState();
-      } else {
+      } else if (validDriveId(currentChapter.driveFileId)) {
         var previewSrc = 'https://drive.google.com/file/d/' + currentChapter.driveFileId + '/preview';
         holder.innerHTML = '<iframe class="viewer-frame" src="' + previewSrc + '" allow="autoplay"></iframe>';
+      } else {
+        holder.innerHTML = '<div class="empty-state" style="padding: 40px 0; color: var(--ink-faint);">No preview or file is attached to this chapter yet.</div>';
       }
+      updateDownloadState();
     });
 
     updateDownloadState();
@@ -142,33 +149,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function validDriveId(value) {
+    return typeof value === 'string' && /^[-\w]{20,}$/.test(value.trim());
+  }
+
   function updateDownloadState() {
     var downloadBtn = document.getElementById('download-btn');
     var gate = document.getElementById('login-gate');
-    if (!currentChapter) return;
+    var dlNotes = document.getElementById('dl-notes');
+    var dlHand = document.getElementById('dl-handwritten');
+    if (!downloadBtn || !gate || !dlNotes || !dlHand || !currentChapter) return;
 
-    // With full inline notes there is no PDF to download — hide the flow.
-    if (hasInlineContent) {
+    var htmlOk = hasInlineContent && !!inlineHtml;
+    var handOk = validDriveId(currentChapter.handwrittenDriveId);
+    var pdfOk = validDriveId(currentChapter.driveFileId);
+    var notesIsPdf = !htmlOk && pdfOk;
+    var verified = !!(currentUser && currentUser.emailVerified);
+
+    // The menu appears whenever at least one downloadable file exists.
+    if (!htmlOk && !pdfOk && !handOk) {
+      downloadBtn.parentElement.style.display = 'none';
       gate.style.display = 'none';
-      downloadBtn.style.display = 'none';
       return;
     }
+    downloadBtn.parentElement.style.display = 'inline-flex';
 
-    if (currentUser && currentUser.emailVerified) {
+    // Item 1 — the written notes: a free HTML file when the chapter is
+    // written on the site, otherwise the chapter's Drive PDF.
+    dlNotes.style.display = htmlOk || pdfOk ? 'block' : 'none';
+    dlNotes.disabled = notesIsPdf && !verified;
+    dlNotes.innerHTML = notesIsPdf
+      ? 'Download notes (PDF)<small>The full PDF of this chapter from Drive</small>'
+      : 'Download notes<small>The written notes on this page, as a file</small>';
+
+    // Item 2 — the handwritten Drive PDF (only when a link is set).
+    dlHand.style.display = handOk ? 'block' : 'none';
+    dlHand.disabled = !verified;
+
+    if (verified || htmlOk) {
       gate.style.display = 'none';
-      downloadBtn.style.display = 'inline-flex';
-      downloadBtn.disabled = false;
-      downloadBtn.textContent = 'Download PDF';
-    } else if (currentUser) {
-      downloadBtn.style.display = 'none';
-      gate.style.display = 'flex';
-      gate.querySelector('p').textContent = 'Verify your email address before downloading this file.';
-      var verifyLink = gate.querySelector('a');
-      verifyLink.textContent = 'Send verification email';
-      verifyLink.setAttribute('href', '#');
     } else {
-      downloadBtn.style.display = 'none';
       gate.style.display = 'flex';
+      gate.querySelector('p').textContent = currentUser
+        ? 'Verify your email address before downloading the Drive files.'
+        : 'Log in to download the Drive files. Viewing the preview above is free for everyone.';
+      var verifyLink = gate.querySelector('a');
+      if (currentUser) {
+        verifyLink.textContent = 'Send verification email';
+        verifyLink.setAttribute('href', '#');
+      } else {
+        verifyLink.textContent = 'Log in';
+        verifyLink.setAttribute('href', '/login/');
+      }
     }
   }
 
@@ -188,25 +220,102 @@ document.addEventListener('DOMContentLoaded', function () {
     if (target) target.classList.add('active');
   });
 
-  document.getElementById('download-btn').addEventListener('click', function () {
-    if (!currentUser || !currentChapter || !currentUser.emailVerified) return;
-    var downloadBtn = document.getElementById('download-btn');
+  // Download menu: toggle, close on outside click / Esc, and the two items.
+  var menuBtn = document.getElementById('download-btn');
+  var menuPanel = document.getElementById('download-panel');
+  function closeMenu() {
+    if (!menuPanel) return;
+    menuPanel.classList.remove('open');
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  if (menuBtn && menuPanel) {
+    menuBtn.addEventListener('click', function (event) {
+      event.stopPropagation();
+      var open = menuPanel.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (event) {
+      if (!event.target.closest || !event.target.closest('.download-menu')) closeMenu();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeMenu();
+    });
+  }
 
-    // Secure download: the browser only sends the chapter id. The Cloud
-    // Function verifies the caller's ID token and verified email, looks up
-    // the real Drive file server-side, and streams the bytes through — so
-    // no reusable Drive link is ever exposed in the page source.
-    downloadBtn.disabled = true;
-    downloadBtn.textContent = 'Preparing download…';
+  function saveBlob(blob, filename) {
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+
+  function safeFileName(title, extension) {
+    var clean = String(title || 'gyanu-notes').replace(/[^a-zA-Z0-9 ._-]/g, '').trim().slice(0, 80);
+    return (clean || 'gyanu-notes') + extension;
+  }
+
+  document.getElementById('dl-notes').addEventListener('click', function () {
+    if (this.disabled) return;
+    // Written notes: a free HTML file — no login needed, matches the page.
+    if (hasInlineContent && inlineHtml) {
+      saveBlob(new Blob([inlineHtml], { type: 'text/html;charset=utf-8' }), safeFileName(currentChapter.title, '.html'));
+      return;
+    }
+    // Fallback for file-only chapters: secure Drive download (gated).
+    if (!currentUser || !currentUser.emailVerified) return;
+    var item = this;
+    item.disabled = true;
     secureDownload({ type: 'note', id: currentChapter.id, name: currentChapter.title })
       .catch(function (error) {
         window.alert(error.message || 'Download failed. Please try again later.');
       })
       .finally(function () {
-        downloadBtn.disabled = false;
-        downloadBtn.textContent = 'Download PDF';
+        item.disabled = false;
+        updateDownloadState();
       });
   });
+
+  document.getElementById('dl-handwritten').addEventListener('click', function () {
+    if (this.disabled || !currentUser || !currentUser.emailVerified) return;
+    var item = this;
+    item.disabled = true;
+    // Secure download: the browser only sends the chapter id. The Cloud
+    // Function verifies the caller, looks up the handwritten Drive file
+    // server-side, and streams the bytes through.
+    secureDownload({ type: 'noteHandwritten', id: currentChapter.id, name: currentChapter.title + ' handwritten' })
+      .catch(function (error) {
+        window.alert(error.message || 'Download failed. Please try again later.');
+      })
+      .finally(function () {
+        item.disabled = false;
+        updateDownloadState();
+      });
+  });
+
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      var shareData = {
+        title: document.title,
+        text: currentChapter ? currentChapter.title : 'Gyanu Notes',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(function () { /* visitor dismissed the sheet */ });
+      } else {
+        navigator.clipboard.writeText(shareData.url).then(function () {
+          shareBtn.textContent = 'Link copied ✓';
+          setTimeout(function () { shareBtn.textContent = 'Share'; }, 2000);
+        }).catch(function () {
+          window.prompt('Copy this link:', shareData.url);
+        });
+      }
+    });
+  }
 
   if (bookmarkBtn) {
     bookmarkBtn.addEventListener('click', function () {

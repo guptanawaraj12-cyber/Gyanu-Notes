@@ -10,7 +10,7 @@ import { auth } from "/assets/js/firebase-config.js";
 var DOWNLOAD_URL = "https://us-central1-gyanu-notes-6f6d8.cloudfunctions.net/downloadFile";
 
 export async function secureDownload(options) {
-  var type = options && options.type === "paper" ? "paper" : "note";
+  var type = options && (options.type === "paper" || options.type === "noteHandwritten") ? options.type : "note";
   var id = String((options && options.id) || "");
   var name = String((options && options.name) || "");
   if (!id) throw new Error("Nothing to download.");

@@ -2104,6 +2104,49 @@
   background: var(--accent-light);
 }
 
+/* Download menu (note viewer): one button opening the two file options */
+.download-menu {
+  position: relative;
+  display: inline-flex;
+}
+.download-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  min-width: 270px;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+.download-panel.open { display: flex; }
+.dl-item {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.dl-item:hover { background: var(--bg-soft); color: var(--accent); }
+.dl-item:disabled { color: var(--ink-faint); cursor: default; background: none; }
+.dl-item small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
 /* ---------- Notice popup (homepage notice board) ---------- */
 .update-row.notice-clickable { cursor: pointer; }
 

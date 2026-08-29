@@ -105,7 +105,9 @@ export const downloadFile = functions
 
     // 2. Resolve the requested catalogue entry (the client sends the note or
     //    paper id, never a Drive id).
-    const type = req.query.type === "paper" ? "paper" : "note";
+    const type =
+      req.query.type === "paper" ? "paper" :
+      req.query.type === "noteHandwritten" ? "noteHandwritten" : "note";
     const id = String(req.query.id || "").trim();
     if (!/^[-\w]{2,80}$/.test(id)) return deny(400, "Invalid file reference.");
 
@@ -114,10 +116,11 @@ export const downloadFile = functions
       return deny(503, "The catalogue has not been imported yet. Ask the administrator to run Import bundled data.");
     }
 
-    const record = findCatalogueRecord(snapshot.data(), type, id);
+    const record = findCatalogueRecord(snapshot.data(), type === "noteHandwritten" ? "note" : type, id);
     if (!record) return deny(404, "This file could not be found in the catalogue.");
 
-    const fileId = typeof record.driveFileId === "string" ? record.driveFileId : "";
+    const field = type === "noteHandwritten" ? "handwrittenDriveId" : "driveFileId";
+    const fileId = typeof record[field] === "string" ? record[field] : "";
     if (fileId === PLACEHOLDER_ID || !DRIVE_ID_PATTERN.test(fileId)) {
       return deny(404, "No downloadable file is attached to this entry yet.");
     }

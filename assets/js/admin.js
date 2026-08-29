@@ -109,8 +109,10 @@ document.getElementById('add-note-form').addEventListener('submit', async (event
   const subjectSlug = document.getElementById('note-subject').value;
   const title = document.getElementById('note-title').value.trim();
   const driveFileId = document.getElementById('note-drive-id').value.trim();
+  const handwrittenDriveId = document.getElementById('note-handwritten-id')?.value.trim() || "";
   const entry = content.notes.notes.find((note) => note.classSlug === classSlug && note.subjectSlug === subjectSlug);
   const chapter = { id: makeId([classSlug, subjectSlug, 'chapter']), title, driveFileId };
+  if (handwrittenDriveId) chapter.handwrittenDriveId = handwrittenDriveId;
   if (entry) entry.chapters.push(chapter);
   else content.notes.notes.push({ classSlug, subjectSlug, chapters: [chapter] });
   try {
@@ -256,6 +258,16 @@ async function loadChapterDoc() {
   const chapterId = document.getElementById("content-chapter")?.value;
   const editor = document.getElementById("content-editor");
   if (!chapterId || !editor) return;
+  // Fill the handwritten-Drive-link field from the live catalogue chapter.
+  const handwrittenInput = document.getElementById("content-handwritten");
+  const entry = contentEntry();
+  const catalogueChapter = entry?.chapters.find((chapter) => chapter.id === chapterId);
+  if (handwrittenInput) {
+    handwrittenInput.value =
+      catalogueChapter && typeof catalogueChapter.handwrittenDriveId === "string"
+        ? catalogueChapter.handwrittenDriveId
+        : "";
+  }
   editor.value = "";
   editor.placeholder = "Loading…";
   try {
@@ -314,6 +326,31 @@ document.getElementById("delete-content")?.addEventListener("click", async () =>
     loadChapterDoc();
   } catch (error) {
     message("content-message", "Could not remove: " + error.message, "error");
+  }
+});
+
+// Saves (or clears) the handwritten-notes Drive file ID on the catalogue
+// chapter. The download Cloud Function reads this field server-side.
+document.getElementById("save-handwritten")?.addEventListener("click", async () => {
+  const chapterId = document.getElementById("content-chapter").value;
+  const input = document.getElementById("content-handwritten");
+  if (!chapterId) return message("content-message", "Choose a chapter first.", "error");
+  if (!input) return;
+  const value = input.value.trim();
+  if (value && !/^[-\w]{20,}$/.test(value)) {
+    return message("content-message", "That does not look like a Drive file ID — paste the long ID from the file's share link, not the whole link.", "error");
+  }
+  const entry = contentEntry();
+  const chapter = entry?.chapters.find((item) => item.id === chapterId);
+  if (!chapter) return message("content-message", "Chapter not found in the live catalogue.", "error");
+  if (value) chapter.handwrittenDriveId = value;
+  else delete chapter.handwrittenDriveId;
+  try {
+    await saveContent();
+    fillEditors();
+    message("content-message", value ? "Handwritten Drive file linked to this chapter." : "Handwritten Drive file link removed.", "success");
+  } catch (error) {
+    message("content-message", "Could not save the handwritten link: " + error.message, "error");
   }
 });
 
