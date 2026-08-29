@@ -402,6 +402,13 @@ function slugify(text) {
     .slice(0, 80);
 }
 
+// Nepali/Devanagari titles slugify to an empty string — fall back to a
+// timestamp-based slug so publishing never blocks. Users can also type
+// their own English slug in the field.
+function ensureSlug(text) {
+  return slugify(text) || "post-" + Date.now().toString(36);
+}
+
 async function uniqueSlug(base) {
   let candidate = base;
   for (let n = 2; n < 30; n++) {
@@ -427,9 +434,9 @@ async function saveBlogPost(published) {
   const html = document.getElementById("blog-html").value;
   const category = document.getElementById("blog-category").value;
   const alsoNotice = document.getElementById("blog-notice").checked;
-  if (!title || !excerpt || (!editingSlug && !slugify(document.getElementById("blog-slug").value || title))) {
-    return message("blog-message", "Title, excerpt, and body are required.", "error");
-  }
+  if (!title) return message("blog-message", "Give the post a title first.", "error");
+  if (published && !excerpt) return message("blog-message", "Write a short excerpt before publishing.", "error");
+  if (published && !html.trim()) return message("blog-message", "Write the post body before publishing.", "error");
   try {
     let slug;
     let publishedAt;
@@ -438,7 +445,7 @@ async function saveBlogPost(published) {
       const current = await getDoc(doc(db, "blogPosts", slug));
       publishedAt = current.exists() ? current.data().publishedAt : serverTimestamp();
     } else {
-      slug = await uniqueSlug(slugify(document.getElementById("blog-slug").value || title));
+      slug = await uniqueSlug(ensureSlug(document.getElementById("blog-slug").value.trim() || title));
       publishedAt = serverTimestamp();
     }
     await setDoc(doc(db, "blogPosts", slug), {
