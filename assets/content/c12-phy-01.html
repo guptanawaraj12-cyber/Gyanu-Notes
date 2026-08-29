@@ -8,7 +8,7 @@
 <ul>
   <li>Define moment of inertia, radius of gyration, torque, angular momentum — in one clean line each.</li>
   <li>Derive I for a uniform rod about both standard axes by integration.</li>
-  <li>Derive rotational KE = ½Iω² and τ = Iα from first principles.</li>
+  <li>Derive rotational KE = ½Iω², τ = Iα, W = τθ and P = τω from first principles.</li>
   <li>State and explain conservation of angular momentum with real examples.</li>
   <li>Solve numericals mixing ω–θ–t, energy, and L-conservation.</li>
 </ul>
@@ -50,6 +50,7 @@
   <tbody>
     <tr><td>v = u + at</td><td>ω = ω₀ + αt</td></tr>
     <tr><td>s = ut + ½at²</td><td>θ = ω₀t + ½αt²</td></tr>
+    <tr><td>v² = u² + 2as</td><td>ω² = ω₀² + 2αθ</td></tr>
     <tr><td>F = ma</td><td>τ = Iα</td></tr>
     <tr><td>p = mv</td><td>L = Iω</td></tr>
     <tr><td>K = ½mv²</td><td>K = ½Iω²</td></tr>
@@ -78,6 +79,21 @@
 <div class="highlight-box"><strong>Memorise cold:</strong> the six standard moments of inertia — ring MR² · disc ½MR² · solid sphere (2/5)MR² · hollow sphere (2/3)MR² · rod centre ML²/12 · rod end ML²/3.</div>
 
 <h2>5. Derivations (NEB long-question favourites)</h2>
+<p>Every derivation below uses exactly the same symbols as your NEB textbook — keep this key beside you while you practise:</p>
+<table class="chapter-table">
+  <thead><tr><th>Symbol</th><th>Meaning</th><th>SI unit</th></tr></thead>
+  <tbody>
+    <tr><td>θ</td><td>angular displacement (angle turned)</td><td>rad</td></tr>
+    <tr><td>ω, ω₀</td><td>angular velocity; ω₀ = its initial value</td><td>rad/s</td></tr>
+    <tr><td>α</td><td>angular acceleration</td><td>rad/s²</td></tr>
+    <tr><td>τ</td><td>torque (turning effect of a force)</td><td>N·m</td></tr>
+    <tr><td>I</td><td>moment of inertia</td><td>kg·m²</td></tr>
+    <tr><td>k</td><td>radius of gyration (I = Mk²)</td><td>m</td></tr>
+    <tr><td>L</td><td>angular momentum (L = Iω)</td><td>kg·m²/s</td></tr>
+    <tr><td>W, P</td><td>work done by a torque; power</td><td>J, W</td></tr>
+    <tr><td>M, l, m, r</td><td>mass and length of the body; mass of one particle and its distance from the axis</td><td>kg, m</td></tr>
+  </tbody>
+</table>
 
 <h3>Derivation 1 — Relation between linear and angular quantities: v = rω</h3>
 <p>A particle at distance r from the axis moves along a circle. When the body turns through angle θ (in radians), the arc length travelled is s = rθ.</p>
@@ -97,26 +113,35 @@
 <p class="step">Let the rigid body rotate with angular velocity ω. A particle m₁ at distance r₁ moves with speed v₁ = r₁ω (all points share the same ω).</p>
 <p class="step">Its kinetic energy: K₁ = ½m₁v₁² = ½m₁(r₁ω)² = ½m₁r₁²ω².</p>
 <p class="step">Total kinetic energy is the sum over all particles:</p>
-<p class="step">K = ½m₁r₁²ω² + ½m₂r₂²ω² + … = ½(Σmr²) ω²</p>
+<div class="formula-box"><p>K = ½m₁r₁²ω² + ½m₂r₂²ω² + … = ½ (Σ m r²) ω²</p><span class="formula-label">every particle shares the same ω, so it comes out of the sum</span></div>
 <div class="formula-box"><p>K = ½ I ω²</p><span class="formula-label">rotational kinetic energy of a rigid body</span></div>
 <p><strong>Note for exams:</strong> write the sum symbol (Σ) explicitly before collapsing it into I — examiners award marks for that step.</p>
 
-<h3>Derivation 4 — Moment of inertia of a uniform rod about a perpendicular axis through its centre: I = Ml²/12</h3>
+<h3>Derivation 4 — Moment of inertia of a thin uniform rod about a perpendicular axis through its centre: I = Ml²/12</h3>
 <p class="step">Let the rod have mass M and length l, with axis YY′ through the centre C, perpendicular to its length.</p>
 <p class="step">Mass per unit length = M/l. Take a tiny element of length dx at distance x from C. Its mass: dm = (M/l)dx.</p>
 <p class="step">Its contribution to I about the axis: dI = dm·x² = (M/l)x²dx.</p>
 <p class="step">Integrate x from −l/2 to +l/2 to cover the whole rod:</p>
 <div class="formula-box"><p>I = (M/l) ∫<sub>−l/2</sub><sup>l/2</sup> x² dx = (M/l)[x³/3] from −l/2 to l/2</p></div>
-<p class="step">I = (M/l)·[(l³/8)/3 − (−l³/8)/3] = (M/l)(l³/12)</p>
+<div class="formula-box"><p>I = (M/l) [x³/3]<sub>−l/2</sub><sup>+l/2</sup> = (M/l) ( l³/24 + l³/24 ) = (M/l) · l³/12</p><span class="formula-label">evaluating the limits: (l/2)³/3 = l³/24</span></div>
 <div class="formula-box"><p>I = Ml²/12</p><span class="formula-label">axis through centre, ⊥ to length</span></div>
 
 <h3>Derivation 5 — Same rod about an axis through one end: I = Ml²/3</h3>
 <p class="step">Same setup, but now integrate x from 0 to l (the axis passes through end A):</p>
-<p class="step">I = (M/l)∫₀ˡ x² dx = (M/l)(l³/3)</p>
+<div class="formula-box"><p>I = (M/l) ∫<sub>0</sub><sup>l</sup> x² dx = (M/l) [x³/3]<sub>0</sub><sup>l</sup> = (M/l) · l³/3</p><span class="formula-label">evaluating the limits: l³/3 − 0 = l³/3</span></div>
 <div class="formula-box"><p>I = Ml²/3</p><span class="formula-label">axis through one end, ⊥ to length</span></div>
 <p class="step"><strong>Shortcut check:</strong> by the parallel-axis theorem I<sub>end</sub> = I<sub>cm</sub> + Md² = Ml²/12 + M(l/2)² = Ml²/12 + Ml²/4 = Ml²/3 ✓ — quoting this cross-check in exams earns credit.</p>
 
-<h3>Derivation 6 — Angular momentum L = Iω and its conservation</h3>
+<h3>Derivation 6 — Work and power in rotational motion: W = τθ and P = τω</h3>
+<p class="step">Let a force act on a particle of the body at distance r from the axis, directed along its tangent. When the body turns through a small angle dθ, that particle moves along its arc by ds = r dθ.</p>
+<p class="step">Work done on this one particle: dW = F ds = F (r dθ) = (r F) dθ = τ dθ, since the torque of the tangential force is τ = rF.</p>
+<p class="step">For a constant torque turning the whole body through a total angle θ, summing over every particle gives:</p>
+<div class="formula-box"><p>W = τ θ</p><span class="formula-label">work done by a constant torque — the rotational twin of W = Fs</span></div>
+<p class="step">Power is the rate of doing work. Differentiating W = τθ with respect to time (τ constant):</p>
+<div class="formula-box"><p>P = dW/dt = τ dθ/dt = τ ω</p><span class="formula-label">instantaneous power — the rotational twin of P = Fv</span></div>
+<p class="step"><strong>Work–energy check:</strong> using τ = Iα and ω² = ω₀² + 2αθ, W = τθ = Iαθ = ½Iω² − ½Iω₀² — exactly the change in rotational kinetic energy. Quoting this cross-check in the exam earns extra credit.</p>
+
+<h3>Derivation 7 — Angular momentum L = Iω and its conservation</h3>
 <p class="step">A particle m₁ at r₁ has linear momentum p₁ = m₁v₁ = m₁r₁ω. Its angular momentum about the axis is L₁ = p₁r₁ = m₁r₁²ω.</p>
 <p class="step">Summing over all particles: L = Σmr²ω = ω Σmr² (ω is same for every particle).</p>
 <div class="formula-box"><p>L = I ω</p><span class="formula-label">angular momentum of a rigid body</span></div>
@@ -174,8 +199,9 @@ K₁ = ½×6×4 = 12 J; K₂ = ½×2×36 = 36 J → KE <strong>triples</strong>.
 <h3>Long questions (derivations — 5+ marks)</h3>
 <p class="step"><strong>Q5. Show that the kinetic energy of a rotating rigid body is ½Iω².</strong> → <em>Write Derivation 3 above in full.</em></p>
 <p class="step"><strong>Q6. Derive an expression for the moment of inertia of a uniform rod about an axis through one end perpendicular to its length.</strong> → <em>Derivation 5 (add Derivation 4 as the centre case if asked "about both axes").</em></p>
-<p class="step"><strong>Q7. State and prove the law of conservation of angular momentum. Give one example.</strong> → <em>Derivation 6 + any skater/diver/planet illustration.</em></p>
+<p class="step"><strong>Q7. State and prove the law of conservation of angular momentum. Give one example.</strong> → <em>Derivation 7 + any skater/diver/planet illustration.</em></p>
 <p class="step"><strong>Q8. Prove τ = Iα.</strong> → <em>Derivation 2.</em></p>
+<p class="step"><strong>Q9. Derive expressions for the work done and the power developed in rotational motion.</strong> → <em>Derivation 6.</em></p>
 
 <div class="highlight-box"><strong>Answer-writing tips:</strong> start derivations by defining every symbol; keep the Σ step visible before replacing it with I; draw the rod-with-axis sketch for MOI questions (1 mark is often for the figure); end numericals with units boxed in the final answer.</div>
 
@@ -192,12 +218,12 @@ K₁ = ½×6×4 = 12 J; K₂ = ½×2×36 = 36 J → KE <strong>triples</strong>.
   <li>1 rpm = 2π/60 rad/s · always convert rpm before kinematics formulas.</li>
   <li>Skater pulls arms in → I↓ → ω↑ → L constant (KE rises: muscle work).</li>
   <li>Parallel-axis theorem: I = I<sub>cm</sub> + Md² (cross-checks rod results).</li>
-  <li>Most-asked derivations: K = ½Iω² · τ = Iα · rod MOI (both axes) · L-conservation statement + example.</li>
+  <li>Most-asked derivations: K = ½Iω² · τ = Iα · rod MOI (both axes) · L-conservation statement + example · work and power: W = τθ, P = τω</li>
 </ul>
 
 <div class="key-takeaway">
   <div class="takeaway-icon">🎯</div>
-  <p><strong>Last-minute strategy:</strong> memorise Section 4's table cold, rehearse Derivations 3–6 on paper twice, and re-solve Types 1–5 numericals once the night before the exam. That combination has historically covered nearly every question NEB asks from this unit.</p>
+  <p><strong>Last-minute strategy:</strong> memorise Section 4's table cold, rehearse Derivations 3–7 on paper twice, and re-solve Types 1–5 numericals once the night before the exam. That combination has historically covered nearly every question NEB asks from this unit.</p>
 </div>
 
 
