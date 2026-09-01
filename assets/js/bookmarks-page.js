@@ -5,6 +5,16 @@ import { auth } from "/assets/js/firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { getBookmarks, removeBookmark } from "/assets/js/bookmarks.js";
 
+// Only relative paths and https links are allowed as bookmark targets, so a
+// tampered bookmark document can never become a javascript: URL.
+function safeUrl(url) {
+  if (typeof url !== 'string') return null;
+  var value = url.trim();
+  if (value.charAt(0) === '/') return value;
+  if (/^https:\/\//i.test(value)) return value;
+  return null;
+}
+
 onAuthStateChanged(auth, function (user) {
   if (!user) {
     window.location.href = '/login/';
@@ -31,8 +41,13 @@ function render(items, uid) {
 
     var link = document.createElement('a');
     link.className = 'bm-link';
-    link.href = item.url;
-    link.innerHTML = '<span class="type-tag">' + item.type + '</span>' + item.title;
+    var target = safeUrl(item.url);
+    if (target) link.href = target;
+    var tag = document.createElement('span');
+    tag.className = 'type-tag';
+    tag.textContent = item.type || 'Item';
+    link.appendChild(tag);
+    link.appendChild(document.createTextNode(item.title || 'Untitled'));
     row.appendChild(link);
 
     var remove = document.createElement('button');

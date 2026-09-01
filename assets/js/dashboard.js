@@ -7,6 +7,16 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase
 import { getRecentHistory, countHistory, clearHistory } from "/assets/js/history.js";
 import { getBookmarkCount, getBookmarks } from "/assets/js/bookmarks.js";
 
+// Only relative paths and https links are allowed as targets, so user-stored
+// urls can never become javascript: links; titles render via textContent.
+function safeUrl(url) {
+  if (typeof url !== 'string') return null;
+  var value = url.trim();
+  if (value.charAt(0) === '/') return value;
+  if (/^https:\/\//i.test(value)) return value;
+  return null;
+}
+
 function timeAgo(isoOrTimestamp) {
   if (!isoOrTimestamp) return '';
   var date = isoOrTimestamp.toDate ? isoOrTimestamp.toDate() : new Date(isoOrTimestamp);
@@ -67,6 +77,7 @@ onAuthStateChanged(auth, function (user) {
 
 function renderClassLinks(classLevel) {
   var holder = document.getElementById('class-links');
+  if (!/^[0-9]+$/.test(String(classLevel))) return; // user input — digits only ever form a link
   function card(href, label, title) {
     return '<a class="class-quick-card" href="' + href + '">' +
       '<div class="cq-label">' + label + '</div>' +
@@ -91,8 +102,16 @@ function renderBookmarks(items) {
   items.forEach(function (item) {
     var row = document.createElement('div');
     row.className = 'bookmark-row';
-    row.innerHTML =
-      '<a class="bm-link" href="' + item.url + '"><span class="type-tag">' + item.type + '</span>' + item.title + '</a>';
+    var link = document.createElement('a');
+    link.className = 'bm-link';
+    var target = safeUrl(item.url);
+    if (target) link.href = target;
+    var tag = document.createElement('span');
+    tag.className = 'type-tag';
+    tag.textContent = item.type || 'Item';
+    link.appendChild(tag);
+    link.appendChild(document.createTextNode(item.title || 'Untitled'));
+    row.appendChild(link);
     list.appendChild(row);
   });
 
@@ -137,7 +156,8 @@ function renderHistory(items) {
 
   var latest = items[0];
   continueTitle.textContent = latest.title;
-  continueLink.setAttribute('href', latest.url);
+  var continueUrl = safeUrl(latest.url);
+  if (continueUrl) continueLink.setAttribute('href', continueUrl);
   continueCard.style.display = 'flex';
 
   var rest = items.slice(1);
@@ -150,11 +170,21 @@ function renderHistory(items) {
 
   rest.forEach(function (item) {
     var row = document.createElement('a');
-    row.href = item.url;
+    var target = safeUrl(item.url);
+    if (target) row.href = target;
     row.className = 'history-row';
-    row.innerHTML =
-      '<span class="title"><span class="type-tag">' + item.type + '</span>' + item.title + '</span>' +
-      '<span class="time">' + timeAgo(item.viewedAt) + '</span>';
+    var title = document.createElement('span');
+    title.className = 'title';
+    var tag = document.createElement('span');
+    tag.className = 'type-tag';
+    tag.textContent = item.type || 'Item';
+    title.appendChild(tag);
+    title.appendChild(document.createTextNode(item.title || 'Untitled'));
+    var time = document.createElement('span');
+    time.className = 'time';
+    time.textContent = timeAgo(item.viewedAt);
+    row.appendChild(title);
+    row.appendChild(time);
     historyList.appendChild(row);
   });
 }

@@ -1,8 +1,7 @@
 import { auth, db } from "/assets/js/firebase-config.js";
 import { getSiteContent } from "/assets/js/content-store.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc, setDoc, deleteDoc, addDoc, collection, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-functions.js";
+import { doc, getDoc, setDoc, deleteDoc, addDoc, collection, getDocs, query, orderBy, limit, where, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const contentRef = doc(db, "siteContent", "current");
 let content = null;
@@ -155,12 +154,22 @@ document.getElementById("import-bundled").addEventListener("click", async () => 
 });
 
 async function setRole(enabled) {
-  const email = document.getElementById("role-email").value.trim();
+  const email = document.getElementById("role-email").value.trim().toLowerCase();
   if (!email) return message("role-message", "Enter the account email first.", "error");
   try {
-    const setAdminRole = httpsCallable(getFunctions(), "setAdminRole");
-    await setAdminRole({ email, enabled });
-    message("role-message", enabled ? "Administrator role granted." : "Administrator role revoked.", "success");
+    const matches = await getDocs(query(collection(db, "users"), where("email", "==", email), limit(5)));
+    let updated = 0;
+    for (const snap of matches.docs) {
+      if (snap.id === auth.currentUser.uid) continue; // an admin never changes their own role here
+      await updateDoc(doc(db, "users", snap.id), { admin: enabled });
+      updated++;
+    }
+    if (!updated) {
+      message("role-message", "No other account with that email was found. The user must sign up first.", "error");
+    } else {
+      message("role-message", (enabled ? "Administrator role granted" : "Administrator role revoked") +
+        " for " + updated + " account(s). The user must sign out and back in.", "success");
+    }
   } catch (error) {
     message("role-message", "Role update failed: " + (error.message || "try again."), "error");
   }
