@@ -1,4 +1,4 @@
-import { auth, db } from "/assets/js/firebase-config.js";
+import { auth, db } from "/assets/js/firebase-config.js?v=2";
   import {
     createUserWithEmailAndPassword,
     updateProfile,
@@ -63,7 +63,7 @@ import { auth, db } from "/assets/js/firebase-config.js";
     var password = document.getElementById('password').value;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Creating account…';
+    submitBtn.textContent = 'Creating accountâ€¦';
     form.dataset.submitting = 'true';
 
     createUserWithEmailAndPassword(auth, email, password)

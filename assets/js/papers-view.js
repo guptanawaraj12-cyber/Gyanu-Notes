@@ -1,6 +1,6 @@
-// Gyanu Notes — paper viewer: loads paper data, shows preview, gates download behind login
+// Gyanu Notes â€” paper viewer: loads paper data, shows preview, gates download behind login
 
-import { auth } from "/assets/js/firebase-config.js";
+import { auth } from "/assets/js/firebase-config.js?v=2";
 import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { logView } from "/assets/js/history.js";
 import { getPapersData } from "/assets/js/content-store.js";
@@ -54,11 +54,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var subjectInfo = data.subjects.find(function (s) { return s.slug === entry.subjectSlug; });
     var classLabel = classInfo ? classInfo.label : entry.classSlug;
     var subjectLabel = subjectInfo ? subjectInfo.label : entry.subjectSlug;
-    var titleText = classLabel + ' ' + subjectLabel + ' ' + entry.year + ' — ' + currentSet.label;
+    var titleText = classLabel + ' ' + subjectLabel + ' ' + entry.year + ' â€” ' + currentSet.label;
     currentTitleText = titleText;
 
-    document.title = titleText + ' — Gyanu Notes';
-    document.getElementById('page-title').textContent = titleText + ' — Gyanu Notes';
+    document.title = titleText + ' â€” Gyanu Notes';
+    document.getElementById('page-title').textContent = titleText + ' â€” Gyanu Notes';
     heading.textContent = titleText;
     breadcrumb.innerHTML =
       '/ <a href="/papers/' + entry.classSlug + '/">' + classLabel + '</a>' +
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!bookmarkBtn) return;
     var star = bookmarkBtn.querySelector('.bm-star');
     var label = bookmarkBtn.querySelector('.bm-label');
-    if (star) star.textContent = bookmarkActive ? '★' : '☆';
+    if (star) star.textContent = bookmarkActive ? 'â˜…' : 'â˜†';
     if (label) label.textContent = bookmarkActive ? 'Saved' : 'Save';
     bookmarkBtn.classList.toggle('is-active', bookmarkActive);
     bookmarkBtn.setAttribute('aria-pressed', bookmarkActive ? 'true' : 'false');
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Direct Drive download (login-gated client-side, same as notes-view.js).
     downloadBtn.disabled = true;
-    downloadBtn.textContent = 'Preparing download…';
+    downloadBtn.textContent = 'Preparing downloadâ€¦';
     secureDownload({ fileId: currentSet.driveFileId, name: currentTitleText })
       .catch(function (error) {
         window.alert(error.message || 'Download failed. Please try again later.');

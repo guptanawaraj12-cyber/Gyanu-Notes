@@ -1,6 +1,6 @@
 // Notice board: renders admin-published notices on the homepage. The static
 // rows already in the HTML stay as the fallback when Firestore has none.
-import { db } from "/assets/js/firebase-config.js";
+import { db } from "/assets/js/firebase-config.js?v=2";
 import { collection, getDocs, limit, query, orderBy } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 function escapeHtml(text) {
@@ -47,7 +47,7 @@ async function renderNotices() {
       return Object.assign({ id: docSnap.id }, docSnap.data());
     });
   } catch (error) {
-    return; // rules blocked, offline, or empty — keep the static fallback rows
+    return; // rules blocked, offline, or empty â€” keep the static fallback rows
   }
 
   if (!notices.length) return;

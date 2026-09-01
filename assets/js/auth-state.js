@@ -1,6 +1,6 @@
-// Gyanu Notes — reflects login state in the navbar on every page
+// Gyanu Notes â€” reflects login state in the navbar on every page
 
-import { auth, db } from "/assets/js/firebase-config.js";
+import { auth, db } from "/assets/js/firebase-config.js?v=2";
 import { onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
@@ -83,11 +83,11 @@ onAuthStateChanged(auth, async function (user) {
       verifyBtn.textContent = "Resend verification email";
       verifyBtn.addEventListener("click", function () {
         verifyBtn.disabled = true;
-        verifyBtn.textContent = "Sending…";
+        verifyBtn.textContent = "Sendingâ€¦";
         sendEmailVerification(user).then(function () {
-          verifyBtn.textContent = "Sent — check your inbox";
+          verifyBtn.textContent = "Sent â€” check your inbox";
         }).catch(function () {
-          verifyBtn.textContent = "Could not send — try again";
+          verifyBtn.textContent = "Could not send â€” try again";
           verifyBtn.disabled = false;
         });
       });
@@ -106,7 +106,7 @@ onAuthStateChanged(auth, async function (user) {
       }
     } catch (err) {
       // Non-critical: if the profile can't be read, the admin link simply
-      // doesn't appear — the rest of the menu stays fully functional.
+      // doesn't appear â€” the rest of the menu stays fully functional.
     }
 
     var logoutLink = document.createElement("a");

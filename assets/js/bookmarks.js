@@ -1,9 +1,9 @@
-// Gyanu Notes — bookmarks data layer
+// Gyanu Notes â€” bookmarks data layer
 // Stored under: bookmarks/{uid}/items/{contentId}
 // The document id is the note chapter id or paper set id, so saving a viewer
 // is an idempotent add/remove toggle (rules forbid partial updates).
 
-import { db } from "/assets/js/firebase-config.js";
+import { db } from "/assets/js/firebase-config.js?v=2";
 import {
   doc, setDoc, deleteDoc, getDoc,
   collection, query, orderBy, getDocs, getCountFromServer, serverTimestamp

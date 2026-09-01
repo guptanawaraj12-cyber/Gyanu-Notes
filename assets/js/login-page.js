@@ -1,4 +1,4 @@
-import { auth, db } from "/assets/js/firebase-config.js";
+import { auth, db } from "/assets/js/firebase-config.js?v=2";
   import {
     signInWithEmailAndPassword,
     GoogleAuthProvider,
@@ -64,7 +64,7 @@ import { auth, db } from "/assets/js/firebase-config.js";
     var email = document.getElementById('email').value.trim();
     var password = document.getElementById('password').value;
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Logging in…';
+    submitBtn.textContent = 'Logging inâ€¦';
 
     signInWithEmailAndPassword(auth, email, password)
       .then(function (cred) {

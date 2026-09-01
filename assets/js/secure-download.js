@@ -1,7 +1,7 @@
-// Gyanu Notes — download gate (client-side, free-plan friendly).
+// Gyanu Notes â€” download gate (client-side, free-plan friendly).
 // Downloads are allowed only for signed-in visitors with a verified email.
 // The chapter/paper Drive file IDs are already public: the same IDs power
-// the on-page preview iframes, so this flow exposes nothing new — it simply
+// the on-page preview iframes, so this flow exposes nothing new â€” it simply
 // packages the file as a one-click download instead of a preview.
 //
 // The earlier design streamed bytes through a Cloud Function so the Drive
@@ -9,7 +9,7 @@
 // on the free Spark plan the function cannot deploy, so downloads point
 // straight at Drive's public download endpoint instead.
 
-import { auth } from "/assets/js/firebase-config.js";
+import { auth } from "/assets/js/firebase-config.js?v=2";
 
 var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;
 

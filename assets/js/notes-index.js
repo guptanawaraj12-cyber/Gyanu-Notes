@@ -1,6 +1,6 @@
-// Gyanu Notes — renders the /notes/ landing page from editable site content
+// Gyanu Notes â€” renders the /notes/ landing page from editable site content
 import { getNotesData } from "/assets/js/content-store.js";
-import { auth } from "/assets/js/firebase-config.js";
+import { auth } from "/assets/js/firebase-config.js?v=2";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { getRecentHistory } from "/assets/js/history.js";
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
       subjectList.appendChild(a);
     });
 
-    // recent notes — flatten chapters, take a handful
+    // recent notes â€” flatten chapters, take a handful
     var recent = [];
     data.notes.forEach(function (entry) {
       entry.chapters.forEach(function (ch) {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var subjectLabel = data.subjects.find(function (s) { return s.slug === item.subjectSlug; });
       row.innerHTML =
         '<span class="update-date">' + (classLabel ? classLabel.label : '') + '</span>' +
-        '<span class="update-title">' + item.title + ' <span style="color: var(--ink-faint); font-weight: 400;">— ' + (subjectLabel ? subjectLabel.label : '') + '</span></span>' +
+        '<span class="update-title">' + item.title + ' <span style="color: var(--ink-faint); font-weight: 400;">â€” ' + (subjectLabel ? subjectLabel.label : '') + '</span></span>' +
         '<a href="/notes/' + item.classSlug + '/' + item.subjectSlug + '/">View &rarr;</a>';
       recentList.appendChild(row);
     });

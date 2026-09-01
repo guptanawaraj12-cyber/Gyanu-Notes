@@ -1,7 +1,7 @@
-﻿// Gyanu Notes — dashboard: welcome header, continue-where-left-off,
+// Gyanu Notes — dashboard: welcome header, continue-where-left-off,
 // stats row, class quick links, latest bookmarks and recent activity.
 
-import { auth, db } from "/assets/js/firebase-config.js";
+import { auth, db } from "/assets/js/firebase-config.js?v=2";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import { getRecentHistory, countHistory, clearHistory } from "/assets/js/history.js";

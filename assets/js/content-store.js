@@ -1,6 +1,6 @@
 // Shared content source. Firestore is the editable production source; the
 // checked-in JSON files provide a safe fallback before first migration.
-import { db } from "/assets/js/firebase-config.js";
+import { db } from "/assets/js/firebase-config.js?v=2";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 async function bundled(path) {
