@@ -70,6 +70,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   background: #fff;
   border: 1.5px solid var(--border-strong);
   border-radius: 100px;
@@ -88,8 +89,9 @@
 }
 
 .search-bar input {
-  flex: 1;
+  flex: 1 1 0%;
   min-width: 0;
+  max-width: 100%;
   border: none;
   background: transparent;
   font-family: var(--font-body);
@@ -152,8 +154,9 @@
 }
 
 .search-box input {
-  flex: 1;
+  flex: 1 1 0%;
   min-width: 0;
+  max-width: 100%;
   border: none;
   background: transparent;
   padding: 10px 8px;
