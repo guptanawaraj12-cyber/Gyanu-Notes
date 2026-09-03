@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function render(data) {
     var cardsHolder = document.getElementById('class-cards');
     var footerClassLinks = document.getElementById('footer-class-links');
+    cardsHolder.innerHTML = ''; // wipe skeleton placeholders before rendering
 
     data.classExamTypes.forEach(function (c) {
       var num = c.label.replace(/\D/g, '');

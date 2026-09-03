@@ -2387,3 +2387,122 @@
   border-radius: var(--radius);
   border: 1px solid var(--border);
 }
+
+/* ============================================================
+   SKELETON LOADING PLACEHOLDERS — pulsing blocks shown while
+   Firestore content loads. Render scripts wipe them when real
+   content arrives (containers are cleared / headings get text).
+   ============================================================ */
+.skeleton {
+  display: block;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; opacity: 0.75; }
+}
+
+/* heading + lead placeholders — wiped when the script sets textContent */
+.sk-heading { height: 0.72em; width: min(22ch, 72%); border-radius: 0.16em; }
+.sk-sub { height: 0.85rem; width: min(48ch, 86%); margin-top: 10px; }
+
+/* list rows — /notes/ recent list (mirrors the .update-row grid) */
+.sk-row {
+  display: grid;
+  grid-template-columns: 92px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--border);
+}
+.sk-lines { display: grid; gap: 7px; min-width: 0; }
+.skeleton-line { height: 13px; }
+.sk-date, .sk-link { width: 58px; height: 13px; }
+
+/* subject / chapter rows (class + subject pages) */
+.sk-item {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 18px;
+}
+.sk-item .sk-w { width: 46%; height: 14px; }
+.sk-item .sk-a { width: 18px; height: 14px; }
+
+/* class catalogue cards (papers index) — children of .class-cards grid */
+.sk-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 10px;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.sk-card .sk-num { width: 34px; height: 34px; border-radius: 10px; }
+.sk-card .sk-label { width: 64%; height: 13px; }
+
+/* paper result cards — children of .results-grid */
+.sk-paper {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-height: 150px;
+}
+.sk-paper .sk-w1 { width: 40%; height: 14px; }
+.sk-paper .sk-w2 { width: 26%; height: 12px; }
+
+/* Drive preview area (notes + papers viewers) */
+.sk-viewer {
+  width: 100%;
+  height: min(62vh, 560px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* blog cards — children of .blog-grid */
+.sk-blog {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.sk-blog .sk-cover { height: 118px; border-radius: var(--radius-sm); }
+.sk-blog .sk-w1 { width: 32%; height: 12px; }
+.sk-blog .sk-w2 { width: 88%; height: 15px; }
+
+/* dashboard / bookmarks rows */
+.sk-line-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+.sk-tag { width: 46px; height: 12px; flex: none; }
+.sk-line { flex: 1; height: 13px; min-width: 0; }
+.sk-time { width: 64px; height: 12px; flex: none; }

@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var subjectCount = document.getElementById('subject-count');
     if (subjectCount) subjectCount.textContent = data.subjects.length + ' subjects';
 
+    // wipe skeleton placeholders (and any stale content) before rendering
+    classGrid.innerHTML = '';
+    subjectList.innerHTML = '';
+
     // class cards
     data.classes.forEach(function (c) {
       var num = c.label.replace(/\D/g, '');

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
 <link rel="stylesheet" href="/assets/css/layout.css?v=3">
-<link rel="stylesheet" href="/assets/css/components.css?v=5">
+<link rel="stylesheet" href="/assets/css/components.css?v=6">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=3">
 
 </head>
@@ -64,12 +64,12 @@
       <div class="browse-grid">
         <div class="browse-panel">
           <h3>By class <span class="count">grade 8&ndash;12</span></h3>
-          <div class="ticket-grid" id="class-grid"></div>
+          <div class="ticket-grid" id="class-grid" aria-busy="true"><div class="sk-card" aria-hidden="true"><span class="skeleton" style="width:34px;height:34px;"></span><span class="skeleton" style="width:64%;height:13px;"></span></div><div class="sk-card" aria-hidden="true"><span class="skeleton" style="width:34px;height:34px;"></span><span class="skeleton" style="width:64%;height:13px;"></span></div><div class="sk-card" aria-hidden="true"><span class="skeleton" style="width:34px;height:34px;"></span><span class="skeleton" style="width:64%;height:13px;"></span></div><div class="sk-card" aria-hidden="true"><span class="skeleton" style="width:34px;height:34px;"></span><span class="skeleton" style="width:64%;height:13px;"></span></div><div class="sk-card" aria-hidden="true"><span class="skeleton" style="width:34px;height:34px;"></span><span class="skeleton" style="width:64%;height:13px;"></span></div></div>
         </div>
 
         <div class="browse-panel">
           <h3>By subject <span class="count" id="subject-count">8 subjects</span></h3>
-          <div class="subject-list" id="subject-list"></div>
+          <div class="subject-list" id="subject-list" aria-busy="true"><div class="sk-item" aria-hidden="true"><span class="skeleton" style="width:46%;height:14px;"></span><span class="skeleton" style="width:18px;height:14px;"></span></div><div class="sk-item" aria-hidden="true"><span class="skeleton" style="width:46%;height:14px;"></span><span class="skeleton" style="width:18px;height:14px;"></span></div><div class="sk-item" aria-hidden="true"><span class="skeleton" style="width:46%;height:14px;"></span><span class="skeleton" style="width:18px;height:14px;"></span></div><div class="sk-item" aria-hidden="true"><span class="skeleton" style="width:46%;height:14px;"></span><span class="skeleton" style="width:18px;height:14px;"></span></div></div>
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
       <span class="eyebrow">Recently added</span>
       <h2>Latest notes</h2>
       <div class="updates-list" id="recent-notes-list">
-        <p style="color: var(--ink-faint); font-size: 0.92rem;">Loading recent notes…</p>
+        <div class="sk-row" aria-hidden="true"><span class="skeleton" style="width:58px;height:13px;"></span><span class="sk-lines"><span class="skeleton" style="width:72%;height:13px;"></span><span class="skeleton" style="width:45%;height:13px;"></span></span><span class="skeleton" style="width:58px;height:13px;"></span></div><div class="sk-row" aria-hidden="true"><span class="skeleton" style="width:58px;height:13px;"></span><span class="sk-lines"><span class="skeleton" style="width:72%;height:13px;"></span><span class="skeleton" style="width:45%;height:13px;"></span></span><span class="skeleton" style="width:58px;height:13px;"></span></div><div class="sk-row" aria-hidden="true"><span class="skeleton" style="width:58px;height:13px;"></span><span class="sk-lines"><span class="skeleton" style="width:72%;height:13px;"></span><span class="skeleton" style="width:45%;height:13px;"></span></span><span class="skeleton" style="width:58px;height:13px;"></span></div>
       </div>
     </div>
   </section>
@@ -131,6 +131,6 @@
 
 <script src="/assets/js/main.js?v=3"></script>
 <script type="module" src="/assets/js/auth-state.js?v=3"></script>
-<script type="module" src="/assets/js/notes-index.js?v=3"></script>
+<script type="module" src="/assets/js/notes-index.js?v=4"></script>
 </body>
 </html>

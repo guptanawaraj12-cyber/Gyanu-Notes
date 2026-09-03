@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
 <link rel="stylesheet" href="/assets/css/layout.css?v=3">
-<link rel="stylesheet" href="/assets/css/components.css?v=5">
+<link rel="stylesheet" href="/assets/css/components.css?v=6">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=3">
 
 </head>
@@ -46,9 +46,9 @@
   <section style="padding: 40px 0 80px;">
     <div class="container">
       <div class="breadcrumb"><a href="/notes/">Notes</a> <span id="breadcrumb-trail"></span></div>
-      <h1 id="note-heading">Loading…</h1>
+      <h1 id="note-heading" aria-busy="true"><span class="skeleton sk-heading" aria-hidden="true"></span></h1>
 
-      <div id="viewer-holder"></div>
+      <div id="viewer-holder" aria-busy="true"><div class="skeleton sk-viewer" aria-hidden="true"></div></div>
 
       <div class="viewer-actions">
         <div class="download-menu">

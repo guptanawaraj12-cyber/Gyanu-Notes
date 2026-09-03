@@ -138,7 +138,11 @@ async function renderPost() {
   if (!body) return;
   const article = document.getElementById("post-article");
   const missing = document.getElementById("post-missing");
-  const slug = new URLSearchParams(location.search).get("slug");
+  // Clean URLs: /blog/post/<slug>/ — fall back to the legacy ?slug= query.
+  const pathMatch = location.pathname.match(/^\/blog\/post\/([^\/]+)\/?$/);
+  const slug = pathMatch
+    ? decodeURIComponent(pathMatch[1])
+    : new URLSearchParams(location.search).get("slug");
   const showMissing = () => {
     if (article) article.hidden = true;
     if (missing) missing.hidden = false;
