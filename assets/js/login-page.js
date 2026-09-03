@@ -54,6 +54,28 @@ import { auth, db } from "/assets/js/firebase-config.js?v=2";
     return "Something went wrong. Please try again.";
   }
 
+  function socialError(err, action) {
+    var code = (err && err.code) || '';
+    if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+      return action + ' closed before finishing. Please try again.';
+    }
+    if (code === 'auth/popup-blocked') {
+      return 'Your browser blocked the ' + action + ' window. Allow popups for this site and try again.';
+    }
+    if (code === 'auth/unauthorized-domain') {
+      return 'This domain is not allowed for sign-in yet. Add it in Firebase Console > Authentication > Settings > Authorized domains.';
+    }
+    if (code === 'auth/operation-not-allowed') {
+      return action + ' is not enabled yet. Turn it on in Firebase Console > Authentication > Sign-in method.';
+    }
+    if (code === 'auth/account-exists-with-different-credential') {
+      return 'An account already exists with this email using a different sign-in method. Try logging in with that method instead.';
+    }
+    if (code === 'auth/network-request-failed') {
+      return 'Network problem while contacting ' + action + '. Check your connection and try again.';
+    }
+    return action + ' failed. Please try again.';
+  }
   // redirect away if already logged in
   onAuthStateChanged(auth, function (user) {
     if (user) redirectAfterLogin(user);
@@ -83,8 +105,9 @@ import { auth, db } from "/assets/js/firebase-config.js?v=2";
       .then(function (cred) {
         redirectAfterLogin(cred.user);
       })
-      .catch(function () {
-        showMessage('Google sign-in was cancelled or failed. Please try again.', 'error');
+      .catch(function (err) {
+        console.error('Google sign-in failed:', err && err.code, err);
+        showMessage(socialError(err, 'Google sign-in'), 'error');
       });
   });
 
@@ -95,10 +118,7 @@ import { auth, db } from "/assets/js/firebase-config.js?v=2";
         redirectAfterLogin(cred.user);
       })
       .catch(function (err) {
-        if (err.code === 'auth/account-exists-with-different-credential') {
-          showMessage('An account already exists with this email using a different sign-in method. Try logging in with that method instead.', 'error');
-        } else {
-          showMessage('Facebook sign-in was cancelled or failed. Please try again.', 'error');
-        }
+        console.error('Facebook sign-in failed:', err && err.code, err);
+        showMessage(socialError(err, 'Facebook sign-in'), 'error');
       });
   });

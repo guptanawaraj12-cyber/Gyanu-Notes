@@ -84,6 +84,29 @@ import { auth, db } from "/assets/js/firebase-config.js?v=2";
       });
   });
 
+  function socialError(err, action) {
+    var code = (err && err.code) || '';
+    if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+      return action + ' closed before finishing. Please try again.';
+    }
+    if (code === 'auth/popup-blocked') {
+      return 'Your browser blocked the ' + action + ' window. Allow popups for this site and try again.';
+    }
+    if (code === 'auth/unauthorized-domain') {
+      return 'This domain is not allowed for sign-in yet. Add it in Firebase Console > Authentication > Settings > Authorized domains.';
+    }
+    if (code === 'auth/operation-not-allowed') {
+      return action + ' is not enabled yet. Turn it on in Firebase Console > Authentication > Sign-in method.';
+    }
+    if (code === 'auth/account-exists-with-different-credential') {
+      return 'An account already exists with this email using a different sign-in method. Try logging in with that method instead.';
+    }
+    if (code === 'auth/network-request-failed') {
+      return 'Network problem while contacting ' + action + '. Check your connection and try again.';
+    }
+    return action + ' failed. Please try again.';
+  }
+
   googleBtn.addEventListener('click', function () {
     var provider = new GoogleAuthProvider();
     form.dataset.submitting = 'true';
@@ -94,8 +117,9 @@ import { auth, db } from "/assets/js/firebase-config.js?v=2";
       .then(function (user) {
         redirectAfterLogin(user);
       })
-      .catch(function () {
-        showMessage('Google sign-up was cancelled or failed. Please try again.', 'error');
+      .catch(function (err) {
+        console.error('Google sign-up failed:', err && err.code, err);
+        showMessage(socialError(err, 'Google sign-up'), 'error');
         form.dataset.submitting = '';
       });
   });
@@ -112,10 +136,7 @@ import { auth, db } from "/assets/js/firebase-config.js?v=2";
       })
       .catch(function (err) {
         form.dataset.submitting = '';
-        if (err.code === 'auth/account-exists-with-different-credential') {
-          showMessage('An account already exists with this email using a different sign-in method. Try logging in with that method instead.', 'error');
-        } else {
-          showMessage('Facebook sign-up was cancelled or failed. Please try again.', 'error');
-        }
+        console.error('Facebook sign-up failed:', err && err.code, err);
+        showMessage(socialError(err, 'Facebook sign-up'), 'error');
       });
   });
