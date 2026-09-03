@@ -9,7 +9,7 @@
 // on the free Spark plan the function cannot deploy, so downloads point
 // straight at Drive's public download endpoint instead.
 
-import { auth } from "/assets/js/firebase-config.js?v=2";
+import { auth } from "/assets/js/firebase-config.js?v=3";
 
 var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;
 // The catalogue ships with this placeholder until real files are uploaded.

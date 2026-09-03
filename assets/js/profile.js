@@ -1,6 +1,6 @@
 // Gyanu Notes — profile settings: edit info, change password, delete account
 
-import { auth, db } from "/assets/js/firebase-config.js?v=2";
+import { auth, db } from "/assets/js/firebase-config.js?v=3";
 import {
   onAuthStateChanged, updateProfile,
   EmailAuthProvider, reauthenticateWithCredential, updatePassword,

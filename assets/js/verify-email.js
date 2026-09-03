@@ -2,7 +2,7 @@
 // Looks for #verify-banner on the page and reveals it when the signed-in
 // user's email is not verified yet, with a resend button.
 
-import { auth } from "/assets/js/firebase-config.js?v=2";
+import { auth } from "/assets/js/firebase-config.js?v=3";
 import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
 onAuthStateChanged(auth, function (user) {

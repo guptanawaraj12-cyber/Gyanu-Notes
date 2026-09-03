@@ -1,9 +1,9 @@
 // Gyanu Notes — "My bookmarks" page: lists the user's saved notes/papers
 // with the ability to remove them inline.
 
-import { auth } from "/assets/js/firebase-config.js?v=2";
+import { auth } from "/assets/js/firebase-config.js?v=3";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getBookmarks, removeBookmark } from "/assets/js/bookmarks.js";
+import { getBookmarks, removeBookmark } from "/assets/js/bookmarks.js?v=3";
 
 // Only relative paths and https links are allowed as bookmark targets, so a
 // tampered bookmark document can never become a javascript: URL.

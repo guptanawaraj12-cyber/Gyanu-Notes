@@ -1,4 +1,4 @@
-import { auth, db } from "/assets/js/firebase-config.js?v=2";
+import { auth, db } from "/assets/js/firebase-config.js?v=3";
   import {
     signInWithEmailAndPassword,
     GoogleAuthProvider,

@@ -1,6 +1,6 @@
 // Gyanu Notes — reflects login state in the navbar on every page
 
-import { auth, db } from "/assets/js/firebase-config.js?v=2";
+import { auth, db } from "/assets/js/firebase-config.js?v=3";
 import { onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 

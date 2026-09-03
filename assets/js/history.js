@@ -1,7 +1,7 @@
 // Gyanu Notes — view history logging, used by notes-view.js and papers-view.js
 // Stores under: history/{uid}/items/{autoId}
 
-import { db } from "/assets/js/firebase-config.js?v=2";
+import { db } from "/assets/js/firebase-config.js?v=3";
 import {
   collection, addDoc, query, orderBy, limit, getDocs, getCountFromServer,
   where, deleteDoc, serverTimestamp

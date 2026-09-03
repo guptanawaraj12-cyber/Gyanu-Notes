@@ -1,5 +1,5 @@
 // Gyanu Notes — renders filterable paper results for /papers/{class-slug}/
-import { getPapersData } from "/assets/js/content-store.js";
+import { getPapersData } from "/assets/js/content-store.js?v=3";
 
 document.addEventListener('DOMContentLoaded', function () {
   var parts = window.location.pathname.split('/').filter(Boolean); // ["papers","class-10"]

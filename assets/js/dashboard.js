@@ -1,11 +1,11 @@
 // Gyanu Notes — dashboard: welcome header, continue-where-left-off,
 // stats row, class quick links, latest bookmarks and recent activity.
 
-import { auth, db } from "/assets/js/firebase-config.js?v=2";
+import { auth, db } from "/assets/js/firebase-config.js?v=3";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { getRecentHistory, countHistory, clearHistory } from "/assets/js/history.js";
-import { getBookmarkCount, getBookmarks } from "/assets/js/bookmarks.js";
+import { getRecentHistory, countHistory, clearHistory } from "/assets/js/history.js?v=3";
+import { getBookmarkCount, getBookmarks } from "/assets/js/bookmarks.js?v=3";
 
 // Only relative paths and https links are allowed as targets, so user-stored
 // urls can never become javascript: links; titles render via textContent.

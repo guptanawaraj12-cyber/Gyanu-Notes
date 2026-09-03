@@ -1,12 +1,12 @@
 // Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
-import { auth, db } from "/assets/js/firebase-config.js?v=2";
+import { auth, db } from "/assets/js/firebase-config.js?v=3";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { logView } from "/assets/js/history.js";
-import { getNotesData } from "/assets/js/content-store.js";
-import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js";
-import { secureDownload } from "/assets/js/secure-download.js?v=2";
+import { logView } from "/assets/js/history.js?v=3";
+import { getNotesData } from "/assets/js/content-store.js?v=3";
+import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js?v=3";
+import { secureDownload } from "/assets/js/secure-download.js?v=3";
 
 document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);

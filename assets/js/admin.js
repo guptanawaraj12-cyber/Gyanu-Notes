@@ -1,5 +1,5 @@
-import { auth, db } from "/assets/js/firebase-config.js?v=2";
-import { getSiteContent } from "/assets/js/content-store.js";
+import { auth, db } from "/assets/js/firebase-config.js?v=3";
+import { getSiteContent } from "/assets/js/content-store.js?v=3";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { doc, getDoc, setDoc, deleteDoc, addDoc, collection, getDocs, query, orderBy, limit, where, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 

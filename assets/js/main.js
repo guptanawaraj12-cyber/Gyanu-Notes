@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!statNotes || !statPapers || !statSubjects) return;
 
-    import('/assets/js/content-store.js')
+    import('/assets/js/content-store.js?v=3')
       .then(function (mod) { return mod.getSiteContent(); })
       .then(function (content) {
         var notesData = content.notes;

@@ -1,11 +1,11 @@
 // Gyanu Notes — paper viewer: loads paper data, shows preview, gates download behind login
 
-import { auth } from "/assets/js/firebase-config.js?v=2";
+import { auth } from "/assets/js/firebase-config.js?v=3";
 import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { logView } from "/assets/js/history.js";
-import { getPapersData } from "/assets/js/content-store.js";
-import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js";
-import { secureDownload } from "/assets/js/secure-download.js?v=2";
+import { logView } from "/assets/js/history.js?v=3";
+import { getPapersData } from "/assets/js/content-store.js?v=3";
+import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js?v=3";
+import { secureDownload } from "/assets/js/secure-download.js?v=3";
 
 document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);

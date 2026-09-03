@@ -1,6 +1,6 @@
 // Notice board: renders admin-published notices on the homepage. The static
 // rows already in the HTML stay as the fallback when Firestore has none.
-import { db } from "/assets/js/firebase-config.js?v=2";
+import { db } from "/assets/js/firebase-config.js?v=3";
 import { collection, getDocs, limit, query, orderBy } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 function escapeHtml(text) {

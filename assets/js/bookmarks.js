@@ -3,7 +3,7 @@
 // The document id is the note chapter id or paper set id, so saving a viewer
 // is an idempotent add/remove toggle (rules forbid partial updates).
 
-import { db } from "/assets/js/firebase-config.js?v=2";
+import { db } from "/assets/js/firebase-config.js?v=3";
 import {
   doc, setDoc, deleteDoc, getDoc,
   collection, query, orderBy, getDocs, getCountFromServer, serverTimestamp

@@ -1,6 +1,6 @@
 // Blog rendering for /blog/ (list), /blog/post/ (single), and the homepage
 // "latest posts" section. Each part activates only when its element exists.
-import { db } from "/assets/js/firebase-config.js?v=2";
+import { db } from "/assets/js/firebase-config.js?v=3";
 import { collection, getDocs, getDoc, doc, query, where, limit } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 function escapeHtml(text) {

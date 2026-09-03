@@ -1,4 +1,4 @@
-import { auth } from "/assets/js/firebase-config.js?v=2";
+import { auth } from "/assets/js/firebase-config.js?v=3";
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
 const form = document.getElementById("reset-form");

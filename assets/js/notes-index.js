@@ -1,8 +1,8 @@
 // Gyanu Notes — renders the /notes/ landing page from editable site content
-import { getNotesData } from "/assets/js/content-store.js";
-import { auth } from "/assets/js/firebase-config.js?v=2";
+import { getNotesData } from "/assets/js/content-store.js?v=3";
+import { auth } from "/assets/js/firebase-config.js?v=3";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getRecentHistory } from "/assets/js/history.js";
+import { getRecentHistory } from "/assets/js/history.js?v=3";
 
 document.addEventListener('DOMContentLoaded', function () {
   var mineOnly = new URLSearchParams(window.location.search).get('filter') === 'mine';
