@@ -154,10 +154,17 @@ document.getElementById("import-bundled").addEventListener("click", async () => 
 });
 
 async function setRole(enabled) {
-  const email = document.getElementById("role-email").value.trim().toLowerCase();
+  const email = document.getElementById("role-email").value.trim();
   if (!email) return message("role-message", "Enter the account email first.", "error");
   try {
-    const matches = await getDocs(query(collection(db, "users"), where("email", "==", email), limit(5)));
+    // Profiles store the email exactly as typed at signup and Firestore
+    // equality is case-sensitive, so query the exact form first and fall
+    // back to the lowercased form before giving up.
+    let matches = await getDocs(query(collection(db, "users"), where("email", "==", email), limit(5)));
+    const lowered = email.toLowerCase();
+    if (matches.empty && email !== lowered) {
+      matches = await getDocs(query(collection(db, "users"), where("email", "==", lowered), limit(5)));
+    }
     let updated = 0;
     for (const snap of matches.docs) {
       if (snap.id === auth.currentUser.uid) continue; // an admin never changes their own role here

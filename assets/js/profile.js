@@ -7,7 +7,7 @@ import {
   GoogleAuthProvider, FacebookAuthProvider, reauthenticateWithPopup,
   deleteUser
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { doc, getDoc, setDoc, deleteDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 var currentUser = null;
 var isPasswordAccount = false;
@@ -52,11 +52,18 @@ document.getElementById('profile-form').addEventListener('submit', function (e) 
 
   updateProfile(currentUser, { displayName: name })
     .then(function () {
-      return setDoc(doc(db, 'users', currentUser.uid), {
-        name: name,
-        classLevel: classLevel,
-        email: currentUser.email
-      }, { merge: true });
+      // If the profile doc was never created (e.g. the signup write failed),
+      // a plain merge would create it without createdAt and the users create
+      // rule rejects that. Include createdAt only when creating the doc.
+      return getDoc(doc(db, 'users', currentUser.uid)).then(function (snap) {
+        var payload = {
+          name: name,
+          classLevel: classLevel,
+          email: currentUser.email
+        };
+        if (!snap.exists()) payload.createdAt = new Date().toISOString();
+        return setDoc(doc(db, 'users', currentUser.uid), payload, { merge: true });
+      });
     })
     .then(function () {
       showMsg('profile-message', 'Saved! Your changes have been updated.', 'success');
@@ -147,7 +154,31 @@ confirmDeleteBtn.addEventListener('click', function () {
 
   reauthPromise
     .then(function () {
-      // clean up Firestore data first, then delete the auth account
+      // Clean up ALL Firestore data first, then delete the auth account.
+      // Subcollections (history, bookmarks) are only accessible while the
+      // account exists — after deletion the security rules would make them
+      // permanently unreachable, so empty them here in chunks of 450.
+      return Promise.all([
+        getDocs(collection(db, 'history', currentUser.uid, 'items')),
+        getDocs(collection(db, 'bookmarks', currentUser.uid, 'items'))
+      ]);
+    })
+    .then(function (snapshots) {
+      var refs = [];
+      snapshots.forEach(function (snap) {
+        snap.forEach(function (item) { refs.push(item.ref); });
+      });
+      var chunks = [];
+      for (var i = 0; i < refs.length; i += 450) chunks.push(refs.slice(i, i + 450));
+      return chunks.reduce(function (chain, chunk) {
+        return chain.then(function () {
+          var batch = writeBatch(db);
+          chunk.forEach(function (ref) { batch.delete(ref); });
+          return batch.commit();
+        });
+      }, Promise.resolve()).catch(function () { /* continue even if cleanup fails */ });
+    })
+    .then(function () {
       return deleteDoc(doc(db, 'users', currentUser.uid)).catch(function () { /* continue even if this fails */ });
     })
     .then(function () { return deleteUser(currentUser); })

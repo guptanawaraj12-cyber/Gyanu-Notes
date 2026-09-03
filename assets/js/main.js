@@ -41,21 +41,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   updateHomeStats();
 
-  // mobile nav toggle
+  // mobile nav toggle — class-based (styled in layout.css) so no inline
+  // styles linger and block the desktop layout after a resize
   var navToggle = document.querySelector('.nav-toggle');
   var navLinks = document.querySelector('.nav-links');
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', function () {
-      var isOpen = navLinks.style.display === 'flex';
-      navLinks.style.display = isOpen ? 'none' : 'flex';
-      navLinks.style.flexDirection = 'column';
-      navLinks.style.position = 'absolute';
-      navLinks.style.top = '100%';
-      navLinks.style.left = '0';
-      navLinks.style.right = '0';
-      navLinks.style.background = '#fff';
-      navLinks.style.padding = '16px 24px';
-      navLinks.style.borderBottom = '1px solid var(--border)';
+      navLinks.classList.toggle('open');
     });
   }
 

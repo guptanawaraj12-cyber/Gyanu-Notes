@@ -20,7 +20,7 @@ export const setAdminRole = functions.https.onCall(async (data, context) => {
   const email = typeof data?.email === "string" ? data.email.trim() : "";
   const enabled = data?.enabled === true;
   if (!email || !email.includes("@")) {
-    throw new HttpsError("invalid-argument", "A valid email address is required.");
+    throw new functions.https.HttpsError("invalid-argument", "A valid email address is required.");
   }
 
   const auth = getAuth();
@@ -159,3 +159,18 @@ export const downloadFile = functions
     Readable.fromWeb(upstream.body).pipe(res);
   }
 );
+
+// ---------------------------------------------------------------------------
+// Account cleanup. The client deletes its own profile doc on account deletion,
+// but subcollections (viewing history, bookmarks) can only be removed with
+// admin privileges. This trigger guarantees no private data outlives a
+// deleted account (privacy policy: "we will address it promptly").
+// ---------------------------------------------------------------------------
+export const onUserDeleted = functions.auth.user().onDelete(async (user) => {
+  const fs = getFirestore();
+  await Promise.all([
+    fs.doc(`users/${user.uid}`).delete().catch(() => {}),
+    fs.recursiveDelete(fs.collection(`history/${user.uid}/items`)).catch(() => {}),
+    fs.recursiveDelete(fs.collection(`bookmarks/${user.uid}/items`)).catch(() => {})
+  ]);
+});

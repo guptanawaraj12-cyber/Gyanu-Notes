@@ -152,7 +152,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function validDriveId(value) {
-    return typeof value === 'string' && /^[-\w]{20,}$/.test(value.trim());
+    // The bundled catalogue ships entries with a placeholder id until real
+    // files are uploaded; it matches the shape test below, so reject it
+    // explicitly (same treatment as the download Cloud Function).
+    return typeof value === 'string' &&
+      value.trim() !== 'REPLACE_WITH_REAL_DRIVE_FILE_ID' &&
+      /^[-\w]{20,}$/.test(value.trim());
   }
 
   function updateDownloadState() {

@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var subjectList = document.getElementById('subject-list');
     var footerClassLinks = document.getElementById('footer-class-links');
     var recentList = document.getElementById('recent-notes-list');
+    var subjectCount = document.getElementById('subject-count');
+    if (subjectCount) subjectCount.textContent = data.subjects.length + ' subjects';
 
     // class cards
     data.classes.forEach(function (c) {
@@ -48,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // recent notes â€” flatten chapters, take a handful
     var recent = [];
-    data.notes.forEach(function (entry) {
-      entry.chapters.forEach(function (ch) {
+    data.notes.slice().reverse().forEach(function (entry) {
+      entry.chapters.slice().reverse().forEach(function (ch) {
         recent.push({
           title: ch.title,
           classSlug: entry.classSlug,

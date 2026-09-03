@@ -93,7 +93,6 @@
     var t = clock.getElapsedTime();
 
     if (!prefersReducedMotion) {
-      cardGroup.rotation.y += (targetRotY - cardGroup.rotation.y + t * 0.05 - cardGroup.rotation.y * 0) * 0.02;
       cardGroup.rotation.y = cardGroup.rotation.y * 0.96 + (targetRotY + t * 0.08) * 0.04;
       cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.04;
 

@@ -64,13 +64,26 @@ document.addEventListener('DOMContentLoaded', function () {
       '/ <a href="/papers/' + entry.classSlug + '/">' + classLabel + '</a>' +
       ' / ' + subjectLabel + ' ' + entry.year + ' / ' + currentSet.label;
 
-    // Embedded Drive preview. Real files need a real driveFileId (currently placeholder).
-    var previewSrc = 'https://drive.google.com/file/d/' + currentSet.driveFileId + '/preview';
-    holder.innerHTML = '<iframe class="viewer-frame" src="' + previewSrc + '" allow="autoplay"></iframe>';
+    // Embedded Drive preview; placeholder/malformed ids get an empty state
+    // instead of a broken iframe.
+    if (validDriveId(currentSet.driveFileId)) {
+      var previewSrc = 'https://drive.google.com/file/d/' + currentSet.driveFileId + '/preview';
+      holder.innerHTML = '<iframe class="viewer-frame" src="' + previewSrc + '" allow="autoplay"></iframe>';
+    } else {
+      holder.innerHTML = '<div class="empty-state" style="padding: 40px 0; color: var(--ink-faint);">No preview file is attached to this paper yet. Check back soon.</div>';
+    }
 
     updateDownloadState();
     updateBookmarkState();
     maybeLogView();
+  }
+
+  // Same placeholder/shape check as notes-view.js — a placeholder or
+  // malformed id must never produce a broken Drive iframe or download.
+  function validDriveId(value) {
+    return typeof value === 'string' &&
+      value.trim() !== 'REPLACE_WITH_REAL_DRIVE_FILE_ID' &&
+      /^[-\w]{20,}$/.test(value.trim());
   }
 
   function bookmarkEntry() {
@@ -122,11 +135,22 @@ document.addEventListener('DOMContentLoaded', function () {
     var gate = document.getElementById('login-gate');
     if (!currentSet) return;
 
+    var gateText = gate.querySelector('p');
+    var gateLink = gate.querySelector('a');
+    gateLink.style.display = '';
+
     if (currentUser && currentUser.emailVerified) {
-      gate.style.display = 'none';
-      downloadBtn.style.display = 'inline-flex';
-      downloadBtn.disabled = false;
-      downloadBtn.textContent = 'Download PDF';
+      if (validDriveId(currentSet.driveFileId)) {
+        gate.style.display = 'none';
+        downloadBtn.style.display = 'inline-flex';
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = 'Download PDF';
+      } else {
+        downloadBtn.style.display = 'none';
+        gateLink.style.display = 'none';
+        gateText.textContent = 'No downloadable file is attached to this paper yet.';
+        gate.style.display = 'flex';
+      }
     } else if (currentUser) {
       downloadBtn.style.display = 'none';
       gate.style.display = 'flex';

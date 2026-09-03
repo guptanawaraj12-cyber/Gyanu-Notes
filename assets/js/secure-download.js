@@ -12,11 +12,14 @@
 import { auth } from "/assets/js/firebase-config.js?v=2";
 
 var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;
+// The catalogue ships with this placeholder until real files are uploaded.
+// It matches the pattern above, so it must be rejected explicitly.
+var PLACEHOLDER_ID = "REPLACE_WITH_REAL_DRIVE_FILE_ID";
 
 export async function secureDownload(options) {
   var fileId = String((options && options.fileId) || "");
   var name = String((options && options.name) || "");
-  if (!DRIVE_ID_PATTERN.test(fileId)) {
+  if (fileId === PLACEHOLDER_ID || !DRIVE_ID_PATTERN.test(fileId)) {
     throw new Error("This file is not available for download yet.");
   }
 

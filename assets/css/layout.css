@@ -299,6 +299,21 @@ section {
   .nav-links {
     display: none;
   }
+
+  /* Class-based mobile menu (toggled by main.js). Scoped to this media
+     query so an open menu can never leak into the desktop layout. */
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
 }
 
 /* ============================================================
