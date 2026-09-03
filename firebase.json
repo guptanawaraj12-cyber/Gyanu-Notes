@@ -14,6 +14,10 @@
       "assets/uploads/**"
     ],
     "cleanUrls": true,
+    "rewrites": [
+      { "source": "/blog/post/:slug", "destination": "/blog/post/index.html" },
+      { "source": "/blog/post/:slug/", "destination": "/blog/post/index.html" }
+    ],
     "headers": [
       {
         "source": "/assets/css/**",
