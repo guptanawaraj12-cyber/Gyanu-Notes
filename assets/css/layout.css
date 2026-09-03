@@ -484,6 +484,26 @@ section {
   min-height: 340px;
 }
 
+/* --- 3D hero fallback: static SVG shown until three.js takes over --- */
+.hero-3d-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-float-a { animation: hero-float 7s ease-in-out infinite alternate; }
+.hero-float-b { animation: hero-float 9s ease-in-out -3s infinite alternate-reverse; }
+.hero-float-c { animation: hero-float 11s ease-in-out -5s infinite alternate; }
+
+@keyframes hero-float {
+  from { transform: translateY(-7px); }
+  to { transform: translateY(7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-float-a, .hero-float-b, .hero-float-c { animation: none; }
+}
+
 .welcome-banner {
   display: none;
   align-items: center;

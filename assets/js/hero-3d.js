@@ -14,9 +14,15 @@
   var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
   camera.position.set(0, 0, 9);
 
-  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  } catch (error) {
+    return; // WebGL unavailable — keep the static fallback illustration
+  }
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.innerHTML = ''; // 3D scene is live — replace the static fallback
   container.appendChild(renderer.domElement);
 
   var ambient = new THREE.AmbientLight(0xffffff, 0.75);

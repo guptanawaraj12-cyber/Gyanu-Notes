@@ -27,7 +27,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
-<link rel="stylesheet" href="/assets/css/layout.css?v=3">
+<link rel="stylesheet" href="/assets/css/layout.css?v=4">
 <link rel="stylesheet" href="/assets/css/components.css?v=6">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=3">
 </head>
@@ -89,7 +89,48 @@
           </div>
         </div>
 
-        <div class="hero-3d" id="hero-3d-canvas" aria-hidden="true"></div>
+        <div class="hero-3d" id="hero-3d-canvas" aria-hidden="true">
+          <svg class="hero-3d-fallback" viewBox="0 0 520 420" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <ellipse cx="262" cy="212" rx="205" ry="150" style="fill: var(--accent-glow);"/>
+            <g class="hero-float-a">
+              <g transform="rotate(-9 132 140)">
+                <rect x="72" y="62" width="120" height="156" rx="12" style="fill: #ffffff; stroke: var(--border-strong); stroke-width: 1.5;"/>
+                <rect x="90" y="86" width="70" height="9" rx="4.5" style="fill: var(--accent-light);"/>
+                <rect x="90" y="104" width="84" height="9" rx="4.5" style="fill: var(--bg-soft);"/>
+                <rect x="90" y="122" width="56" height="9" rx="4.5" style="fill: var(--bg-soft);"/>
+              </g>
+            </g>
+            <g class="hero-float-b">
+              <g transform="rotate(7 372 168)">
+                <rect x="312" y="90" width="120" height="156" rx="12" style="fill: var(--accent);"/>
+                <rect x="330" y="114" width="70" height="9" rx="4.5" style="fill: #ffffff; opacity: 0.4;"/>
+                <rect x="330" y="132" width="84" height="9" rx="4.5" style="fill: #ffffff; opacity: 0.28;"/>
+                <rect x="330" y="150" width="56" height="9" rx="4.5" style="fill: #ffffff; opacity: 0.28;"/>
+              </g>
+            </g>
+            <g class="hero-float-c">
+              <g transform="rotate(5 172 306)">
+                <rect x="112" y="228" width="120" height="156" rx="12" style="fill: #ffffff; stroke: var(--border); stroke-width: 1.5;"/>
+                <rect x="130" y="252" width="70" height="9" rx="4.5" style="fill: var(--accent-light);"/>
+                <rect x="130" y="270" width="84" height="9" rx="4.5" style="fill: var(--bg-soft);"/>
+              </g>
+              <g transform="rotate(-6 402 330)">
+                <rect x="342" y="252" width="120" height="156" rx="12" style="fill: var(--accent-light); stroke: var(--accent); stroke-width: 1.5;"/>
+                <rect x="360" y="276" width="70" height="9" rx="4.5" style="fill: #ffffff;"/>
+                <rect x="360" y="294" width="84" height="9" rx="4.5" style="fill: var(--bg-soft);"/>
+              </g>
+            </g>
+            <g class="hero-float-a">
+              <g transform="rotate(-14 250 60)">
+                <rect x="212" y="10" width="76" height="100" rx="10" style="fill: #ffffff; stroke: var(--border); stroke-width: 1.5;"/>
+                <rect x="226" y="30" width="44" height="8" rx="4" style="fill: var(--accent-light);"/>
+                <rect x="226" y="44" width="48" height="8" rx="4" style="fill: var(--bg-soft);"/>
+              </g>
+              <circle cx="486" cy="52" r="14" style="fill: var(--accent-light);"/>
+              <circle cx="34" cy="330" r="18" style="fill: var(--bg-soft);"/>
+            </g>
+          </svg>
+        </div>
       </div>
 
     </div>
@@ -265,8 +306,8 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
-<script src="/assets/js/hero-3d.js?v=3"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="/assets/js/hero-3d.js?v=4"></script>
 <script type="module" src="/assets/js/auth-state.js?v=3"></script>
 <script type="module" src="/assets/js/notices.js?v=4"></script>
 <script type="module" src="/assets/js/blog.js?v=5"></script>
