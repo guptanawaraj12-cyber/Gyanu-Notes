@@ -10,7 +10,8 @@
       "scripts/**",
       "**/*.md",
       ".vscode/**",
-      "**/*.ps1"
+      "**/*.ps1",
+      "assets/uploads/**"
     ],
     "cleanUrls": true,
     "headers": [

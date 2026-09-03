@@ -487,6 +487,7 @@ async function saveBlogPost(published) {
   const html = document.getElementById("blog-html").value;
   const category = document.getElementById("blog-category").value;
   const alsoNotice = document.getElementById("blog-notice").checked;
+  const coverImage = document.getElementById("blog-cover").value.trim();
   if (!title) return message("blog-message", "Give the post a title first.", "error");
   if (published && !excerpt) return message("blog-message", "Write a short excerpt before publishing.", "error");
   if (published && !html.trim()) return message("blog-message", "Write the post body before publishing.", "error");
@@ -507,6 +508,7 @@ async function saveBlogPost(published) {
       excerpt,
       html,
       category,
+      coverImage,
       published,
       publishedAt,
       updatedAt: serverTimestamp(),
@@ -518,7 +520,7 @@ async function saveBlogPost(published) {
         await addDoc(collection(db, "notices"), {
           title,
           body: excerpt,
-          url: "/blog/post/?slug=" + slug,
+          url: "/blog/post/" + slug + "/",
           pinned: false,
           createdAt: serverTimestamp(),
           createdBy: auth.currentUser.uid
@@ -530,7 +532,7 @@ async function saveBlogPost(published) {
       }
     }
     message("blog-message", published
-      ? "Published at /blog/post/?slug=" + slug + "." + noticeNote
+      ? "Published at /blog/post/" + slug + "/." + noticeNote
       : "Draft saved — it is not visible to visitors yet.", "success");
     resetBlogForm();
     loadBlogList();
@@ -607,6 +609,7 @@ document.getElementById("blog-list")?.addEventListener("click", async (event) =>
       document.getElementById("blog-slug").readOnly = true;
       document.getElementById("blog-excerpt").value = data.excerpt || "";
       document.getElementById("blog-html").value = data.html || "";
+      document.getElementById("blog-cover").value = data.coverImage || "";
       document.getElementById("blog-publish").textContent = "Update & publish";
       document.getElementById("blog-cancel").hidden = false;
       message("blog-message", "Editing “" + (data.title || snapshot.id) + "”. The URL slug stays fixed.", "success");
