@@ -1,4 +1,4 @@
-// Gyanu Notes â€” chapter viewer: loads note data, shows preview, gates download behind login
+// Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
 import { auth, db } from "/assets/js/firebase-config.js?v=2";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var subjectInfo = data.subjects.find(function (s) { return s.slug === found.subjectSlug; });
     var classLabel = classInfo ? classInfo.label : found.classSlug;
     var subjectLabel = subjectInfo ? subjectInfo.label : found.subjectSlug;
-    currentMeta = classLabel + ' Â· ' + subjectLabel;
+    currentMeta = classLabel + ' · ' + subjectLabel;
 
-    document.title = currentChapter.title + ' â€” Gyanu Notes';
-    document.getElementById('page-title').textContent = currentChapter.title + ' â€” Gyanu Notes';
+    document.title = currentChapter.title + ' — Gyanu Notes';
+    document.getElementById('page-title').textContent = currentChapter.title + ' — Gyanu Notes';
     heading.textContent = currentChapter.title;
     breadcrumb.innerHTML =
       '/ <a href="/notes/' + found.classSlug + '/">' + classLabel + '</a>' +
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ' / ' + currentChapter.title;
 
     // Inline HTML content wins when present; otherwise embed Drive preview
-    // (real files need a real driveFileId â€” currently placeholder).
+    // (real files need a real driveFileId — currently placeholder).
     loadInlineContent().then(function (html) {
       if (html) {
         hasInlineContent = true;
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!bookmarkBtn) return;
     var star = bookmarkBtn.querySelector('.bm-star');
     var label = bookmarkBtn.querySelector('.bm-label');
-    if (star) star.textContent = bookmarkActive ? 'â˜…' : 'â˜†';
+    if (star) star.textContent = bookmarkActive ? '★' : '☆';
     if (label) label.textContent = bookmarkActive ? 'Saved' : 'Save';
     bookmarkBtn.classList.toggle('is-active', bookmarkActive);
     bookmarkBtn.setAttribute('aria-pressed', bookmarkActive ? 'true' : 'false');
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     downloadBtn.parentElement.style.display = 'inline-flex';
 
-    // Item 1 â€” the written notes as a branded PDF when the chapter is
+    // Item 1 — the written notes as a branded PDF when the chapter is
     // written on the site, otherwise the chapter's Drive PDF.
     // Every download is for signed-in, verified accounts.
     dlNotes.style.display = htmlOk || pdfOk ? 'block' : 'none';
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ? 'Download notes (PDF)<small>The full PDF of this chapter from Drive</small>'
       : 'Download notes (PDF)<small>The written notes, branded and page-formatted</small>';
 
-    // Item 2 â€” the handwritten Drive PDF (only when a link is set).
+    // Item 2 — the handwritten Drive PDF (only when a link is set).
     dlHand.style.display = handOk ? 'block' : 'none';
     dlHand.disabled = !verified;
 
@@ -250,10 +250,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Written notes â†’ branded PDF. A static site cannot emit a real PDF file
+  // Written notes → branded PDF. A static site cannot emit a real PDF file
   // client-side without heavy rasterising libraries, so we build a clean A4
   // print document (Gyanu Notes header + chapter content + footer) in a
-  // hidden iframe and open the print dialog â€” whose destination defaults to
+  // hidden iframe and open the print dialog — whose destination defaults to
   // "Save as PDF" in Chrome and Edge.
   function printBrandedNotesPdf() {
     if (!inlineHtml || !currentChapter) return;
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(frame);
 
     var doc = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
-      '<title>' + title + ' â€” Gyanu Notes</title><style>' +
+      '<title>' + title + ' — Gyanu Notes</title><style>' +
       '@page { size: A4; margin: 16mm 14mm; }' +
       '* { box-sizing: border-box; }' +
       'body { font-family: "Segoe UI", Arial, sans-serif; color: #1b1f24; margin: 0; line-height: 1.6; }' +
@@ -297,12 +297,12 @@ document.addEventListener('DOMContentLoaded', function () {
       '<header class="pdf-head">' +
       '<div class="brand-row"><img src="/assets/images/logo.jpeg" alt="Gyanu Notes">' +
       '<span class="brand-name">Gyanu Notes</span>' +
-      '<span class="brand-tag">Free notes &amp; past papers Â· nawarajgupta.com.np</span></div>' +
+      '<span class="brand-tag">Free notes &amp; past papers · nawarajgupta.com.np</span></div>' +
       '<h1>' + title + '</h1>' +
-      '<p class="pdf-meta">' + (currentMeta ? currentMeta + ' â€” Chapter notes' : 'Chapter notes') + '</p>' +
+      '<p class="pdf-meta">' + (currentMeta ? currentMeta + ' — Chapter notes' : 'Chapter notes') + '</p>' +
       '</header>' +
       '<div class="pdf-body">' + inlineHtml + '</div>' +
-      '<footer class="pdf-foot">Downloaded from nawarajgupta.com.np â€” Â© 2026 Gyanu Notes. Free for personal study use.</footer>' +
+      '<footer class="pdf-foot">Downloaded from nawarajgupta.com.np — © 2026 Gyanu Notes. Free for personal study use.</footer>' +
       '</body></html>';
 
     frame.onload = function () {
@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navigator.share(shareData).catch(function () { /* visitor dismissed the sheet */ });
       } else {
         navigator.clipboard.writeText(shareData.url).then(function () {
-          shareBtn.textContent = 'Link copied âœ“';
+          shareBtn.textContent = 'Link copied ✓';
           setTimeout(function () { shareBtn.textContent = 'Share'; }, 2000);
         }).catch(function () {
           window.prompt('Copy this link:', shareData.url);

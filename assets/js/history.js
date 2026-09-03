@@ -1,4 +1,4 @@
-// Gyanu Notes â€” view history logging, used by notes-view.js and papers-view.js
+// Gyanu Notes — view history logging, used by notes-view.js and papers-view.js
 // Stores under: history/{uid}/items/{autoId}
 
 import { db } from "/assets/js/firebase-config.js?v=2";
@@ -17,7 +17,7 @@ export function logView(uid, entry) {
     type: entry.type,
     viewedAt: serverTimestamp()
   }).catch(function (err) {
-    // Non-critical â€” don't break the viewing experience if this fails
+    // Non-critical — don't break the viewing experience if this fails
     console.warn("Could not log view history:", err);
   });
 }

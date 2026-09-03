@@ -47,7 +47,7 @@ async function renderNotices() {
       return Object.assign({ id: docSnap.id }, docSnap.data());
     });
   } catch (error) {
-    return; // rules blocked, offline, or empty â€” keep the static fallback rows
+    return; // rules blocked, offline, or empty — keep the static fallback rows
   }
 
   if (!notices.length) return;

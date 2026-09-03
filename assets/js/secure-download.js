@@ -1,7 +1,7 @@
-// Gyanu Notes â€” download gate (client-side, free-plan friendly).
+// Gyanu Notes — download gate (client-side, free-plan friendly).
 // Downloads are allowed only for signed-in visitors with a verified email.
 // The chapter/paper Drive file IDs are already public: the same IDs power
-// the on-page preview iframes, so this flow exposes nothing new â€” it simply
+// the on-page preview iframes, so this flow exposes nothing new — it simply
 // packages the file as a one-click download instead of a preview.
 //
 // The earlier design streamed bytes through a Cloud Function so the Drive

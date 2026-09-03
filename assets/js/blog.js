@@ -29,7 +29,7 @@ function newestFirst(a, b) {
   return bt - at;
 }
 
-// Single-field equality query â€” no composite Firestore index needed; the
+// Single-field equality query — no composite Firestore index needed; the
 // client sorts by publishedAt afterwards.
 async function fetchLivePosts(max) {
   const snapshot = await getDocs(query(collection(db, "blogPosts"), where("published", "==", true), limit(max)));
@@ -54,7 +54,7 @@ async function renderBlogList() {
     const posts = await fetchLivePosts(50);
     list.innerHTML = posts.length
       ? posts.map(postCard).join("")
-      : '<p class="muted">No posts yet â€” check back soon.</p>';
+      : '<p class="muted">No posts yet — check back soon.</p>';
   } catch (error) {
     list.innerHTML = '<p class="muted">Could not load posts. Please refresh the page.</p>';
   }
@@ -89,7 +89,7 @@ async function renderPost() {
     const snapshot = await getDoc(doc(db, "blogPosts", slug));
     if (!snapshot.exists() || snapshot.data().published !== true) throw new Error("missing");
     const post = snapshot.data();
-    document.title = (post.title || "Blog post") + " â€” Gyanu Notes";
+    document.title = (post.title || "Blog post") + " — Gyanu Notes";
     document.getElementById("post-title").textContent = post.title || "";
     document.getElementById("post-category").textContent = post.category || "Blog";
     document.getElementById("post-date").textContent = formatDate(post.publishedAt);
@@ -103,7 +103,7 @@ async function renderPost() {
 
 function wireShare(post) {
   const url = location.origin + "/blog/post/?slug=" + encodeURIComponent(post.slug || "");
-  const text = (post.title || "Gyanu Notes") + " â€” Gyanu Notes";
+  const text = (post.title || "Gyanu Notes") + " — Gyanu Notes";
   const native = document.getElementById("share-native");
   if (native) {
     if (navigator.share) native.addEventListener("click", () => navigator.share({ title: post.title, text: text, url: url }).catch(() => {}));
@@ -114,7 +114,7 @@ function wireShare(post) {
     copy.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(url);
-        copy.textContent = "Link copied âœ“";
+        copy.textContent = "Link copied ✓";
         setTimeout(() => { copy.textContent = "Copy link"; }, 2000);
       } catch (error) {
         copy.textContent = url;

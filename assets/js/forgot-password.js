@@ -7,7 +7,7 @@ const message = document.getElementById("reset-message");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   button.disabled = true;
-  button.textContent = "Sendingâ€¦";
+  button.textContent = "Sending…";
   try {
     await sendPasswordResetEmail(auth, document.getElementById("email").value.trim());
     message.textContent = "If that account exists, a password-reset link has been sent.";

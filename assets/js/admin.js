@@ -118,7 +118,7 @@ document.getElementById('add-note-form').addEventListener('submit', async (event
     await saveContent();
     fillEditors();
     event.target.reset();
-    message('catalogue-message', `Published â€œ${title}â€.`, 'success');
+    message('catalogue-message', `Published “${title}”.`, 'success');
   } catch (error) { message('catalogue-message', 'Could not publish note: ' + error.message, 'error'); }
 });
 
@@ -137,7 +137,7 @@ document.getElementById('add-paper-form').addEventListener('submit', async (even
     await saveContent();
     fillEditors();
     event.target.reset();
-    message('catalogue-message', `Published â€œ${label}â€.`, 'success');
+    message('catalogue-message', `Published “${label}”.`, 'success');
   } catch (error) { message('catalogue-message', 'Could not publish paper: ' + error.message, 'error'); }
 });
 document.getElementById("import-bundled").addEventListener("click", async () => {
@@ -205,7 +205,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // ---------------------------------------------------------------------------
-// Chapter notes content â€” manages the Firestore chapterContent/{id} documents
+// Chapter notes content — manages the Firestore chapterContent/{id} documents
 // that the chapter viewer renders in preference to bundled files.
 // ---------------------------------------------------------------------------
 
@@ -285,20 +285,20 @@ async function loadChapterDoc() {
         : "";
   }
   editor.value = "";
-  editor.placeholder = "Loadingâ€¦";
+  editor.placeholder = "Loading…";
   try {
     const snapshot = await getDoc(doc(db, "chapterContent", chapterId));
     if (snapshot.exists()) {
       editor.value = snapshot.data().html || "";
-      editor.placeholder = "Chapter HTMLâ€¦";
+      editor.placeholder = "Chapter HTML…";
       message("content-message", "Loaded the published Firestore version. Edit and publish to update it.", "success");
       return;
     }
     const response = await fetch("/assets/content/" + encodeURIComponent(chapterId) + ".html");
     editor.value = response.ok ? await response.text() : "";
     editor.placeholder = response.ok
-      ? "Chapter HTMLâ€¦"
-      : "No content yet â€” write the chapter HTML here and publish.";
+      ? "Chapter HTML…"
+      : "No content yet — write the chapter HTML here and publish.";
     message(
       "content-message",
       response.ok
@@ -354,7 +354,7 @@ document.getElementById("save-handwritten")?.addEventListener("click", async () 
   if (!input) return;
   const value = input.value.trim();
   if (value && !/^[-\w]{20,}$/.test(value)) {
-    return message("content-message", "That does not look like a Drive file ID â€” paste the long ID from the file's share link, not the whole link.", "error");
+    return message("content-message", "That does not look like a Drive file ID — paste the long ID from the file's share link, not the whole link.", "error");
   }
   const entry = contentEntry();
   const chapter = entry?.chapters.find((item) => item.id === chapterId);
@@ -371,7 +371,7 @@ document.getElementById("save-handwritten")?.addEventListener("click", async () 
 });
 
 // ---------------------------------------------------------------------------
-// Notice board â€” publishes and manages Firestore notices shown on the homepage.
+// Notice board — publishes and manages Firestore notices shown on the homepage.
 // ---------------------------------------------------------------------------
 
 async function loadNoticesList() {
@@ -440,7 +440,7 @@ document.getElementById("notice-list")?.addEventListener("click", async (event) 
 });
 
 // ---------------------------------------------------------------------------
-// Blog â€” full articles at /blog/. Doc id = url slug. Drafts stay private;
+// Blog — full articles at /blog/. Doc id = url slug. Drafts stay private;
 // live posts are public. Publishing can also push a homepage notice.
 // ---------------------------------------------------------------------------
 
@@ -455,7 +455,7 @@ function slugify(text) {
     .slice(0, 80);
 }
 
-// Nepali/Devanagari titles slugify to an empty string â€” fall back to a
+// Nepali/Devanagari titles slugify to an empty string — fall back to a
 // timestamp-based slug so publishing never blocks. Users can also type
 // their own English slug in the field.
 function ensureSlug(text) {
@@ -531,7 +531,7 @@ async function saveBlogPost(published) {
     }
     message("blog-message", published
       ? "Published at /blog/post/?slug=" + slug + "." + noticeNote
-      : "Draft saved â€” it is not visible to visitors yet.", "success");
+      : "Draft saved — it is not visible to visitors yet.", "success");
     resetBlogForm();
     loadBlogList();
   } catch (error) {
@@ -609,7 +609,7 @@ document.getElementById("blog-list")?.addEventListener("click", async (event) =>
       document.getElementById("blog-html").value = data.html || "";
       document.getElementById("blog-publish").textContent = "Update & publish";
       document.getElementById("blog-cancel").hidden = false;
-      message("blog-message", "Editing â€œ" + (data.title || snapshot.id) + "â€. The URL slug stays fixed.", "success");
+      message("blog-message", "Editing “" + (data.title || snapshot.id) + "”. The URL slug stays fixed.", "success");
       document.getElementById("blog-form").scrollIntoView({ behavior: "smooth", block: "center" });
     } catch (error) {
       message("blog-message", "Could not load the post: " + error.message, "error");

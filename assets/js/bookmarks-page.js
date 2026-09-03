@@ -1,4 +1,4 @@
-// Gyanu Notes â€” "My bookmarks" page: lists the user's saved notes/papers
+// Gyanu Notes — "My bookmarks" page: lists the user's saved notes/papers
 // with the ability to remove them inline.
 
 import { auth } from "/assets/js/firebase-config.js?v=2";
@@ -29,7 +29,7 @@ function render(items, uid) {
   var list = document.getElementById('bookmarks-list');
 
   if (!items || items.length === 0) {
-    list.innerHTML = '<div class="empty-state">Nothing saved yet. Tap the â˜… button on any note or paper to keep it here.</div>';
+    list.innerHTML = '<div class="empty-state">Nothing saved yet. Tap the ★ button on any note or paper to keep it here.</div>';
     return;
   }
 
@@ -56,13 +56,13 @@ function render(items, uid) {
     remove.textContent = 'Remove';
     remove.addEventListener('click', function () {
       remove.disabled = true;
-      remove.textContent = 'Removingâ€¦';
+      remove.textContent = 'Removing…';
       removeBookmark(uid, item.id).then(function () {
         row.style.opacity = '0';
         row.style.transition = 'opacity 0.25s ease';
         setTimeout(function () { row.remove(); }, 250);
         if (list.children.length <= 1) {
-          list.innerHTML = '<div class="empty-state">Nothing saved yet. Tap the â˜… button on any note or paper to keep it here.</div>';
+          list.innerHTML = '<div class="empty-state">Nothing saved yet. Tap the ★ button on any note or paper to keep it here.</div>';
         }
       }).catch(function () {
         remove.disabled = false;

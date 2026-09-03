@@ -1,4 +1,4 @@
-// Gyanu Notes â€” renders the /papers/ landing page from editable site content
+// Gyanu Notes — renders the /papers/ landing page from editable site content
 import { getPapersData } from "/assets/js/content-store.js";
 import { auth } from "/assets/js/firebase-config.js?v=2";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";

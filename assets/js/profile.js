@@ -1,4 +1,4 @@
-// Gyanu Notes â€” profile settings: edit info, change password, delete account
+// Gyanu Notes — profile settings: edit info, change password, delete account
 
 import { auth, db } from "/assets/js/firebase-config.js?v=2";
 import {
@@ -48,7 +48,7 @@ document.getElementById('profile-form').addEventListener('submit', function (e) 
   var classLevel = document.getElementById('class-level').value;
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Savingâ€¦';
+  submitBtn.textContent = 'Saving…';
 
   updateProfile(currentUser, { displayName: name })
     .then(function () {
@@ -87,7 +87,7 @@ if (passwordForm) {
     var newPassword = document.getElementById('new-password').value;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Updatingâ€¦';
+    submitBtn.textContent = 'Updating…';
 
     var credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
 
@@ -138,7 +138,7 @@ cancelDeleteBtn.addEventListener('click', function () {
 
 confirmDeleteBtn.addEventListener('click', function () {
   confirmDeleteBtn.disabled = true;
-  confirmDeleteBtn.textContent = 'Deletingâ€¦';
+  confirmDeleteBtn.textContent = 'Deleting…';
 
   var reauthPromise;
   if (isPasswordAccount) {
