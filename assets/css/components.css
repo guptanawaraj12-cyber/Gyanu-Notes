@@ -314,12 +314,12 @@
   color: var(--ink);
   font-weight: 600;
   transform-style: preserve-3d;
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s ease;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
   will-change: transform;
 }
 
 .ticket:hover {
-  border-color: transparent;
+  border-color: var(--accent);
   color: var(--ink);
   box-shadow: var(--shadow);
 }
@@ -358,13 +358,13 @@
   padding: 26px 16px;
   text-align: center;
   color: var(--ink);
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s ease;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
   transform-style: preserve-3d;
 }
 
 .class-card:hover {
   box-shadow: var(--shadow);
-  border-color: transparent;
+  border-color: var(--accent);
   color: var(--ink);
 }
 
@@ -411,11 +411,11 @@
   padding: 15px 18px;
   color: var(--ink);
   font-weight: 600;
-  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s ease;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 
 .subject-row:hover {
-  border-color: transparent;
+  border-color: var(--accent);
   box-shadow: var(--shadow);
   transform: translateX(4px);
   color: var(--ink);
@@ -450,13 +450,13 @@
   border-radius: var(--radius);
   padding: 18px 22px;
   color: var(--ink);
-  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s ease;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 
 .chapter-row:hover {
   transform: translateX(4px);
   box-shadow: var(--shadow);
-  border-color: transparent;
+  border-color: var(--accent);
   color: var(--ink);
 }
 
@@ -478,13 +478,13 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px;
-  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s ease;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 
 .paper-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow);
-  border-color: transparent;
+  border-color: var(--accent);
 }
 
 .paper-card .subject {
@@ -539,11 +539,17 @@
   align-items: center;
   padding: 18px 0;
   border-bottom: 1px solid var(--border);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .update-row:hover {
   transform: translateX(4px);
+}
+
+/* Interactive notice rows: accent hairline + soft lift, per the shared hover recipe */
+.update-row.notice-clickable:hover {
+  border-bottom-color: var(--accent);
+  box-shadow: var(--shadow);
 }
 
 .update-date {
@@ -2264,7 +2270,7 @@
 .blog-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow);
-  border-color: var(--border-strong);
+  border-color: var(--accent);
 }
 
 .blog-card h3 {
