@@ -32,14 +32,6 @@ function formatDate(value) {
   }
 }
 
-// Notices from the last 3 days show a "New" badge (unless pinned).
-function isNew(value) {
-  try {
-    var date = value && typeof value.toDate === "function" ? value.toDate() : null;
-    return !!date && Date.now() - date.getTime() < 3 * 24 * 60 * 60 * 1000;
-  } catch (error) { return false; }
-}
-
 var loadedNotices = [];
 
 async function renderNotices() {
@@ -69,14 +61,11 @@ async function renderNotices() {
     var tag = notice.pinned === true
       ? '<span class="tag tag-pin">Pinned</span>'
       : '<span class="tag">Notice</span>';
-    var badge = isNew(notice.createdAt) && notice.pinned !== true
-      ? '<span class="tag tag-new">New</span>'
-      : "";
     return '<div class="update-row notice-clickable' + (notice.pinned === true ? " pinned" : "") + '"' +
       ' data-index="' + index + '" tabindex="0" role="button" aria-haspopup="dialog">' +
       '<span class="update-date">' + formatDate(notice.createdAt) + '</span>' +
       '<div class="update-main">' +
-        '<span class="update-title">' + tag + badge + escapeHtml(notice.title) + '</span>' +
+        '<span class="update-title">' + tag + escapeHtml(notice.title) + '</span>' +
         (notice.body ? '<p class="update-body">' + escapeHtml(notice.body) + '</p>' : "") +
       '</div>' +
       '<span class="update-read">Read &rarr;</span>' +
@@ -110,7 +99,6 @@ function ensureModal() {
       '<p class="notice-modal-meta"><span class="tag" id="notice-modal-tag">Notice</span>' +
       '<span class="notice-modal-date" id="notice-modal-date"></span></p>' +
       '<h3 id="notice-modal-title"></h3>' +
-      '<figure class="notice-modal-image" id="notice-modal-image" hidden></figure>' +
       '<div class="notice-modal-body" id="notice-modal-body"></div>' +
       '<p class="notice-modal-actions"><a class="btn btn-primary" id="notice-modal-link" hidden>Open link &rarr;</a></p>' +
     '</div>';
@@ -125,19 +113,11 @@ function openNoticeModal(notice, opener) {
   ensureModal();
   modalOpener = opener || null;
   var tag = document.getElementById("notice-modal-tag");
-  tag.textContent = notice.pinned === true
-    ? "Pinned"
-    : (isNew(notice.createdAt) ? "New" : "Notice");
-  tag.className = notice.pinned === true
-    ? "tag tag-pin"
-    : (isNew(notice.createdAt) ? "tag tag-new" : "tag");
+  tag.textContent = notice.pinned === true ? "Pinned" : "Notice";
+  tag.className = notice.pinned === true ? "tag tag-pin" : "tag";
   document.getElementById("notice-modal-date").textContent = formatDate(notice.createdAt);
   document.getElementById("notice-modal-title").textContent = notice.title || "";
   document.getElementById("notice-modal-body").innerHTML = notice.body ? bodyToParagraphs(notice.body) : "";
-  var imageWrap = document.getElementById("notice-modal-image");
-  var imageUrl = safeUrl(notice.image);
-  imageWrap.hidden = !imageUrl;
-  if (imageUrl) imageWrap.innerHTML = '<img src="' + escapeHtml(imageUrl) + '" alt="">';
   var link = document.getElementById("notice-modal-link");
   var url = safeUrl(notice.url);
   link.hidden = !url;
