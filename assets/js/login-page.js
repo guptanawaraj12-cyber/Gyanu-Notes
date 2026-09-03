@@ -74,7 +74,38 @@ import { auth, db } from "/assets/js/firebase-config.js?v=3";
     if (code === 'auth/network-request-failed') {
       return 'Network problem while contacting ' + action + '. Check your connection and try again.';
     }
-    return action + ' failed. Please try again.';
+    var detail = serverDetail(err);
+    if (detail) {
+      var d = detail.toLowerCase();
+      if (d.indexOf('api key') !== -1) {
+        return "The site's Firebase API key is invalid or restricted. In Google Cloud Console > APIs & Services > Credentials, set the key's Application restrictions to 'None' or add this website's domain to its HTTP referrers.";
+      }
+      if (d.indexOf('app check') !== -1) {
+        return 'App Check enforcement is blocking sign-in. In Firebase Console > Authentication > Settings, turn App Check enforcement OFF (or register a valid reCAPTCHA v3 key first).';
+      }
+      if (d.indexOf('identity toolkit') !== -1 || d.indexOf('service_disabled') !== -1) {
+        return 'The Identity Toolkit API is disabled for this project. Enable it in Google Cloud Console > APIs & Services > Library.';
+      }
+      if (d.indexOf('operation_not_allowed') !== -1) {
+        return action + ' is not enabled in Firebase Console > Authentication > Sign-in method.';
+      }
+      return action + ' failed: ' + detail;
+    }
+    return action + ' failed. Please try again. (Code: ' + (code || 'unknown') + ')';
+  }
+
+  // auth/internal-error wraps the real server rejection in customData.message,
+  // e.g. 'Error (auth/internal-error); body: {"error":{"message":"API key not valid…"}}'
+  function serverDetail(err) {
+    var raw = (err && err.customData && err.customData.message) || '';
+    var m = raw.match(/body:\s*(\{[\s\S]*\})/);
+    if (!m) return '';
+    try {
+      var parsed = JSON.parse(m[1]);
+      return (parsed.error && parsed.error.message) || '';
+    } catch (e) {
+      return '';
+    }
   }
   // redirect away if already logged in
   onAuthStateChanged(auth, function (user) {
