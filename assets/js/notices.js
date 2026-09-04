@@ -55,7 +55,7 @@ async function renderNotices() {
       import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
     ]);
     var snapshot = await withTimeout(
-      getDocs(query(f.collection(db, "notices"), f.orderBy("createdAt", "desc"), f.limit(8))),
+      f.getDocs(f.query(f.collection(db, "notices"), f.orderBy("createdAt", "desc"), f.limit(8))),
       6000
     );
     notices = snapshot.docs.map(function (docSnap) {

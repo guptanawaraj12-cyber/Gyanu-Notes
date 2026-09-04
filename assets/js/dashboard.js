@@ -93,6 +93,10 @@ function timeAgo(isoOrTimestamp) {
     if (hero) hero.insertAdjacentHTML('beforeend',
       '<p class="form-message error">Couldn\'t load content — check your connection.</p>' +
       '<p><a class="btn btn-outline" href="">Retry</a></p>');
+    // The stat tiles read 0 only because Firebase never answered — hide
+    // them rather than show fake-zero data beside the error banner.
+    var stats = document.querySelector(".dash-stats");
+    if (stats) stats.style.display = "none";
   }
 })();
 
