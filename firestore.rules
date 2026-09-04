@@ -150,6 +150,29 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Reader Q&A comments on note pages. Anyone can read; only signed-in
+    // users can post or flag. Flagging may only set reported=true (one flag
+    // is enough); text/uid/createdAt are immutable after posting. Only
+    // administrators can delete.
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if signedIn() &&
+        request.resource.data.keys().hasOnly(['noteId', 'uid', 'displayName', 'text', 'createdAt', 'reported']) &&
+        request.resource.data.noteId is string &&
+        request.resource.data.noteId.size() > 0 && request.resource.data.noteId.size() <= 100 &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.displayName is string &&
+        request.resource.data.displayName.size() > 0 && request.resource.data.displayName.size() <= 100 &&
+        request.resource.data.text is string &&
+        request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 1000 &&
+        request.resource.data.createdAt == request.time &&
+        request.resource.data.reported == false;
+      allow update: if signedIn() &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reported']) &&
+        request.resource.data.reported == true;
+      allow delete: if isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

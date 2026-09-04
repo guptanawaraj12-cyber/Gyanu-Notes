@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
        // Best-effort Firestore write: anonymous-friendly, never surfaces errors
        (async function () {
          try {
-           var fc = await import("/assets/js/firebase-config.js?v=5");
+           var fc = await import("/assets/js/firebase-config.js?v=3");
            var fs = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js");
            await fs.addDoc(fs.collection(fc.db, "feedback"), {
              noteId: noteId || null,
@@ -314,6 +314,18 @@ document.addEventListener('DOMContentLoaded', function () {
     var target = wrap.querySelector('#' + btn.getAttribute('data-tab'));
     if (target) target.classList.add('active');
   });
+
+
+  // Share on WhatsApp: message = title + direct page URL (pure client-side).
+  var waBtn = document.getElementById('whatsapp-share');
+  if (waBtn) {
+    waBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      var title = currentChapter ? currentChapter.title : document.title.replace(/ — Gyanu Notes$/, '');
+      var text = 'Check out ' + title + ' on Gyanu Notes: ' + window.location.href;
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    });
+  }
 
   // Download menu: toggle, close on outside click / Esc, and the two items.
   var menuBtn = document.getElementById('download-btn');

@@ -2321,6 +2321,130 @@
   color: var(--ink);
   font-weight: 500;
 }
+ 
+/* ---------- Exam cards (exams page) ---------- */
+.exam-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+ 
+.exam-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
+}
+ 
+.exam-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+ 
+.exam-card .tag {
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+ 
+.exam-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+ 
+.exam-date {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin: 0 0 4px;
+}
+ 
+.exam-countdown {
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+ 
+.exam-subjects {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+ 
+.exam-grid.collapsed {
+  display: none;
+}
+
+/* ---------- Reader Q&A comments (note view) ---------- */
+.comments-section {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+#comment-form textarea {
+  width: 100%;
+  min-height: 96px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+#comment-form textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.comment-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+
+.comment-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.comment-author { color: var(--ink); }
+
+.comment-date { color: var(--ink-faint); }
+
+.comment-report {
+  margin-left: auto;
+  color: var(--ink-faint);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.comment-report:hover { color: var(--accent); }
+
+.comment-text {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.tag-reported {
+  background: #b45309;
+  color: #ffffff;
+}
+ 
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;

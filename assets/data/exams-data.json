@@ -1,21 +1,30 @@
-// /assets/data/exams-data.json — bundled exam schedule (fallback)
 [
   {
-    "examName": "SEE 2082",
-    "date": "2082-03-15",
+    "examName": "SEE 2083",
+    "date": "2027-03-26",
+    "dateBs": "2083-12-15",
     "class": "Class 10",
     "subjects": ["Nepali", "English", "Mathematics", "Science", "Social Studies"]
   },
   {
-    "examName": "Class 11 NEB Exams",
-    "date": "2082-02-10",
+    "examName": "Class 11 NEB Board Exams",
+    "date": "2027-04-28",
+    "dateBs": "2084-01-15",
     "class": "Class 11",
     "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali"]
   },
   {
-    "examName": "Class 12 NEB Exams",
-    "date": "2082-04-05",
+    "examName": "Class 12 NEB Board Exams",
+    "date": "2027-05-05",
+    "dateBs": "2084-02-10",
     "class": "Class 12",
     "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali", "Computer Science", "Social Studies"]
+  },
+  {
+    "examName": "SEE 2082",
+    "date": "2025-05-02",
+    "dateBs": "2082-01-20",
+    "class": "Class 10",
+    "subjects": ["Nepali", "English", "Mathematics", "Science", "Social Studies"]
   }
 ]

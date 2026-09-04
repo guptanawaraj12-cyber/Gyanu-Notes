@@ -217,6 +217,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Share on WhatsApp: message = title + direct page URL (pure client-side).
+  var waBtn = document.getElementById('whatsapp-share');
+  if (waBtn) {
+    waBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      var title = currentTitleText || (currentSet ? currentSet.title : '') || 'this paper';
+      var text = 'Check out ' + title + ' on Gyanu Notes: ' + window.location.href;
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    });
+  }
+
   document.getElementById('login-gate-link').addEventListener('click', function (event) {
     if (!currentUser || currentUser.emailVerified) return;
     event.preventDefault();

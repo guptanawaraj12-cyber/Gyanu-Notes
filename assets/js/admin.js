@@ -198,6 +198,49 @@ async function setRole(enabled) {
 document.getElementById("grant-admin").addEventListener("click", () => setRole(true));
 document.getElementById("revoke-admin").addEventListener("click", () => setRole(false));
 
+// ---------------------------------------------------------------------------
+// Reported comments — moderation queue for the reader Q&A (comments/{id}).
+// ---------------------------------------------------------------------------
+
+async function loadReportedComments() {
+  const list = document.getElementById("reported-comments-list");
+  if (!list) return;
+  try {
+    const snapshot = await getDocs(query(collection(db, "comments"), where("reported", "==", true)));
+    if (!snapshot.size) {
+      list.innerHTML = '<p class="muted">No reported comments. All clear.</p>';
+      return;
+    }
+    const rows = snapshot.docs
+      .map((docSnap) => Object.assign({ id: docSnap.id }, docSnap.data()))
+      .sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    list.innerHTML = rows.map((row) => {
+      const when = row.createdAt?.toDate ? row.createdAt.toDate().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "";
+      return '<div class="notice-info">' +
+        "<strong>" + escapeHtml(row.displayName || "Student") + "</strong>" +
+        ' <span class="muted">&middot; ' + when + " &middot; note " + escapeHtml(row.noteId || "?") + "</span>" +
+        "<p>" + escapeHtml(row.text || "") + "</p>" +
+        '<button class="btn btn-outline comment-del" data-id="' + escapeHtml(row.id) + '" type="button">Delete comment</button>' +
+        "</div>";
+    }).join("");
+  } catch (error) {
+    list.innerHTML = '<p class="muted">Could not load reported comments: ' + escapeHtml(error.message) + "</p>";
+  }
+}
+
+document.getElementById("reported-comments-list")?.addEventListener("click", async (event) => {
+  const btn = event.target.closest?.(".comment-del");
+  if (!btn) return;
+  if (!window.confirm("Delete this comment permanently?")) return;
+  try {
+    await deleteDoc(doc(db, "comments", btn.dataset.id));
+    message("reported-comments-message", "Comment deleted.", "success");
+    loadReportedComments();
+  } catch (error) {
+    message("reported-comments-message", "Delete failed: " + (error.message || "try again."), "error");
+  }
+});
+
 onAuthStateChanged(auth, async (user) => {
   const denied = document.getElementById("access-denied");
   if (!user) {
@@ -215,6 +258,7 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("admin-app").hidden = false;
   try { await loadAdmin(); }
   catch (error) { message("catalogue-message", "Could not load catalogue: " + error.message, "error"); }
+  loadReportedComments();
 });
 
 // ---------------------------------------------------------------------------

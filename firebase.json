@@ -11,7 +11,8 @@
       "**/*.md",
       ".vscode/**",
       "**/*.ps1",
-      "assets/uploads/**"
+      "assets/uploads/**",
+      "*.js"
     ],
     "cleanUrls": true,
     "rewrites": [
@@ -52,7 +53,8 @@
     ]
   },
   "firestore": {
-    "rules": "firestore.rules"
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   },
   "functions": [
     {
