@@ -1,8 +1,5 @@
 // Gyanu Notes — renders the /notes/ landing page from editable site content
-import { getNotesData } from "/assets/js/content-store.js?v=3";
-import { auth } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getRecentHistory } from "/assets/js/history.js?v=3";
+import { getNotesData } from "/assets/js/content-store.js?v=4";
 
 document.addEventListener('DOMContentLoaded', function () {
   var mineOnly = new URLSearchParams(window.location.search).get('filter') === 'mine';
@@ -14,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(function (data) { render(data); })
     .catch(function () {
       var list = document.getElementById('recent-notes-list');
-      if (list) list.innerHTML = '<p style="color: var(--ink-faint);">Could not load notes right now. Please try again later.</p>';
+      if (list) list.innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p><p><a class="btn btn-outline" href="">Retry</a></p>';
     });
 
   function render(data) {
@@ -24,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var recentList = document.getElementById('recent-notes-list');
     var subjectCount = document.getElementById('subject-count');
     if (subjectCount) subjectCount.textContent = data.subjects.length + ' subjects';
+    footerClassLinks.innerHTML = ''; // clear the static fallback links shipped in the HTML
 
     // wipe skeleton placeholders (and any stale content) before rendering
     classGrid.innerHTML = '';
@@ -97,31 +95,43 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function renderMine() {
-    onAuthStateChanged(auth, function (user) {
-      if (!user) {
-        window.location.href = '/login/';
-        return;
-      }
-      document.querySelector('.page-hero h1').textContent = 'My recently viewed notes';
-      document.querySelector('.page-hero .lead').textContent = 'Continue studying from where you left off.';
-      var browse = document.querySelector('.browse-grid');
-      if (browse) browse.closest('section').style.display = 'none';
-      getRecentHistory(user.uid, 30).then(function (items) {
-        var list = document.getElementById('recent-notes-list');
-        var notes = items.filter(function (item) { return item.type === 'note'; });
-        list.innerHTML = '';
-        if (!notes.length) {
-          list.innerHTML = '<p style="color: var(--ink-faint);">You have not viewed any notes yet. <a href="/notes/">Browse notes</a></p>';
-          return;
-        }
-        notes.forEach(function (item) {
-          var row = document.createElement('a');
-          row.className = 'update-row';
-          row.href = item.url;
-          row.textContent = item.title;
-          list.appendChild(row);
+    (async function () {
+      try {
+        const [{ auth }, { onAuthStateChanged }] = await Promise.all([
+          import("/assets/js/firebase-config.js?v=3"),
+          import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js")
+        ]);
+        const { getRecentHistory } = await import("/assets/js/history.js?v=4");
+        onAuthStateChanged(auth, function (user) {
+          if (!user) {
+            window.location.href = '/login/';
+            return;
+          }
+          document.querySelector('.page-hero h1').textContent = 'My recently viewed notes';
+          document.querySelector('.page-hero .lead').textContent = 'Continue studying from where you left off.';
+          var browse = document.querySelector('.browse-grid');
+          if (browse) browse.closest('section').style.display = 'none';
+          getRecentHistory(user.uid, 30).then(function (items) {
+            var list = document.getElementById('recent-notes-list');
+            var notes = items.filter(function (item) { return item.type === 'note'; });
+            list.innerHTML = '';
+            if (!notes.length) {
+              list.innerHTML = '<p style="color: var(--ink-faint);">You have not viewed any notes yet. <a href="/notes/">Browse notes</a></p>';
+              return;
+            }
+            notes.forEach(function (item) {
+              var row = document.createElement('a');
+              row.className = 'update-row';
+              row.href = item.url;
+              row.textContent = item.title;
+              list.appendChild(row);
+            });
+          });
         });
-      });
-    });
+      } catch (error) {
+        var list = document.getElementById('recent-notes-list');
+        if (list) list.innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p><p><a class="btn btn-outline" href="">Retry</a></p>';
+      }
+    })();
   }
 });

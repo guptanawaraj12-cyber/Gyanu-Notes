@@ -1,13 +1,24 @@
 // Gyanu Notes — profile settings: edit info, change password, delete account
 
-import { auth, db } from "/assets/js/firebase-config.js?v=3";
-import {
-  onAuthStateChanged, updateProfile,
-  EmailAuthProvider, reauthenticateWithCredential, updatePassword,
-  GoogleAuthProvider, FacebookAuthProvider, reauthenticateWithPopup,
-  deleteUser
-} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc, setDoc, deleteDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+let auth, db, onAuthStateChanged, updateProfile, EmailAuthProvider,
+    reauthenticateWithCredential, updatePassword, GoogleAuthProvider,
+    FacebookAuthProvider, reauthenticateWithPopup, deleteUser,
+    doc, getDoc, setDoc, deleteDoc, collection, getDocs, writeBatch;
+(async function () {
+  try {
+    const [fc, am, fs] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+    ]);
+    auth = fc.auth; db = fc.db;
+    onAuthStateChanged = am.onAuthStateChanged; updateProfile = am.updateProfile;
+    EmailAuthProvider = am.EmailAuthProvider; reauthenticateWithCredential = am.reauthenticateWithCredential;
+    updatePassword = am.updatePassword; GoogleAuthProvider = am.GoogleAuthProvider;
+    FacebookAuthProvider = am.FacebookAuthProvider; reauthenticateWithPopup = am.reauthenticateWithPopup;
+    deleteUser = am.deleteUser;
+    doc = fs.doc; getDoc = fs.getDoc; setDoc = fs.setDoc; deleteDoc = fs.deleteDoc;
+    collection = fs.collection; getDocs = fs.getDocs; writeBatch = fs.writeBatch;
 
 var currentUser = null;
 var isPasswordAccount = false;
@@ -194,4 +205,11 @@ confirmDeleteBtn.addEventListener('click', function () {
       confirmDeleteBtn.disabled = false;
       confirmDeleteBtn.textContent = 'Yes, delete permanently';
     });
-});
+  });
+  } catch (error) {
+    console.warn("Profile page could not reach Firebase:", error);
+    showMsg('profile-message', "Couldn't reach the sign-in service — check your connection.", 'error');
+    var ps = document.getElementById('profile-submit');
+    if (ps) ps.disabled = true;
+  }
+})

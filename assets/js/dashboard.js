@@ -1,11 +1,24 @@
 // Gyanu Notes — dashboard: welcome header, continue-where-left-off,
 // stats row, class quick links, latest bookmarks and recent activity.
 
-import { auth, db } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { getRecentHistory, countHistory, clearHistory } from "/assets/js/history.js?v=3";
-import { getBookmarkCount, getBookmarks } from "/assets/js/bookmarks.js?v=3";
+let auth, db, onAuthStateChanged, doc, getDoc,
+    getRecentHistory, countHistory, clearHistory, getBookmarkCount, getBookmarks;
+
+// Firebase loads dynamically: if it cannot be reached the dashboard shows a
+// visible error with a retry (instead of a silent empty state).
+(async function init() {
+  try {
+    const [fc, am, fs, hist, bm] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js"),
+      import("/assets/js/history.js?v=4"),
+      import("/assets/js/bookmarks.js?v=4")
+    ]);
+    auth = fc.auth; db = fc.db; onAuthStateChanged = am.onAuthStateChanged;
+    doc = fs.doc; getDoc = fs.getDoc;
+    getRecentHistory = hist.getRecentHistory; countHistory = hist.countHistory; clearHistory = hist.clearHistory;
+    getBookmarkCount = bm.getBookmarkCount; getBookmarks = bm.getBookmarks;
 
 // Only relative paths and https links are allowed as targets, so user-stored
 // urls can never become javascript: links; titles render via textContent.
@@ -31,11 +44,11 @@ function timeAgo(isoOrTimestamp) {
   return date.toLocaleDateString();
 }
 
-onAuthStateChanged(auth, function (user) {
-  if (!user) {
-    window.location.href = '/login/';
-    return;
-  }
+  onAuthStateChanged(auth, function (user) {
+    if (!user) {
+      window.location.href = '/login/';
+      return;
+    }
 
   var firstName = user.displayName ? user.displayName.split(' ')[0] : 'there';
   document.getElementById('welcome-heading').textContent = 'Welcome back, ' + firstName;
@@ -73,7 +86,15 @@ onAuthStateChanged(auth, function (user) {
   getRecentHistory(user.uid, 8).then(function (items) {
     renderHistory(items);
   });
-});
+  });
+  } catch (error) {
+    console.warn("Dashboard could not reach Firebase:", error);
+    var hero = document.querySelector('.dash-hero .container');
+    if (hero) hero.insertAdjacentHTML('beforeend',
+      '<p class="form-message error">Couldn\'t load content — check your connection.</p>' +
+      '<p><a class="btn btn-outline" href="">Retry</a></p>');
+  }
+})();
 
 function renderClassLinks(classLevel) {
   var holder = document.getElementById('class-links');

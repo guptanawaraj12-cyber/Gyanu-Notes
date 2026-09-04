@@ -1,8 +1,21 @@
 // Gyanu Notes — reflects login state in the navbar on every page
 
-import { auth, db } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+let auth, db, onAuthStateChanged, signOut, sendEmailVerification, doc, getDoc;
+
+// Non-critical: if Firebase cannot be reached the navbar simply stays in its
+// logged-out appearance instead of breaking the page.
+(async function () {
+  try {
+    const [fc, am, fs] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+    ]);
+    auth = fc.auth; db = fc.db;
+    onAuthStateChanged = am.onAuthStateChanged;
+    signOut = am.signOut;
+    sendEmailVerification = am.sendEmailVerification;
+    doc = fs.doc; getDoc = fs.getDoc;
 
 function initials(name) {
   return (name || "?").split(/\s+/).slice(0, 2).map(function (w) {
@@ -144,4 +157,8 @@ onAuthStateChanged(auth, async function (user) {
     renderTrigger(null);
     clearLoggedInPanel();
   }
-});
+  });
+  } catch (error) {
+    console.warn("Navbar auth state unavailable:", error);
+  }
+})();

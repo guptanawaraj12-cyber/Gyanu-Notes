@@ -1,9 +1,22 @@
-import { auth, db } from "/assets/js/firebase-config.js?v=3";
-import { getSiteContent } from "/assets/js/content-store.js?v=3";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc, setDoc, deleteDoc, addDoc, collection, getDocs, query, orderBy, limit, where, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-const contentRef = doc(db, "siteContent", "current");
+let auth, db, onAuthStateChanged, getSiteContent, doc, getDoc, setDoc, deleteDoc,
+    addDoc, collection, getDocs, query, orderBy, limit, where, updateDoc, serverTimestamp;
+let contentRef;
+// Admin is auth-gated: if Firebase cannot be reached the access panel shows
+// the connection error instead of leaving the page silent.
+(async function () {
+  try {
+    const [fc, cs, am, fs] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("/assets/js/content-store.js?v=4"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+    ]);
+    auth = fc.auth; db = fc.db; getSiteContent = cs.getSiteContent;
+    onAuthStateChanged = am.onAuthStateChanged;
+    doc = fs.doc; getDoc = fs.getDoc; setDoc = fs.setDoc; deleteDoc = fs.deleteDoc; addDoc = fs.addDoc;
+    collection = fs.collection; getDocs = fs.getDocs; query = fs.query; orderBy = fs.orderBy;
+    limit = fs.limit; where = fs.where; updateDoc = fs.updateDoc; serverTimestamp = fs.serverTimestamp;
+    contentRef = doc(db, "siteContent", "current");
 let content = null;
 
 function message(id, text, type) {
@@ -630,4 +643,11 @@ document.getElementById("blog-list")?.addEventListener("click", async (event) =>
       message("blog-message", "Could not delete the post: " + error.message, "error");
     }
   }
-});
+  });
+  } catch (error) {
+    console.error("Admin could not reach Firebase:", error);
+    var denied = document.getElementById("access-denied");
+    if (denied) denied.style.display = "block";
+    document.getElementById("access-message").textContent = "Couldn't reach the sign-in service — check your connection.";
+  }
+})();

@@ -1,8 +1,5 @@
 // Gyanu Notes — renders the /papers/ landing page from editable site content
-import { getPapersData } from "/assets/js/content-store.js?v=3";
-import { auth } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getRecentHistory } from "/assets/js/history.js?v=3";
+import { getPapersData } from "/assets/js/content-store.js?v=4";
 
 document.addEventListener('DOMContentLoaded', function () {
   var mineOnly = new URLSearchParams(window.location.search).get('filter') === 'mine';
@@ -13,13 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
   getPapersData()
     .then(function (data) { render(data); })
     .catch(function () {
-      document.getElementById('class-cards').innerHTML = '<p style="color: var(--ink-faint);">Could not load papers right now.</p>';
+      document.getElementById('class-cards').innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p><p><a class="btn btn-outline" href="">Retry</a></p>';
     });
 
   function render(data) {
     var cardsHolder = document.getElementById('class-cards');
     var footerClassLinks = document.getElementById('footer-class-links');
     cardsHolder.innerHTML = ''; // wipe skeleton placeholders before rendering
+    footerClassLinks.innerHTML = ''; // clear the static fallback links shipped in the HTML
 
     data.classExamTypes.forEach(function (c) {
       var num = c.label.replace(/\D/g, '');
@@ -51,29 +49,40 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function renderMine() {
-    onAuthStateChanged(auth, function (user) {
-      if (!user) {
-        window.location.href = '/login/';
-        return;
-      }
-      document.querySelector('.page-hero h1').textContent = 'My recently viewed papers';
-      document.querySelector('.page-hero .lead').textContent = 'Continue studying from where you left off.';
-      getRecentHistory(user.uid, 30).then(function (items) {
-        var holder = document.getElementById('class-cards');
-        var papers = items.filter(function (item) { return item.type === 'paper'; });
-        holder.innerHTML = '';
-        if (!papers.length) {
-          holder.innerHTML = '<p style="color: var(--ink-faint);">You have not viewed any papers yet. <a href="/papers/">Browse papers</a></p>';
-          return;
-        }
-        papers.forEach(function (item) {
-          var link = document.createElement('a');
-          link.href = item.url;
-          link.className = 'class-card';
-          link.textContent = item.title;
-          holder.appendChild(link);
+    (async function () {
+      try {
+        const [{ auth }, { onAuthStateChanged }] = await Promise.all([
+          import("/assets/js/firebase-config.js?v=3"),
+          import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js")
+        ]);
+        const { getRecentHistory } = await import("/assets/js/history.js?v=4");
+        onAuthStateChanged(auth, function (user) {
+          if (!user) {
+            window.location.href = '/login/';
+            return;
+          }
+          document.querySelector('.page-hero h1').textContent = 'My recently viewed papers';
+          document.querySelector('.page-hero .lead').textContent = 'Continue studying from where you left off.';
+          getRecentHistory(user.uid, 30).then(function (items) {
+            var holder = document.getElementById('class-cards');
+            var papers = items.filter(function (item) { return item.type === 'paper'; });
+            holder.innerHTML = '';
+            if (!papers.length) {
+              holder.innerHTML = '<p style="color: var(--ink-faint);">You have not viewed any papers yet. <a href="/papers/">Browse papers</a></p>';
+              return;
+            }
+            papers.forEach(function (item) {
+              var link = document.createElement('a');
+              link.href = item.url;
+              link.className = 'class-card';
+              link.textContent = item.title;
+              holder.appendChild(link);
+            });
+          });
         });
-      });
-    });
+      } catch (error) {
+        document.getElementById('class-cards').innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p><p><a class="btn btn-outline" href="">Retry</a></p>';
+      }
+    })();
   }
 });

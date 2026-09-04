@@ -9,7 +9,6 @@
 // on the free Spark plan the function cannot deploy, so downloads point
 // straight at Drive's public download endpoint instead.
 
-import { auth } from "/assets/js/firebase-config.js?v=3";
 
 var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;
 // The catalogue ships with this placeholder until real files are uploaded.
@@ -25,6 +24,7 @@ export async function secureDownload(options) {
 
   // Defence in depth: every caller also gates its own button, but the
   // download re-checks the account state first.
+  const { auth } = await import("/assets/js/firebase-config.js?v=3");
   var user = auth.currentUser;
   if (!user) throw new Error("Sign in to download files.");
   if (!user.emailVerified) throw new Error("Verify your email address before downloading.");

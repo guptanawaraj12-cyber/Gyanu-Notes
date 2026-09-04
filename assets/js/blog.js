@@ -1,7 +1,16 @@
 // Blog rendering for /blog/ (list), /blog/post/ (single), and the homepage
 // "latest posts" section. Each part activates only when its element exists.
-import { db } from "/assets/js/firebase-config.js?v=3";
-import { collection, getDocs, getDoc, doc, query, where, limit } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { withTimeout } from "/assets/js/content-store.js?v=4";
+
+// Firestore helpers load dynamically — a failed or slow SDK shows the retry
+// state instead of hanging on the skeletons.
+async function fb() {
+  const [{ db }, f] = await Promise.all([
+    import("/assets/js/firebase-config.js?v=3"),
+    import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+  ]);
+  return { db, collection: f.collection, getDocs: f.getDocs, getDoc: f.getDoc, doc: f.doc, query: f.query, where: f.where, limit: f.limit };
+}
 
 // Posts published within the last 7 days get a "New" badge on cards.
 var NEW_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
@@ -58,7 +67,11 @@ function newestFirst(a, b) {
 // Single-field equality query — no composite Firestore index needed; the
 // client sorts by publishedAt afterwards.
 async function fetchLivePosts(max) {
-  const snapshot = await getDocs(query(collection(db, "blogPosts"), where("published", "==", true), limit(max)));
+  const { db, collection, getDocs, query, where, limit } = await fb();
+  const snapshot = await withTimeout(
+    getDocs(query(collection(db, "blogPosts"), where("published", "==", true), limit(max))),
+    6000
+  );
   return snapshot.docs
     .map((docSnap) => Object.assign({ id: docSnap.id }, docSnap.data()))
     .sort(newestFirst);
@@ -115,7 +128,8 @@ async function renderBlogList() {
     renderCategoryFilter(listPosts);
     renderFilteredPosts();
   } catch (error) {
-    list.innerHTML = '<p class="muted">Could not load posts. Please refresh the page.</p>';
+    list.innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p>' +
+      '<p><a class="btn btn-outline" href="">Retry</a></p>';
   }
 }
 
@@ -149,7 +163,8 @@ async function renderPost() {
   };
   if (!slug) return showMissing();
   try {
-    const snapshot = await getDoc(doc(db, "blogPosts", slug));
+    const { db, doc, getDoc } = await fb();
+    const snapshot = await withTimeout(getDoc(doc(db, "blogPosts", slug)), 6000);
     if (!snapshot.exists() || snapshot.data().published !== true) throw new Error("missing");
     const post = snapshot.data();
     const cleanUrl = location.origin + postPath(slug);
@@ -179,7 +194,14 @@ async function renderPost() {
     wireShare(post, cleanUrl);
     if (article) article.hidden = false;
   } catch (error) {
-    showMissing();
+    if (error && error.message === "missing") { showMissing(); return; }
+    if (article) article.hidden = true;
+    if (missing) {
+      missing.hidden = false;
+      missing.querySelector("h2").textContent = "Couldn't load this post";
+      missing.querySelector("p").textContent = "Couldn't load content — check your connection.";
+      if (!missing.querySelector(".retry-btn")) missing.querySelector(".btn").insertAdjacentHTML("afterend", ' <a class="btn btn-outline retry-btn" href="">Retry</a>');
+    }
   }
 }
 

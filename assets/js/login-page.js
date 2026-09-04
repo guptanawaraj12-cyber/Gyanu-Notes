@@ -1,12 +1,17 @@
-import { auth, db } from "/assets/js/firebase-config.js?v=3";
-  import {
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    FacebookAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-  import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+(async function () {
+  try {
+    const [fc, am, fs] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+    ]);
+    const auth = fc.auth, db = fc.db;
+    const signInWithEmailAndPassword = am.signInWithEmailAndPassword,
+      GoogleAuthProvider = am.GoogleAuthProvider,
+      FacebookAuthProvider = am.FacebookAuthProvider,
+      signInWithPopup = am.signInWithPopup,
+      onAuthStateChanged = am.onAuthStateChanged;
+    const doc = fs.doc, getDoc = fs.getDoc, setDoc = fs.setDoc;
 
   async function redirectAfterLogin(user) {
     var profileRef = doc(db, 'users', user.uid);
@@ -153,3 +158,11 @@ import { auth, db } from "/assets/js/firebase-config.js?v=3";
         showMessage(socialError(err, 'Facebook sign-in'), 'error');
       });
   });
+  } catch (error) {
+    console.error("Login page could not reach Firebase:", error);
+    var msgEl = document.getElementById('form-message');
+    if (msgEl) { msgEl.textContent = "Couldn't reach the sign-in service — check your connection."; msgEl.className = 'form-message error'; }
+    var submit = document.getElementById('login-submit');
+    if (submit) submit.disabled = true;
+  }
+})();

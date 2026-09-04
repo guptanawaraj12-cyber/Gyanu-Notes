@@ -1,5 +1,5 @@
 // Gyanu Notes — renders a chapter list page based on the URL path
-import { getNotesData } from "/assets/js/content-store.js?v=3";
+import { getNotesData } from "/assets/js/content-store.js?v=4";
 // Works for any /notes/{class-slug}/{subject-slug}/ page using the same template
 
 document.addEventListener('DOMContentLoaded', function () {

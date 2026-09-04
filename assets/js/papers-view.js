@@ -1,11 +1,11 @@
 // Gyanu Notes — paper viewer: loads paper data, shows preview, gates download behind login
 
-import { auth } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { logView } from "/assets/js/history.js?v=3";
-import { getPapersData } from "/assets/js/content-store.js?v=3";
-import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js?v=3";
-import { secureDownload } from "/assets/js/secure-download.js?v=3";
+import { getPapersData } from "/assets/js/content-store.js?v=4";
+
+// Firebase loads dynamically — the paper preview renders regardless; sign-in
+// features activate once it arrives.
+let auth, onAuthStateChanged, sendEmailVerification, logView, isBookmarked, toggleBookmark, secureDownload;
+let fbReady = Promise.resolve();
 
 document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);
@@ -16,6 +16,28 @@ document.addEventListener('DOMContentLoaded', function () {
   var hasLoggedView = false;
   var bookmarkBtn = document.getElementById('bookmark-btn');
   var bookmarkActive = false;
+
+  fbReady = (async function () {
+    try {
+      const [fc, am, hist, bm, sd] = await Promise.all([
+        import("/assets/js/firebase-config.js?v=3"),
+        import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+        import("/assets/js/history.js?v=4"),
+        import("/assets/js/bookmarks.js?v=4"),
+        import("/assets/js/secure-download.js?v=4")
+      ]);
+      auth = fc.auth; onAuthStateChanged = am.onAuthStateChanged; sendEmailVerification = am.sendEmailVerification;
+      logView = hist.logView; isBookmarked = bm.isBookmarked; toggleBookmark = bm.toggleBookmark; secureDownload = sd.secureDownload;
+      onAuthStateChanged(auth, function (user) {
+        currentUser = user;
+        updateDownloadState();
+        updateBookmarkState();
+        maybeLogView();
+      });
+    } catch (error) {
+      console.warn("Viewer sign-in features unavailable:", error);
+    }
+  })();
 
   getPapersData()
     .then(function (data) { render(data); })
@@ -205,10 +227,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  onAuthStateChanged(auth, function (user) {
-    currentUser = user;
-    updateDownloadState();
-    updateBookmarkState();
-    maybeLogView();
-  });
 });

@@ -1,12 +1,12 @@
 // Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
-import { auth, db } from "/assets/js/firebase-config.js?v=3";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { logView } from "/assets/js/history.js?v=3";
-import { getNotesData } from "/assets/js/content-store.js?v=3";
-import { isBookmarked, toggleBookmark } from "/assets/js/bookmarks.js?v=3";
-import { secureDownload } from "/assets/js/secure-download.js?v=3";
+import { getNotesData } from "/assets/js/content-store.js?v=4";
+
+// Firebase loads dynamically — the note content renders regardless; sign-in
+// features (downloads, bookmarks, history) activate once it arrives.
+let auth, db, doc, getDoc, onAuthStateChanged, sendEmailVerification,
+    logView, isBookmarked, toggleBookmark, secureDownload;
+let fbReady = Promise.resolve();
 
 document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);
@@ -20,6 +20,30 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentMeta = '';
   var bookmarkBtn = document.getElementById('bookmark-btn');
   var bookmarkActive = false;
+
+  fbReady = (async function () {
+    try {
+      const [fc, fs, am, hist, bm, sd] = await Promise.all([
+        import("/assets/js/firebase-config.js?v=3"),
+        import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js"),
+        import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
+        import("/assets/js/history.js?v=4"),
+        import("/assets/js/bookmarks.js?v=4"),
+        import("/assets/js/secure-download.js?v=4")
+      ]);
+      auth = fc.auth; db = fc.db; doc = fs.doc; getDoc = fs.getDoc;
+      onAuthStateChanged = am.onAuthStateChanged; sendEmailVerification = am.sendEmailVerification;
+      logView = hist.logView; isBookmarked = bm.isBookmarked; toggleBookmark = bm.toggleBookmark; secureDownload = sd.secureDownload;
+      onAuthStateChanged(auth, function (user) {
+        currentUser = user;
+        updateDownloadState();
+        updateBookmarkState();
+        maybeLogView();
+      });
+    } catch (error) {
+      console.warn("Viewer sign-in features unavailable:", error);
+    }
+  })();
 
   getNotesData()
     .then(function (data) { render(data); })
@@ -43,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // When present either way it is rendered instead of the Drive preview.
   async function loadInlineContent() {
     try {
+      await fbReady;
       var snapshot = await getDoc(doc(db, "chapterContent", noteId));
       if (snapshot.exists()) {
         var published = snapshot.data().html;
@@ -404,10 +429,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  onAuthStateChanged(auth, function (user) {
-    currentUser = user;
-    updateDownloadState();
-    updateBookmarkState();
-    maybeLogView();
-  });
 });

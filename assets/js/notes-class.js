@@ -1,5 +1,5 @@
 // Gyanu Notes — renders the subject list for a given class, e.g. /notes/class-10/
-import { getNotesData } from "/assets/js/content-store.js?v=3";
+import { getNotesData } from "/assets/js/content-store.js?v=4";
 
 document.addEventListener('DOMContentLoaded', function () {
   var parts = window.location.pathname.split('/').filter(Boolean); // ["notes","class-10"]

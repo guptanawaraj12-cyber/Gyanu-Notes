@@ -1,7 +1,6 @@
 // Notice board: renders admin-published notices on the homepage. The static
 // rows already in the HTML stay as the fallback when Firestore has none.
-import { db } from "/assets/js/firebase-config.js?v=3";
-import { collection, getDocs, limit, query, orderBy } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { withTimeout } from "/assets/js/content-store.js?v=4";
 
 function escapeHtml(text) {
   return String(text)
@@ -49,8 +48,16 @@ async function renderNotices() {
   var notices;
   try {
     // Latest first; a pinned-first sort happens client-side so no composite
-    // index is needed in Firestore.
-    var snapshot = await getDocs(query(collection(db, "notices"), orderBy("createdAt", "desc"), limit(8)));
+    // index is needed in Firestore. Firebase loads dynamically with a 6s
+    // timeout — if it fails, the static fallback rows below simply remain.
+    const [{ db }, f] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+    ]);
+    var snapshot = await withTimeout(
+      getDocs(query(f.collection(db, "notices"), f.orderBy("createdAt", "desc"), f.limit(8))),
+      6000
+    );
     notices = snapshot.docs.map(function (docSnap) {
       return Object.assign({ id: docSnap.id }, docSnap.data());
     });

@@ -1,4 +1,4 @@
-import { getSiteContent } from "/assets/js/content-store.js?v=3";
+import { getSiteContent } from "/assets/js/content-store.js?v=4";
 
 const input = document.getElementById("search-input");
 const results = document.getElementById("search-results");

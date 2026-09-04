@@ -2,8 +2,14 @@
 // Looks for #verify-banner on the page and reveals it when the signed-in
 // user's email is not verified yet, with a resend button.
 
-import { auth } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+let auth, onAuthStateChanged, sendEmailVerification;
+(async function () {
+  try {
+    const [fc, am] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js")
+    ]);
+    auth = fc.auth; onAuthStateChanged = am.onAuthStateChanged; sendEmailVerification = am.sendEmailVerification;
 
 onAuthStateChanged(auth, function (user) {
   var banner = document.getElementById("verify-banner");
@@ -40,4 +46,6 @@ onAuthStateChanged(auth, function (user) {
         });
     });
   }
-});
+  });
+  } catch (error) { /* non-critical: the banner simply stays hidden */ }
+})();

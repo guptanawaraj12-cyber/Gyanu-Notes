@@ -1,9 +1,30 @@
 // Gyanu Notes — "My bookmarks" page: lists the user's saved notes/papers
 // with the ability to remove them inline.
 
-import { auth } from "/assets/js/firebase-config.js?v=3";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getBookmarks, removeBookmark } from "/assets/js/bookmarks.js?v=3";
+import { getBookmarks, removeBookmark } from "/assets/js/bookmarks.js?v=4";
+let auth, onAuthStateChanged;
+// Firebase loads dynamically; on failure the page shows an error state.
+(async function () {
+  try {
+    const [fc, am] = await Promise.all([
+      import("/assets/js/firebase-config.js?v=3"),
+      import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js")
+    ]);
+    auth = fc.auth; onAuthStateChanged = am.onAuthStateChanged;
+    onAuthStateChanged(auth, function (user) {
+      if (!user) {
+        window.location.href = '/login/';
+        return;
+      }
+      getBookmarks(user.uid).then(function (items) {
+        render(items, user.uid);
+      });
+    });
+  } catch (error) {
+    var list = document.getElementById('bookmarks-list');
+    if (list) list.innerHTML = '<div class="empty-state">Couldn\'t load content — check your connection.</div>';
+  }
+})();
 
 // Only relative paths and https links are allowed as bookmark targets, so a
 // tampered bookmark document can never become a javascript: URL.
@@ -14,16 +35,6 @@ function safeUrl(url) {
   if (/^https:\/\//i.test(value)) return value;
   return null;
 }
-
-onAuthStateChanged(auth, function (user) {
-  if (!user) {
-    window.location.href = '/login/';
-    return;
-  }
-  getBookmarks(user.uid).then(function (items) {
-    render(items, user.uid);
-  });
-});
 
 function render(items, uid) {
   var list = document.getElementById('bookmarks-list');
