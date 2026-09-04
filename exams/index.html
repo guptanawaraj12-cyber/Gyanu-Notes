@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src https://apis.google.com 'self' https://www.google.com https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.googleusercontent.com https://drive.google.com; connect-src https://gyanu-notes-6f6d8.firebaseapp.com https://gyanu-notes-6f6d8.web.app 'self' https://www.gstatic.com https://www.google.com https://*.googleapis.com https://apis.google.com https://*.firebaseio.com wss://*.googleapis.com wss://*.firebaseio.com https://api.web3forms.com; frame-src https://apis.google.com 'self' https://gyanu-notes-6f6d8.firebaseapp.com https://drive.google.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-<title id="page-title">Class 9 past papers — Gyanu Notes</title>
-<meta name="description" content="Browse Class 9 past exam papers by year and subject.">
-<link rel="canonical" href="https://nawarajgupta.com.np/papers/class-9/">
+<title>Exam Dates — Gyanu Notes</title>
+<meta name="description" content="Upcoming SEE and NEB exam dates for Class 10 and Class 12 students in Nepal. Stay updated with live countdowns to each exam.">
+<link rel="canonical" href="https://nawarajgupta.com.np/exams/" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,8 +29,9 @@
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
       <li><a href="/notes/">Notes</a></li>
-      <li><a href="/papers/" class="active">Papers</a></li>
-      <li><a href="/exams/">Exams</a></li><li><a href="/about/">About</a></li>
+      <li><a href="/papers/">Papers</a></li><li><a href="/blog/">Blog</a></li>
+      <li><a href="/exams/" class="active">Exams</a></li>
+      <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
     <div class="nav-actions">
@@ -44,30 +45,79 @@
 </header>
 
 <main>
-  <section style="padding: 48px 0 80px;">
+
+  <section class="page-hero text-center">
     <div class="container">
-      <div class="breadcrumb"><a href="/papers/">Papers</a> <span id="breadcrumb-trail"></span></div>
-      <h1 id="page-heading" aria-busy="true"><span class="skeleton sk-heading" aria-hidden="true"></span></h1>
-      <p class="lead" id="page-sub" aria-busy="true"><span class="skeleton sk-sub" aria-hidden="true"></span></p>
-
-      <div class="filter-block">
-        <div class="filter-group">
-          <h4>Year</h4>
-          <div class="chip-row" id="year-chips"></div>
-        </div>
-        <div class="filter-group">
-          <h4>Subject</h4>
-          <div class="chip-row" id="subject-chips"></div>
-        </div>
-      </div>
-
-      <div class="results-grid" id="results-grid" aria-busy="true"><div class="sk-paper" aria-hidden="true"><span class="skeleton" style="width:40%;height:14px;"></span><span class="skeleton" style="width:26%;height:12px;"></span><span class="skeleton" style="width:100%;height:32px;"></span></div><div class="sk-paper" aria-hidden="true"><span class="skeleton" style="width:40%;height:14px;"></span><span class="skeleton" style="width:26%;height:12px;"></span><span class="skeleton" style="width:100%;height:32px;"></span></div><div class="sk-paper" aria-hidden="true"><span class="skeleton" style="width:40%;height:14px;"></span><span class="skeleton" style="width:26%;height:12px;"></span><span class="skeleton" style="width:100%;height:32px;"></span></div></div>
+      <span class="eyebrow">Exam dates</span>
+      <h1>Upcoming SEE &amp; NEB exam schedule</h1>
+      <p class="lead">Keep track of your board exams with live countdown timers. All dates are in Bikram Sambat (Nepal) unless noted.</p>
     </div>
   </section>
+
+  <section class="reveal">
+    <div class="container">
+      <span class="eyebrow">Coming up</span>
+      <h2>Upcoming exams</h2>
+      <div id="upcoming-exams" class="exam-grid">
+        <div class="skeleton sk-card" aria-hidden="true"></div>
+        <div class="skeleton sk-card" aria-hidden="true"></div>
+        <div class="skeleton sk-card" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <span class="eyebrow">Past exams</span>
+      <h2>Past exams</h2>
+      <div id="past-exams" class="exam-grid collapsed">
+        <p class="muted">No past exams recorded yet.</p>
+      </div>
+      <button class="btn btn-outline" id="toggle-past" type="button" style="margin-top:12px;">Show past exams</button>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
   <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h5>Gyanu Notes</h5>
+        <p>Free study notes, textbooks, and past question papers for Class 8&ndash;12 students in Nepal.</p>
+      </div>
+      <div>
+        <h5>Quick links</h5>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/notes/">Notes</a></li>
+          <li><a href="/papers/">Past papers</a></li><li><a href="/blog/">Blog</a></li>
+          <li><a href="/exams/">Exam dates</a></li>
+          <li><a href="/about/">About us</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>By class</h5>
+        <ul>
+          <li><a href="/notes/class-8/">Class 8 notes</a></li>
+          <li><a href="/notes/class-9/">Class 9 notes</a></li>
+          <li><a href="/notes/class-10/">Class 10 notes</a></li>
+          <li><a href="/notes/class-11/">Class 11 notes</a></li>
+          <li><a href="/notes/class-12/">Class 12 notes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:gyanuunotes@gmail.com">gyanuunotes@gmail.com</a></li>
+          <li><a href="tel:9814412941">9814412941</a></li>
+          <li>Nawalparasi, Nepal</li>
+          <li>Mon&ndash;Fri: 8:00 AM&ndash;6:00 PM</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="footer-bottom">
       <span>© 2026 Gyanu Notes. All rights reserved.</span>
       <div class="legal-links">
@@ -81,6 +131,6 @@
 
 <script src="/assets/js/main.js?v=3"></script>
 <script type="module" src="/assets/js/auth-state.js?v=4"></script>
-<script type="module" src="/assets/js/papers-class.js?v=3"></script>
+<script type="module" src="/assets/js/exams.js?v=2"></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+// /assets/data/exams-data.json — bundled exam schedule (fallback)
+[
+  {
+    "examName": "SEE 2082",
+    "date": "2082-03-15",
+    "class": "Class 10",
+    "subjects": ["Nepali", "English", "Mathematics", "Science", "Social Studies"]
+  },
+  {
+    "examName": "Class 11 NEB Exams",
+    "date": "2082-02-10",
+    "class": "Class 11",
+    "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali"]
+  },
+  {
+    "examName": "Class 12 NEB Exams",
+    "date": "2082-04-05",
+    "class": "Class 12",
+    "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali", "Computer Science", "Social Studies"]
+  }
+]
