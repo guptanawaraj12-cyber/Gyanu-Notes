@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/assets/css/tokens.css?v=4">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
 <link rel="stylesheet" href="/assets/css/layout.css?v=4">
-<link rel="stylesheet" href="/assets/css/components.css?v=7">
+<link rel="stylesheet" href="/assets/css/components.css?v=8">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=3">
 
 </head>
@@ -59,9 +59,17 @@
           </div>
         </div>
         <button class="btn btn-outline" id="share-btn" type="button">Share</button>
-        <button class="btn btn-outline" id="bookmark-btn" aria-pressed="false" style="display:none;">
+                <button class="btn btn-outline" id="bookmark-btn" aria-pressed="false" style="display:none;">
           <span class="bm-star">☆</span> <span class="bm-label">Save</span>
         </button>
+        <div class="feedback-widget" id="feedback-widget" style="display:none;">
+          <p class="feedback-prompt">Was this helpful?</p>
+          <div class="feedback-btns">
+            <button class="btn btn-outline" id="fb-up" type="button" aria-pressed="false">👍 Helpful</button>
+            <button class="btn btn-outline" id="fb-down" type="button" aria-pressed="false">👎 Not helpful</button>
+          </div>
+          <p class="feedback-thanks" style="display:none;">Thanks for the feedback!</p>
+        </div>
       </div>
 
       <div class="login-gate" id="login-gate" style="display: none;">
@@ -87,6 +95,6 @@
 
 <script src="/assets/js/main.js?v=3"></script>
 <script type="module" src="/assets/js/auth-state.js?v=4"></script>
-<script type="module" src="/assets/js/notes-view.js?v=4"></script>
+<script type="module" src="/assets/js/notes-view.js?v=5"></script>
 </body>
 </html>

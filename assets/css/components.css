@@ -2287,6 +2287,40 @@
 
 .blog-excerpt {
   color: var(--ink-soft);
+/* ---------- Was this helpful? feedback widget ---------- */
+.feedback-widget {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.feedback-prompt {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+.feedback-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.feedback-btns .btn {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.feedback-btns .btn:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.feedback-thanks {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+}
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;

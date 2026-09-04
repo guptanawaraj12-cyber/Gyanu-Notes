@@ -133,6 +133,23 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Anonymous visitor feedback — write-only, no cross-user reads.
+    match /feedback/{feedbackId} {
+      allow read: if false;
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'noteId', 'slug', 'vote', 'uid', 'submittedAt'
+        ]) &&
+        request.resource.data.vote in ['up', 'down'] &&
+        request.resource.data.noteId is string &&
+        request.resource.data.noteId.size() > 0 &&
+        (request.resource.data.slug == null || request.resource.data.slug is string) &&
+        (request.resource.data.uid == null || request.resource.data.uid is string) &&
+        (request.resource.data.uid == null || request.resource.data.uid == request.auth.uid) &&
+        request.resource.data.submittedAt == request.time;
+      allow update, delete: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

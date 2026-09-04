@@ -45,6 +45,67 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })();
 
+   // --- Was this helpful? feedback widget (anonymous-friendly, best-effort) ---
+   function initFeedbackWidget() {
+     var widget = document.getElementById('feedback-widget');
+     if (!widget) return;
+     var prompt = widget.querySelector('.feedback-prompt');
+     var btnGroup = widget.querySelector('.feedback-btns');
+     var upBtn = document.getElementById('fb-up');
+     var downBtn = document.getElementById('fb-down');
+     var thanks = widget.querySelector('.feedback-thanks');
+     var fbKey = 'note_feedback_' + (noteId || window.location.pathname);
+     var alreadyVoted = localStorage.getItem(fbKey) === 'true';
+
+     if (alreadyVoted) {
+       if (prompt) prompt.style.display = 'none';
+       if (btnGroup) btnGroup.style.display = 'none';
+       if (thanks) thanks.style.display = 'block';
+       widget.style.display = 'block';
+       return;
+     }
+
+     widget.style.display = 'block';
+
+     function submitVote(vote) {
+       upBtn.disabled = true; downBtn.disabled = true;
+       upBtn.setAttribute('aria-pressed', vote === 'up' ? 'true' : 'false');
+       downBtn.setAttribute('aria-pressed', vote === 'down' ? 'true' : 'false');
+       if (prompt) prompt.style.display = 'none';
+       if (btnGroup) btnGroup.style.display = 'none';
+       if (thanks) thanks.style.display = 'block';
+       localStorage.setItem(fbKey, 'true');
+
+       // Best-effort Firestore write: anonymous-friendly, never surfaces errors
+       (async function () {
+         try {
+           var fc = await import("/assets/js/firebase-config.js?v=5");
+           var fs = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js");
+           await fs.addDoc(fs.collection(fc.db, "feedback"), {
+             noteId: noteId || null,
+             slug: noteId || null,
+             vote: vote,
+             uid: (currentUser && currentUser.uid) || null,
+             submittedAt: fs.serverTimestamp()
+           });
+         } catch (error) {
+           console.debug("Feedback not recorded:", error);
+         }
+       })();
+     }
+
+     upBtn && upBtn.addEventListener('click', function () { submitVote('up'); });
+     downBtn && downBtn.addEventListener('click', function () { submitVote('down'); });
+   }
+
+   var _feedbackTried = false;
+   function maybeInitFeedbackWidget() {
+     if (_feedbackTried) return; _feedbackTried = true;
+     fbReady.then(function () {
+       try { initFeedbackWidget(); } catch (e) { /* swallow */ }
+     });
+   }
+
   getNotesData()
     .then(function (data) { render(data); })
     .catch(function () {
@@ -130,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateDownloadState();
     updateBookmarkState();
     maybeLogView();
+    maybeInitFeedbackWidget();
   }
 
   function bookmarkEntry() {
