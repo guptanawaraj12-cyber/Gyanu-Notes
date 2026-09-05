@@ -1,4 +1,32 @@
 // Gyanu Notes — shared behavior across pages
+
+// Dark mode: apply the stored choice (or the system preference) immediately,
+// then wire the navbar toggle. html[data-theme] drives the dark tokens in
+// tokens.css; "auto" users simply follow their OS setting until they choose.
+(function () {
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem("gn_theme"); } catch (e) {}
+  var system = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  root.setAttribute("data-theme", stored === "light" || stored === "dark" ? stored : system);
+  document.addEventListener("DOMContentLoaded", function () {
+    var btn = document.querySelector(".theme-toggle");
+    if (!btn) return;
+    var paint = function () {
+      var dark = root.getAttribute("data-theme") === "dark";
+      btn.textContent = dark ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    };
+    paint();
+    btn.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("gn_theme", next); } catch (e) {}
+      paint();
+    });
+  });
+})();
+
 // NOTE: this is a classic (non-module) <script> loaded on every page, so it CANNOT
 // use a top-level static import (that throws "Cannot use import statement outside
 // a module" and breaks nav/search/stats/dropdown site-wide). Firebase is only

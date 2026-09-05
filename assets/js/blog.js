@@ -9,7 +9,7 @@ async function fb() {
     import("/assets/js/firebase-config.js?v=3"),
     import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
   ]);
-  return { db, collection: f.collection, getDocs: f.getDocs, getDoc: f.getDoc, doc: f.doc, query: f.query, where: f.where, limit: f.limit };
+  return { db, collection: f.collection, getDocs: f.getDocs, getDoc: f.getDoc, doc: f.doc, query: f.query, where: f.where, limit: f.limit, orderBy: f.orderBy, startAfter: f.startAfter };
 }
 
 // Posts published within the last 7 days get a "New" badge on cards.
@@ -94,6 +94,10 @@ function postCard(post) {
 
 let listPosts = [];
 let activeCategory = "All";
+let shownCount = 0;
+let lastVisible = null;
+let reachedEnd = false;
+const PAGE_SIZE = 12;
 
 function renderCategoryFilter(posts) {
   const wrap = document.getElementById("blog-filters");
@@ -110,21 +114,65 @@ function renderCategoryFilter(posts) {
   wrap.innerHTML = chip("All") + categories.map(chip).join("");
 }
 
-function renderFilteredPosts() {
-  const list = document.getElementById("blog-list");
-  const visible = activeCategory === "All"
+function filteredPosts() {
+  return activeCategory === "All"
     ? listPosts
     : listPosts.filter((post) => post.category === activeCategory);
+}
+
+function updateMoreButton() {
+  const btn = document.getElementById("blog-more");
+  if (!btn) return;
+  const canReveal = shownCount < filteredPosts().length;
+  btn.hidden = reachedEnd && !canReveal;
+}
+
+function renderFilteredPosts() {
+  const list = document.getElementById("blog-list");
+  const visible = filteredPosts().slice(0, shownCount);
   list.innerHTML = visible.length
     ? visible.map(postCard).join("")
     : '<p class="muted">No posts in this category yet.</p>';
+  updateMoreButton();
+}
+
+// Server-paged loading (12 at a time, newest first). Requires the
+// blogPosts (published ASC, publishedAt DESC) composite index in
+// firestore.indexes.json — deployed alongside the rules.
+async function loadMorePosts() {
+  const { db, collection, getDocs, query, where, limit, orderBy, startAfter } = await fb();
+  let q = query(
+    collection(db, "blogPosts"),
+    where("published", "==", true),
+    orderBy("publishedAt", "desc"),
+    limit(PAGE_SIZE)
+  );
+  if (lastVisible) {
+    q = query(
+      collection(db, "blogPosts"),
+      where("published", "==", true),
+      orderBy("publishedAt", "desc"),
+      startAfter(lastVisible),
+      limit(PAGE_SIZE)
+    );
+  }
+  const snapshot = await withTimeout(getDocs(q), 6000);
+  const posts = snapshot.docs.map((docSnap) => Object.assign({ id: docSnap.id }, docSnap.data()));
+  if (snapshot.docs.length) lastVisible = snapshot.docs[snapshot.docs.length - 1];
+  reachedEnd = snapshot.docs.length < PAGE_SIZE;
+  listPosts = listPosts.concat(posts);
 }
 
 async function renderBlogList() {
   const list = document.getElementById("blog-list");
   if (!list) return;
   try {
-    listPosts = await fetchLivePosts(50);
+    await loadMorePosts();
+    shownCount = PAGE_SIZE;
+    if (!document.getElementById("blog-more")) {
+      list.insertAdjacentHTML("afterend",
+        '<p class="blog-more-wrap"><button class="btn btn-outline" id="blog-more" type="button" hidden>Load more</button></p>');
+    }
     renderCategoryFilter(listPosts);
     renderFilteredPosts();
   } catch (error) {
@@ -132,6 +180,26 @@ async function renderBlogList() {
       '<p><a class="btn btn-outline" href="">Retry</a></p>';
   }
 }
+
+document.addEventListener("click", async (event) => {
+  const btn = event.target.closest?.("#blog-more");
+  if (!btn) return;
+  btn.disabled = true;
+  btn.textContent = "Loading…";
+  try {
+    // Category views reveal already-fetched posts; "All" also pulls the next
+    // server page (categories cannot be server-filtered without extra indexes).
+    if (activeCategory === "All" && !reachedEnd) await loadMorePosts();
+    shownCount += PAGE_SIZE;
+    renderFilteredPosts();
+    btn.textContent = "Load more";
+    btn.disabled = false;
+    updateMoreButton();
+  } catch (error) {
+    btn.textContent = "Couldn't load more — tap to retry";
+    btn.disabled = false;
+  }
+});
 
 async function renderHomeBlog() {
   const grid = document.getElementById("home-blog-grid");

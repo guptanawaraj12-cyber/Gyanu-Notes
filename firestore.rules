@@ -137,7 +137,7 @@ service cloud.firestore {
 
     // Anonymous visitor feedback — write-only, no cross-user reads.
     match /feedback/{feedbackId} {
-      allow read: if false;
+      allow read: if isAdmin();
       allow create: if
         request.resource.data.keys().hasOnly([
           'noteId', 'slug', 'vote', 'uid', 'submittedAt'

@@ -23,7 +23,7 @@
 
 .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   box-shadow: 0 6px 18px var(--accent-glow);
 }
 
@@ -35,7 +35,7 @@
 }
 
 .btn-outline {
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
   border-color: var(--border-strong);
 }
@@ -47,7 +47,7 @@
 }
 
 .btn-danger {
-  background: #fff;
+  background: var(--card);
   color: var(--danger);
   border-color: #e7c6c2;
 }
@@ -71,7 +71,7 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
-  background: #fff;
+  background: var(--card);
   border: 1.5px solid var(--border-strong);
   border-radius: 100px;
   padding: 6px 8px 6px 20px;
@@ -109,7 +109,7 @@
   flex-shrink: 0;
   border: none;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.9rem;
@@ -135,7 +135,7 @@
 .search-box {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--card);
   border: 1.5px solid var(--border-strong);
   border-radius: 100px;
   padding: 0 16px;
@@ -177,7 +177,7 @@
   width: 100%;
   max-height: 320px;
   overflow-y: auto;
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
@@ -239,7 +239,7 @@
   padding: 8px 18px;
   border-radius: 100px;
   border: 1.5px solid var(--border-strong);
-  background: #fff;
+  background: var(--card);
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--ink-soft);
@@ -255,7 +255,7 @@
 .chip.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 /* --- Filter bar (sticky page filter) --- */
@@ -274,7 +274,7 @@
   padding: 6px 18px;
   border-radius: 100px;
   border: 1.5px solid var(--border);
-  background: #fff;
+  background: var(--card);
   font-family: var(--font-body);
   font-size: 0.88rem;
   font-weight: 600;
@@ -306,7 +306,7 @@
 
 .ticket {
   display: block;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 10px;
@@ -352,7 +352,7 @@
 
 .class-card {
   display: block;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 26px 16px;
@@ -405,7 +405,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 15px 18px;
@@ -445,7 +445,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 22px;
@@ -474,7 +474,7 @@
 }
 
 .paper-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px;
@@ -596,7 +596,7 @@
 }
 
 .feature-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
@@ -659,7 +659,7 @@
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--ink);
-  background: #fff;
+  background: var(--card);
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -726,7 +726,7 @@
 }
 
 .auth-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 40px 34px;
@@ -793,7 +793,7 @@
   padding: 12px;
   border-radius: 10px;
   border: 1.5px solid var(--border-strong);
-  background: #fff;
+  background: var(--card);
   font-weight: 600;
   font-size: 0.92rem;
   color: var(--ink);
@@ -910,7 +910,7 @@
 }
 
 .continue-card .btn {
-  background: #fff;
+  background: var(--card);
   color: var(--accent-dark);
 }
 
@@ -926,7 +926,7 @@
 }
 
 .quick-link-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
@@ -1051,7 +1051,7 @@
 }
 
 .stat-tile {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px 24px;
@@ -1086,7 +1086,7 @@
 
 .class-quick-card {
   display: block;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 22px;
@@ -1162,7 +1162,7 @@
 
 .bm-remove {
   border: 1px solid var(--border-strong);
-  background: #fff;
+  background: var(--card);
   color: var(--ink-faint);
   font: inherit;
   font-size: 0.78rem;
@@ -1203,7 +1203,7 @@
 }
 
 .settings-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 30px;
@@ -1277,7 +1277,7 @@
 }
 
 .admin-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -1372,7 +1372,7 @@
 }
 
 .team-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 34px;
@@ -1532,7 +1532,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -1559,7 +1559,7 @@
 }
 
 .form-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 36px;
@@ -1575,7 +1575,7 @@
 /* Old contact variants kept for compatibility */
 .contact-visual { position: relative; border-radius: var(--radius-lg); overflow: hidden; }
 .three-container { width: 100%; height: 100%; position: relative; }
-.contact-form-container { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; }
+.contact-form-container { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; }
 
 /* ============================================================
    SEARCH RESULTS / 404
@@ -1602,7 +1602,7 @@
 
 .result {
   display: block;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
@@ -1757,7 +1757,7 @@
 
 .chapter-table thead {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .chapter-table th {
@@ -1781,7 +1781,7 @@
 }
 
 .definition-box {
-  background: #fff;
+  background: var(--card);
   border: 1.5px solid var(--border-strong);
   border-radius: var(--radius-sm);
   padding: 16px 20px;
@@ -2012,7 +2012,7 @@
   width: 100%;
   height: auto;
   display: block;
-  background: #ffffff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
 }
@@ -2542,7 +2542,7 @@
 .blog-filters .chip-active:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-contrast);
 }
 /* Notice popup image */
 .notice-modal-image { margin: 14px 0 4px; }
@@ -2597,7 +2597,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0 18px;
@@ -2607,7 +2607,7 @@
 
 /* class catalogue cards (papers index) — children of .class-cards grid */
 .sk-card {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 10px;
@@ -2623,7 +2623,7 @@
 
 /* paper result cards — children of .results-grid */
 .sk-paper {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px;
@@ -2645,7 +2645,7 @@
 
 /* blog cards — children of .blog-grid */
 .sk-blog {
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
@@ -2665,8 +2665,14 @@
   padding: 13px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: var(--card);
 }
 .sk-tag { width: 46px; height: 12px; flex: none; }
 .sk-line { flex: 1; height: 13px; min-width: 0; }
 .sk-time { width: 64px; height: 12px; flex: none; }
+
+/* ---------- Blog list pagination ---------- */
+.blog-more-wrap {
+  text-align: center;
+  margin-top: 28px;
+}

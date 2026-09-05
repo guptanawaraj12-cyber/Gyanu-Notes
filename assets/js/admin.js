@@ -273,6 +273,7 @@ onAuthStateChanged(auth, async (user) => {
   catch (error) { message("catalogue-message", "Could not load catalogue: " + error.message, "error"); }
   loadReportedComments();
   loadExams();
+  loadFeedbackStats();
 });
 
 // ---------------------------------------------------------------------------
@@ -405,6 +406,44 @@ document.getElementById("exam-list")?.addEventListener("click", async (event) =>
     }
   }
 });
+
+// ---------------------------------------------------------------------------
+// Visitor feedback — 👍/👎 votes from note pages. Write-only for visitors;
+// admins read the aggregate here.
+// ---------------------------------------------------------------------------
+
+async function loadFeedbackStats() {
+  const list = document.getElementById("feedback-stats");
+  if (!list) return;
+  try {
+    const snapshot = await getDocs(query(collection(db, "feedback"), limit(500)));
+    if (!snapshot.size) {
+      list.innerHTML = '<p class="muted">No votes yet.</p>';
+      return;
+    }
+    let up = 0, down = 0;
+    const recent = [];
+    snapshot.docs.forEach((docSnap) => {
+      const data = docSnap.data();
+      if (data.vote === "up") up += 1;
+      else if (data.vote === "down") down += 1;
+      recent.push(Object.assign({ id: docSnap.id }, data));
+    });
+    recent.sort((a, b) => (b.submittedAt?.toMillis?.() || 0) - (a.submittedAt?.toMillis?.() || 0));
+    const total = up + down;
+    const pct = total ? Math.round((up / total) * 100) : 0;
+    list.innerHTML =
+      '<p><strong>' + pct + "% found this helpful</strong>" +
+      ' <span class="muted">(' + up + " 👍 · " + down + " 👎 of " + total + " votes)</span></p>" +
+      recent.slice(0, 5).map((row) => {
+        const when = row.submittedAt?.toDate ? row.submittedAt.toDate().toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "";
+        return '<p class="muted">' + (row.vote === "up" ? "👍" : "👎") + " " + escapeHtml(row.noteId || "?") +
+          (when ? " &middot; " + when : "") + "</p>";
+      }).join("");
+  } catch (error) {
+    list.innerHTML = '<p class="muted">Could not load feedback: ' + escapeHtml(error.message || "") + "</p>";
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Chapter notes content — manages the Firestore chapterContent/{id} documents

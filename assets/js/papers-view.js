@@ -238,4 +238,55 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+
+  // --- Was this helpful? (papers) — mirrors the note viewer's widget --------
+  // Writes to the same write-only feedback collection; silent on failure.
+  function initFeedbackWidget(id) {
+    var widget = document.getElementById('feedback-widget');
+    if (!widget || !id) return;
+    var prompt = widget.querySelector('.feedback-prompt');
+    var btns = widget.querySelector('.feedback-btns');
+    var upBtn = document.getElementById('fb-up');
+    var downBtn = document.getElementById('fb-down');
+    var thanks = widget.querySelector('.feedback-thanks');
+    var fbKey = 'paper_feedback_' + id;
+    var alreadyVoted = false;
+    try { alreadyVoted = localStorage.getItem(fbKey) === 'true'; } catch (e) {}
+    if (alreadyVoted) {
+      if (prompt) prompt.style.display = 'none';
+      if (btns) btns.style.display = 'none';
+      if (thanks) thanks.style.display = 'block';
+      widget.style.display = 'block';
+      return;
+    }
+    widget.style.display = 'block';
+    function submitVote(vote) {
+      if (upBtn.disabled) return;
+      upBtn.disabled = true; downBtn.disabled = true;
+      upBtn.setAttribute('aria-pressed', vote === 'up' ? 'true' : 'false');
+      downBtn.setAttribute('aria-pressed', vote === 'down' ? 'true' : 'false');
+      if (prompt) prompt.style.display = 'none';
+      if (btns) btns.style.display = 'none';
+      if (thanks) thanks.style.display = 'block';
+      try { localStorage.setItem(fbKey, 'true'); } catch (e) {}
+      (async function () {
+        try {
+          const [{ db }, fs] = await Promise.all([
+            import("/assets/js/firebase-config.js?v=3"),
+            import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+          ]);
+          await fs.addDoc(fs.collection(db, "feedback"), {
+            noteId: id,
+            vote: vote,
+            uid: (currentUser && currentUser.uid) || null,
+            submittedAt: fs.serverTimestamp()
+          });
+        } catch (error) { console.debug("Feedback not recorded:", error); }
+      })();
+    }
+    if (upBtn) upBtn.addEventListener('click', function () { submitVote('up'); });
+    if (downBtn) downBtn.addEventListener('click', function () { submitVote('down'); });
+  }
+  fbReady.then(function () { try { initFeedbackWidget(setId); } catch (e) {} });
+
 });

@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/tokens.css?v=4">
+<link rel="stylesheet" href="/assets/css/tokens.css?v=5">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
-<link rel="stylesheet" href="/assets/css/layout.css?v=4">
-<link rel="stylesheet" href="/assets/css/components.css?v=9">
+<link rel="stylesheet" href="/assets/css/layout.css?v=5">
+<link rel="stylesheet" href="/assets/css/components.css?v=10">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=3">
 
 </head>
@@ -37,7 +37,8 @@
         <a href="/login/" class="btn btn-outline login-trigger">Login</a>
         <div class="login-panel"></div>
       </div>
-      <button class="nav-toggle" aria-label="Open menu">☰</button>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+        <button class="nav-toggle" aria-label="Open menu">☰</button>
     </div>
   </nav>
 </header>
@@ -61,9 +62,37 @@
         </button>
       </div>
 
+      
+      <div class="feedback-widget" id="feedback-widget" style="display:none;">
+        <p class="feedback-prompt">Was this helpful?</p>
+        <div class="feedback-btns">
+          <button class="btn btn-outline" id="fb-up" type="button" aria-pressed="false">👍 Helpful</button>
+          <button class="btn btn-outline" id="fb-down" type="button" aria-pressed="false">👎 Not helpful</button>
+        </div>
+        <p class="feedback-thanks" style="display:none;">Thanks for the feedback!</p>
+      </div>
+
       <div class="login-gate" id="login-gate" style="display: none;">
         <p>Log in to download this paper. Viewing the preview above is free for everyone.</p>
         <a href="/login/" class="btn btn-outline" id="login-gate-link">Log in</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="container">
+      <div class="comments-section" id="comments-section">
+        <h2>Questions &amp; answers</h2>
+        <div id="comment-form-wrap" hidden>
+          <form id="comment-form">
+            <textarea id="comment-text" maxlength="1000" placeholder="Ask a question or share feedback about this paper…" required></textarea>
+            <p><button class="btn btn-primary" id="comment-submit" type="submit">Post</button></p>
+            <p class="form-message" id="comment-message"></p>
+          </form>
+        </div>
+        <p id="comment-login-prompt"><a href="/login/">Log in to ask a question</a> — it's free and takes a minute.</p>
+        <div id="comments-list" aria-live="polite"><p class="muted">Loading questions…</p></div>
+        <p><button class="btn btn-outline" id="comments-more" type="button" hidden>Load more</button></p>
       </div>
     </div>
   </section>
@@ -82,8 +111,9 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=6"></script>
+<script src="/assets/js/main.js?v=7"></script>
 <script type="module" src="/assets/js/auth-state.js?v=4"></script>
-<script type="module" src="/assets/js/papers-view.js?v=5"></script>
+<script type="module" src="/assets/js/papers-view.js?v=6"></script>
+<script type="module" src="/assets/js/comments.js?v=1"></script>
 </body>
 </html>
