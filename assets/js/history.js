@@ -9,12 +9,28 @@ async function fs() {
   return { db, ...f };
 }
 
+// Derive a deterministic, Firestore-safe document id from the url so that
+// re-viewing the same entry refreshes one row instead of appending a new one.
+// Firestore ids forbid '/' and a few other characters, so sanitize the url into
+// a slug (collapse unsafe runs to '-', trim, cap well under the 1500-byte limit).
+function historyDocId(url) {
+  return String(url || "")
+    .replace(/[^a-zA-Z0-9._~-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-")
+    .slice(0, 200);
+}
+
 // Call this whenever a signed-in user views a note or paper.
 export function logView(uid, entry) {
   // entry: { title, url, type: 'note' | 'paper' }
   if (!uid) return Promise.resolve();
-  return fs().then(({ db, collection, addDoc, serverTimestamp }) =>
-    addDoc(collection(db, "history", uid, "items"), {
+  var docId = historyDocId(entry.url);
+  if (!docId) return Promise.resolve();
+  return fs().then(({ db, doc, setDoc, serverTimestamp }) =>
+    // Deterministic id: first view creates, later views overwrite (the update
+    // rule below permits only the viewedAt field to change).
+    setDoc(doc(db, "history", uid, "items", docId), {
       title: entry.title,
       url: entry.url,
       type: entry.type,

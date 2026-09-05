@@ -1,6 +1,6 @@
 // Notice board: renders admin-published notices on the homepage. The static
 // rows already in the HTML stay as the fallback when Firestore has none.
-import { withTimeout } from "/assets/js/content-store.js?v=4";
+import { withTimeout } from "/assets/js/content-store.js?v=5";
 
 function escapeHtml(text) {
   return String(text)
@@ -89,6 +89,8 @@ async function renderNotices() {
       '<span class="update-read">Read &rarr;</span>' +
       '</div>';
   }).join("");
+
+  maybeAutoShowPopup();
 }
 
 renderNotices();
@@ -189,3 +191,52 @@ function bindNoticePopup(list) {
 }
 
 bindNoticePopup(document.getElementById("notice-board-list"));
+
+// ---------------------------------------------------------------------------
+// "What's new" popup — when a visitor opens the homepage and the newest
+// notice is one they have not seen yet, auto-open the notice modal once.
+// Blog posts published with "also push a short notice" create notices too,
+// so a fresh post pops the same way. The seen key lives in localStorage,
+// so the popup only reappears for genuinely new content — never on every
+// page load, and only here on the homepage where this module runs.
+// ---------------------------------------------------------------------------
+
+var popupShownThisLoad = false;
+var SEEN_NOTICE_KEY = "gn_seen_notice";
+
+// Stable key for a notice: doc id + creation time, so admin re-created
+// notices (new id) count as new while unchanged ones do not.
+function noticeKey(notice) {
+  try {
+    var date = notice.createdAt && typeof notice.createdAt.toDate === "function"
+      ? notice.createdAt.toDate()
+      : null;
+    if (!date) return "";
+    return notice.id + "@" + date.getTime();
+  } catch (error) {
+    return "";
+  }
+}
+
+function maybeAutoShowPopup() {
+  if (popupShownThisLoad) return;
+  var candidates = loadedNotices.filter(function (notice) { return noticeKey(notice); });
+  if (!candidates.length) return;
+  // The board sorts pinned-first, so compute the true newest by time.
+  var newest = candidates.reduce(function (best, notice) {
+    return noticeKey(notice) > noticeKey(best) ? notice : best;
+  });
+  var key = noticeKey(newest);
+  var seen = "";
+  try { seen = localStorage.getItem(SEEN_NOTICE_KEY) || ""; } catch (error) { return; }
+  if (seen === key) return;
+  popupShownThisLoad = true;
+  // Small delay so the homepage paints before the popup takes focus.
+  window.setTimeout(function () {
+    // If the visitor already opened a notice themselves, let them read it in
+    // peace — this one stays marked unseen and pops on their next visit.
+    if (modal && !modal.hidden) return;
+    openNoticeModal(newest, null);
+    try { localStorage.setItem(SEEN_NOTICE_KEY, key); } catch (error) { /* storage blocked */ }
+  }, 800);
+}

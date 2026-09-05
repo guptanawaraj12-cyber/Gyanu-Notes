@@ -12,7 +12,7 @@
       ".vscode/**",
       "**/*.ps1",
       "assets/uploads/**",
-      "*.js"
+      "./*.js"
     ],
     "cleanUrls": true,
     "rewrites": [

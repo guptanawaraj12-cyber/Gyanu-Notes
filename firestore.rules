@@ -46,7 +46,9 @@ service cloud.firestore {
         request.resource.data.url is string &&
         request.resource.data.type in ['note', 'paper'] &&
         request.resource.data.viewedAt == request.time;
-      allow update: if false;
+      allow update: if signedIn() && request.auth.uid == userId &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['viewedAt']);
       allow delete: if signedIn() && request.auth.uid == userId;
     }
 
@@ -170,6 +172,28 @@ service cloud.firestore {
       allow update: if signedIn() &&
         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reported']) &&
         request.resource.data.reported == true;
+      allow delete: if isAdmin();
+    }
+
+    // Exam schedule (one document per exam). Public read for the /exams/
+    // page and the homepage countdown preview; only administrators write.
+    match /examSchedule/{examId} {
+      allow read: if true;
+      allow create, update: if isAdmin() &&
+        request.resource.data.keys().hasOnly(['board', 'examName', 'date', 'dateBs', 'subjects', 'updatedAt', 'updatedBy']) &&
+        request.resource.data.board in ['BLE', 'SEE', 'plus2'] &&
+        request.resource.data.examName is string &&
+        request.resource.data.examName.size() > 0 &&
+        request.resource.data.examName.size() <= 200 &&
+        (request.resource.data.date == null ||
+          (request.resource.data.date is string &&
+           request.resource.data.date.matches('^\\d{4}-\\d{2}-\\d{2}$'))) &&
+        (request.resource.data.dateBs == null ||
+          (request.resource.data.dateBs is string &&
+           request.resource.data.dateBs.size() <= 100)) &&
+        request.resource.data.subjects is list &&
+        request.resource.data.updatedAt == request.time &&
+        request.resource.data.updatedBy == request.auth.uid;
       allow delete: if isAdmin();
     }
 

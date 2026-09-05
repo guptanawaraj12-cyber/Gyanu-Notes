@@ -52,3 +52,35 @@ export async function getNotesData() {
 export async function getPapersData() {
   return (await getSiteContent()).papers;
 }
+
+// ---- Exam schedule ---------------------------------------------------------
+// Firestore collection examSchedule (one doc per exam, admin-editable) is the
+// source; the bundled JSON is the fallback when Firestore is unreachable.
+const BOARD_VALUES = ["BLE", "SEE", "plus2"];
+
+async function firestoreExams() {
+  const [{ db }, f] = await Promise.all([
+    import("/assets/js/firebase-config.js?v=3"),
+    import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
+  ]);
+  // Null dates (routine not published) sort first, which is fine — the
+  // callers filter by board and date themselves.
+  return withTimeout(
+    f.getDocs(f.query(f.collection(db, "examSchedule"), f.orderBy("date", "asc"))),
+    4000
+  );
+}
+
+export async function getExamsData() {
+  try {
+    const snapshot = await firestoreExams();
+    const exams = snapshot.docs
+      .map((docSnap) => docSnap.data())
+      .filter((exam) => exam && BOARD_VALUES.includes(exam.board));
+    if (exams.length) return exams;
+  } catch (error) {
+    console.warn("examSchedule unavailable; using bundled schedule.", error);
+  }
+  const data = await bundled("/assets/data/exams-data.json");
+  return Array.isArray(data) ? data : [];
+}

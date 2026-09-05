@@ -5,7 +5,8 @@
 // BS→AD conversion table was deliberately not hardcoded — swap it in later
 // if you want the `date` field itself to be BS.)
 
-import { getSiteContent } from "/assets/js/content-store.js?v=4";
+import { getExamsData } from "/assets/js/content-store.js?v=5";
+import { daysRemaining, countdownText, formatDate, BOARD_LABELS } from "/assets/js/countdown-utils.js?v=1";
 
 function escapeHtml(text) {
   return String(text == null ? "" : text)
@@ -13,35 +14,8 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
-// Calendar-day difference: 0 = today, negative = past (no time-of-day noise).
-function daysRemaining(isoDateStr) {
-  var parts = String(isoDateStr || "").split("-");
-  if (parts.length !== 3) return NaN;
-  var examDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-  if (isNaN(examDate.getTime())) return NaN;
-  var today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return Math.round((examDate - today) / 86400000);
-}
-
-function countdownText(isoDateStr) {
-  var days = daysRemaining(isoDateStr);
-  if (isNaN(days)) return "Date not set";
-  if (days < 0) return "Exam passed";
-  if (days === 0) return "Today!";
-  var weeks = Math.floor(days / 7);
-  var remDays = days % 7;
-  if (weeks > 0) return weeks + " week" + (weeks > 1 ? "s" : "") + (remDays ? " " + remDays + " day" + (remDays !== 1 ? "s" : "") : "") + " left";
-  return days + " day" + (days !== 1 ? "s" : "") + " left";
-}
-
-function formatDate(isoDateStr) {
-  var parts = String(isoDateStr || "").split("-");
-  if (parts.length !== 3) return "";
-  var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-  if (isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
-}
+// daysRemaining / countdownText / formatDate come from the shared
+// countdown-utils module (also used by the homepage exam preview).
 
 function renderExamCard(exam) {
   var dateStr = formatDate(exam.date);
@@ -50,7 +24,7 @@ function renderExamCard(exam) {
   return (
     '<div class="exam-card" data-date="' + escapeHtml(exam.date || "") + '">'
     + '<div class="exam-card-body">'
-    + '<span class="tag">' + escapeHtml(exam.class || "Exam") + '</span>'
+    + '<span class="tag">' + escapeHtml(exam.class || BOARD_LABELS[exam.board] || "Exam") + '</span>'
     + '<h3>' + escapeHtml(exam.examName || "Exam") + '</h3>'
     + '<p class="exam-date">' + dateStr + bsLabel + '</p>'
     + '<p class="exam-countdown">' + countdownText(exam.date) + '</p>'
@@ -118,21 +92,16 @@ function startCountdownTicker() {
 
 async function loadAndRender() {
   try {
-    var content = await getSiteContent();
-    var exams = content && content.exams;
+    var exams = await getExamsData();
     if (Array.isArray(exams) && exams.length) {
       renderExams(exams);
       return;
     }
   } catch (error) {
-    console.warn("Could not load live exam data; using bundled schedule.", error);
+    console.warn("Could not load exam data:", error);
   }
-  try {
-    var res = await fetch("/assets/data/exams-data.json");
-    if (res.ok) renderExams(await res.json());
-  } catch (error) {
-    console.warn("Could not load bundled exam data:", error);
-  }
+  var grid = document.getElementById("upcoming-exams");
+  if (grid) grid.innerHTML = '<p class="muted">Exam schedule unavailable right now. Please try again later.</p>';
 }
 
 // Toggle past exams section

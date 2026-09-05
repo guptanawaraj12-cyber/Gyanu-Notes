@@ -1,5 +1,14 @@
 [
   {
+    "board": "BLE",
+    "examName": "Class 8 BLE Exams",
+    "date": null,
+    "dateBs": null,
+    "class": "Class 8",
+    "subjects": []
+  },
+  {
+    "board": "SEE",
     "examName": "SEE 2083",
     "date": "2027-03-26",
     "dateBs": "2083-12-15",
@@ -7,6 +16,7 @@
     "subjects": ["Nepali", "English", "Mathematics", "Science", "Social Studies"]
   },
   {
+    "board": "plus2",
     "examName": "Class 11 NEB Board Exams",
     "date": "2027-04-28",
     "dateBs": "2084-01-15",
@@ -14,6 +24,7 @@
     "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali"]
   },
   {
+    "board": "plus2",
     "examName": "Class 12 NEB Board Exams",
     "date": "2027-05-05",
     "dateBs": "2084-02-10",
@@ -21,6 +32,7 @@
     "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali", "Computer Science", "Social Studies"]
   },
   {
+    "board": "SEE",
     "examName": "SEE 2082",
     "date": "2025-05-02",
     "dateBs": "2082-01-20",

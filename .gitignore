@@ -6,3 +6,4 @@ service-account*.json
 *-service-account.json
 .env
 .env.*
+.vscode/

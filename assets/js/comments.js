@@ -3,7 +3,7 @@
 // Newest-first, 20 per page; client-side first-pass spam filter (moderation
 // still happens in the admin panel via the reported flag).
 
-import { withTimeout } from "/assets/js/content-store.js?v=4";
+import { withTimeout } from "/assets/js/content-store.js?v=5";
 
 const PAGE_SIZE = 20;
 const noteId = new URLSearchParams(window.location.search).get("id");
@@ -85,9 +85,10 @@ function commentCard(item) {
   card.className = "comment-item";
   card.dataset.id = item.id;
   const when = fmtDate(item.createdAt);
+  const own = !!(item.uid && currentUser && item.uid === currentUser.uid);
   const flag = item.reported === true
     ? '<span class="tag tag-reported">Reported</span>'
-    : '<a href="#" class="comment-report" data-id="' + escapeHtml(item.id) + '">Report</a>';
+    : (own ? "" : '<a href="#" class="comment-report" data-id="' + escapeHtml(item.id) + '">Report</a>');
   card.innerHTML =
     '<div class="comment-head">' +
     '<strong class="comment-author">' + escapeHtml(item.displayName || "Student") + "</strong>" +
@@ -122,6 +123,7 @@ async function loadPage(reset) {
   });
   if (snapshot.size) lastVisible = snapshot.docs[snapshot.size - 1];
   moreBtn.hidden = snapshot.size < PAGE_SIZE;
+  moreBtn.textContent = "Load more";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -138,8 +140,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const msg = document.getElementById("comment-message");
 
   function fail() {
+    // The list is unavailable, but posting may still work — the form's
+    // visibility is owned by the auth listener, not by this failure path.
     list.innerHTML = '<p class="muted">Comments unavailable right now.</p>';
-    formWrap.hidden = true;
     moreBtn.hidden = true;
   }
 
@@ -154,7 +157,13 @@ document.addEventListener("DOMContentLoaded", function () {
       await loadPage(true);
       moreBtn.addEventListener("click", function () {
         moreBtn.disabled = true;
-        loadPage(false).catch(fail).finally(function () { moreBtn.disabled = false; });
+        loadPage(false)
+          .catch(function () {
+            // Keep already-loaded comments; just offer a retry on the button.
+            moreBtn.hidden = false;
+            moreBtn.textContent = "Couldn\u2019t load more — tap to retry";
+          })
+          .finally(function () { moreBtn.disabled = false; });
       });
     } catch (error) {
       console.warn("Comments unavailable:", error);
@@ -200,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (empty && /^No questions yet/.test(empty.textContent)) empty.remove();
         list.insertBefore(commentCard({
           id: "local-" + Date.now(),
+          uid: currentUser.uid,
           displayName: name,
           text: text,
           createdAt: new Date(),

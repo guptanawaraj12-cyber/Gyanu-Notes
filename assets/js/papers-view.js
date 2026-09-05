@@ -1,6 +1,6 @@
 // Gyanu Notes — paper viewer: loads paper data, shows preview, gates download behind login
 
-import { getPapersData } from "/assets/js/content-store.js?v=4";
+import { getPapersData } from "/assets/js/content-store.js?v=5";
 
 // Firebase loads dynamically — the paper preview renders regardless; sign-in
 // features activate once it arrives.

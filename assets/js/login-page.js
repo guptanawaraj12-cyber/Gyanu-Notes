@@ -112,9 +112,16 @@
       return '';
     }
   }
-  // redirect away if already logged in
+  // Guard so a successful login only triggers redirectAfterLogin() once.
+  // The explicit submit / social handlers redirect from their own .then(); this
+  // flag stops the onAuthStateChanged listener from doing it again for the same
+  // flow (same intent as signup-page.js's form.dataset.submitting flag).
+  var loginInProgress = false;
+
+  // redirect away if already logged in — but skip when a login flow we started is
+  // already handling the redirect from its own handler.
   onAuthStateChanged(auth, function (user) {
-    if (user) redirectAfterLogin(user);
+    if (user && !loginInProgress) redirectAfterLogin(user);
   });
 
   form.addEventListener('submit', function (e) {
@@ -123,12 +130,14 @@
     var password = document.getElementById('password').value;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Logging in…';
+    loginInProgress = true;
 
     signInWithEmailAndPassword(auth, email, password)
       .then(function (cred) {
         redirectAfterLogin(cred.user);
       })
       .catch(function (err) {
+        loginInProgress = false;
         showMessage(friendlyError(err), 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Log in';
@@ -137,11 +146,13 @@
 
   googleBtn.addEventListener('click', function () {
     var provider = new GoogleAuthProvider();
+    loginInProgress = true;
     signInWithPopup(auth, provider)
       .then(function (cred) {
         redirectAfterLogin(cred.user);
       })
       .catch(function (err) {
+        loginInProgress = false;
         console.error('Google sign-in failed:', err && err.code, err);
         showMessage(socialError(err, 'Google sign-in'), 'error');
       });
@@ -149,11 +160,13 @@
 
   facebookBtn.addEventListener('click', function () {
     var provider = new FacebookAuthProvider();
+    loginInProgress = true;
     signInWithPopup(auth, provider)
       .then(function (cred) {
         redirectAfterLogin(cred.user);
       })
       .catch(function (err) {
+        loginInProgress = false;
         console.error('Facebook sign-in failed:', err && err.code, err);
         showMessage(socialError(err, 'Facebook sign-in'), 'error');
       });

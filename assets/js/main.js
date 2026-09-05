@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!statNotes || !statPapers || !statSubjects) return;
 
-    import('/assets/js/content-store.js?v=4')
+    import('/assets/js/content-store.js?v=5')
       .then(function (mod) { return mod.getSiteContent(); })
       .then(function (content) {
         var notesData = content.notes;
@@ -40,6 +40,45 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   updateHomeStats();
+
+  // Homepage exam countdown preview: soonest upcoming exam per board
+  // (BLE / SEE / +2) from the admin-editable examSchedule collection via
+  // getExamsData(), using the shared countdown helpers.
+  (async function () {
+    var container = document.getElementById("exam-countdown-cards");
+    if (!container) return;
+    function escapeHtml(text) {
+      return String(text == null ? "" : text)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+    try {
+      const [store, utils] = await Promise.all([
+        import("/assets/js/content-store.js?v=5"),
+        import("/assets/js/countdown-utils.js?v=1")
+      ]);
+      var exams = await store.getExamsData();
+      if (!Array.isArray(exams)) exams = [];
+      container.innerHTML = ["BLE", "SEE", "plus2"].map(function (board) {
+        var forBoard = exams.filter(function (e) { return e && e.board === board; });
+        var upcoming = forBoard
+          .filter(function (e) { var d = utils.daysRemaining(e.date); return !isNaN(d) && d >= 0; })
+          .sort(function (a, b) { return utils.daysRemaining(a.date) - utils.daysRemaining(b.date); });
+        var exam = upcoming[0] || forBoard[0];
+        var name = (exam && exam.examName) || utils.BOARD_LABELS[board];
+        var countdown = upcoming.length
+          ? utils.countdownText(exam.date)
+          : (exam ? "Routine not published yet" : "No exams listed");
+        return '<div class="exam-card"><div class="exam-card-body">'
+          + '<span class="tag">' + escapeHtml(name) + '</span>'
+          + '<p class="exam-countdown">' + escapeHtml(countdown) + '</p>'
+          + '</div></div>';
+      }).join("");
+    } catch (error) {
+      console.warn("Exam preview unavailable:", error);
+      container.innerHTML = "";
+    }
+  })();
 
   // mobile nav toggle — class-based (styled in layout.css) so no inline
   // styles linger and block the desktop layout after a resize

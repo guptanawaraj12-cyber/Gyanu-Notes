@@ -6,29 +6,13 @@ import { Readable } from "node:stream";
 
 initializeApp();
 
-// An existing administrator can grant or revoke the admin role. The role is
-// stored as users/{uid}.admin so it can also be managed from Firebase Console.
-export const setAdminRole = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    throw new functions.https.HttpsError("permission-denied", "Administrator access is required.");
-  }
-  const caller = await getFirestore().doc(`users/${context.auth.uid}`).get();
-  if (caller.data()?.admin !== true) {
-    throw new functions.https.HttpsError("permission-denied", "Administrator access is required.");
-  }
-
-  const email = typeof data?.email === "string" ? data.email.trim() : "";
-  const enabled = data?.enabled === true;
-  if (!email || !email.includes("@")) {
-    throw new functions.https.HttpsError("invalid-argument", "A valid email address is required.");
-  }
-
-  const auth = getAuth();
-  const user = await auth.getUserByEmail(email);
-  await getFirestore().doc(`users/${user.uid}`).set({ admin: enabled }, { merge: true });
-
-  return { email: user.email, admin: enabled };
-});
+// NOTE: There is intentionally NO setAdminRole callable Cloud Function here.
+// Granting/revoking the administrator flag is performed by the admin panel
+// through a direct Firestore write to users/{uid}.admin. The Firestore
+// security rules are the single enforcement boundary for that operation —
+// the update rule allows it only when the caller's own users/{uid}.admin is
+// true, which is exactly the check a callable wrapper would perform. Keeping
+// one enforcement path avoids drift between duplicate checks.
 
 // ---------------------------------------------------------------------------
 // Secure downloads. The browser never receives a reusable Drive link: it asks

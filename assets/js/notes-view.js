@@ -1,6 +1,6 @@
 // Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
-import { getNotesData } from "/assets/js/content-store.js?v=4";
+import { getNotesData } from "/assets/js/content-store.js?v=5";
 
 // Firebase loads dynamically — the note content renders regardless; sign-in
 // features (downloads, bookmarks, history) activate once it arrives.
@@ -47,6 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // --- Was this helpful? feedback widget (anonymous-friendly, best-effort) ---
    function initFeedbackWidget() {
+
+     // The feedback rule requires noteId to be a non-empty string, so never
+     // offer a vote when there is no note id — it would only fail silently.
+     if (!noteId) return;
      var widget = document.getElementById('feedback-widget');
      if (!widget) return;
      var prompt = widget.querySelector('.feedback-prompt');

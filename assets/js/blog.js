@@ -1,6 +1,6 @@
 // Blog rendering for /blog/ (list), /blog/post/ (single), and the homepage
 // "latest posts" section. Each part activates only when its element exists.
-import { withTimeout } from "/assets/js/content-store.js?v=4";
+import { withTimeout } from "/assets/js/content-store.js?v=5";
 
 // Firestore helpers load dynamically — a failed or slow SDK shows the retry
 // state instead of hanging on the skeletons.

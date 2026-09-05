@@ -1,5 +1,5 @@
 // Gyanu Notes — renders the /papers/ landing page from editable site content
-import { getPapersData } from "/assets/js/content-store.js?v=4";
+import { getPapersData } from "/assets/js/content-store.js?v=5";
 
 document.addEventListener('DOMContentLoaded', function () {
   var mineOnly = new URLSearchParams(window.location.search).get('filter') === 'mine';

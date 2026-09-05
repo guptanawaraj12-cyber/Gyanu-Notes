@@ -7,7 +7,7 @@ let contentRef;
   try {
     const [fc, cs, am, fs] = await Promise.all([
       import("/assets/js/firebase-config.js?v=3"),
-      import("/assets/js/content-store.js?v=4"),
+      import("/assets/js/content-store.js?v=5"),
       import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
       import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
     ]);
@@ -170,16 +170,29 @@ async function setRole(enabled) {
   const email = document.getElementById("role-email").value.trim();
   if (!email) return message("role-message", "Enter the account email first.", "error");
   try {
-    // Profiles store the email exactly as typed at signup and Firestore
-    // equality is case-sensitive, so query the exact form first and fall
-    // back to the lowercased form before giving up.
-    let matches = await getDocs(query(collection(db, "users"), where("email", "==", email), limit(5)));
-    const lowered = email.toLowerCase();
-    if (matches.empty && email !== lowered) {
-      matches = await getDocs(query(collection(db, "users"), where("email", "==", lowered), limit(5)));
+    // Firestore equality is case-sensitive. Email/password accounts store the
+    // canonical lowercase email (Firebase normalises it), but social-linked
+    // profiles may keep the provider's casing and legacy rows can be anything.
+    // Probe every plausible casing in a single `in` query (max 10 values).
+    const variants = [];
+    const push = (v) => { if (v && variants.indexOf(v) === -1) variants.push(v); };
+    push(email);
+    push(email.toLowerCase());
+    push(email.toUpperCase());
+    // Title-case the local part ("john.doe@x.com" -> "John.Doe@x.com")
+    const at = email.indexOf("@");
+    if (at > 0) {
+      const local = email.slice(0, at);
+      const title = local.split(/[._+-]/).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(".") + email.slice(at);
+      push(title);
     }
+
+    let matches = await getDocs(query(collection(db, "users"), where("email", "in", variants), limit(10)));
     let updated = 0;
+    const seen = new Set();
     for (const snap of matches.docs) {
+      if (seen.has(snap.id)) continue;
+      seen.add(snap.id);
       if (snap.id === auth.currentUser.uid) continue; // an admin never changes their own role here
       await updateDoc(doc(db, "users", snap.id), { admin: enabled });
       updated++;
@@ -259,6 +272,138 @@ onAuthStateChanged(auth, async (user) => {
   try { await loadAdmin(); }
   catch (error) { message("catalogue-message", "Could not load catalogue: " + error.message, "error"); }
   loadReportedComments();
+  loadExams();
+});
+
+// ---------------------------------------------------------------------------
+// Exam schedule — manages the Firestore examSchedule/{id} documents that
+// power the /exams/ page and the homepage countdown preview. Public read,
+// admin-only writes (enforced by the examSchedule rules block).
+// ---------------------------------------------------------------------------
+
+let editingExamId = null;
+const EXAM_BOARDS = { BLE: "BLE (Class 8)", SEE: "SEE (Class 10)", plus2: "+2 (Class 11–12)" };
+
+function parseSubjects(value) {
+  return String(value || "").split(",").map((part) => part.trim()).filter(Boolean);
+}
+
+function resetExamForm() {
+  document.getElementById("exam-form").reset();
+  document.getElementById("exam-date-fields").hidden = true;
+  editingExamId = null;
+  document.getElementById("exam-save").textContent = "Save exam";
+  document.getElementById("exam-cancel").hidden = true;
+  message("exam-message", "", "");
+}
+
+document.getElementById("exam-published")?.addEventListener("change", (event) => {
+  document.getElementById("exam-date-fields").hidden = !event.target.checked;
+});
+
+document.getElementById("exam-cancel")?.addEventListener("click", resetExamForm);
+
+document.getElementById("exam-form")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const published = document.getElementById("exam-published").checked;
+  const payload = {
+    board: document.getElementById("exam-board").value,
+    examName: document.getElementById("exam-name").value.trim(),
+    date: published ? (document.getElementById("exam-date").value || null) : null,
+    dateBs: published ? (document.getElementById("exam-date-bs").value.trim() || null) : null,
+    subjects: parseSubjects(document.getElementById("exam-subjects").value),
+    updatedAt: serverTimestamp(),
+    updatedBy: auth.currentUser ? auth.currentUser.uid : null,
+  };
+  if (!payload.examName) return message("exam-message", "Please enter an exam name.", "error");
+  if (published && payload.date && !/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
+    return message("exam-message", "The exam date must be a valid YYYY-MM-DD date.", "error");
+  }
+  try {
+    if (editingExamId) {
+      await updateDoc(doc(db, "examSchedule", editingExamId), payload);
+      message("exam-message", "Exam updated.", "success");
+    } else {
+      await addDoc(collection(db, "examSchedule"), payload);
+      message("exam-message", "Exam saved.", "success");
+    }
+    resetExamForm();
+    loadExams();
+  } catch (error) {
+    message("exam-message", "Could not save the exam: " + (error.message || "try again."), "error");
+  }
+});
+
+async function loadExams() {
+  const list = document.getElementById("exam-list");
+  if (!list) return;
+  try {
+    const snapshot = await getDocs(query(collection(db, "examSchedule"), orderBy("date", "asc")));
+    if (!snapshot.size) {
+      list.innerHTML = '<p class="muted">No exam entries yet.</p>';
+      return;
+    }
+    const exams = snapshot.docs.map((docSnap) => Object.assign({ id: docSnap.id }, docSnap.data()));
+    const byBoard = { BLE: [], SEE: [], plus2: [] };
+    exams.forEach((exam) => { (byBoard[exam.board] || (byBoard[exam.board] = [])).push(exam); });
+    list.innerHTML = Object.keys(byBoard).map((board) => {
+      if (!byBoard[board].length) return "";
+      return '<p class="muted"><strong>' + EXAM_BOARDS[board] + "</strong></p>" + byBoard[board].map((exam) => {
+        const when = exam.date
+          ? escapeHtml(exam.date) + (exam.dateBs ? ' <span class="muted">(' + escapeHtml(exam.dateBs) + " BS)</span>" : "")
+          : '<span class="muted">Routine not published</span>';
+        return '<div class="notice-info">' +
+          "<strong>" + escapeHtml(exam.examName || exam.id) + "</strong>" +
+          ' <span class="muted">&middot; ' + when + "</span>" +
+          (Array.isArray(exam.subjects) && exam.subjects.length
+            ? '<p class="muted">Subjects: ' + exam.subjects.map(escapeHtml).join(", ") + "</p>"
+            : "") +
+          '<button class="btn btn-outline exam-edit" data-id="' + escapeHtml(exam.id) + '" type="button">Edit</button> ' +
+          '<button class="btn btn-outline exam-del" data-id="' + escapeHtml(exam.id) + '" type="button">Delete</button>' +
+          "</div>";
+      }).join("");
+    }).join("") || '<p class="muted">No exam entries yet.</p>';
+  } catch (error) {
+    list.innerHTML = '<p class="muted">Could not load exam entries: ' + escapeHtml(error.message || "") + "</p>";
+  }
+}
+
+document.getElementById("exam-list")?.addEventListener("click", async (event) => {
+  const editBtn = event.target.closest?.(".exam-edit");
+  const delBtn = event.target.closest?.(".exam-del");
+  if (editBtn) {
+    try {
+      const snapshot = await getDoc(doc(db, "examSchedule", editBtn.dataset.id));
+      if (!snapshot.exists()) return message("exam-message", "That exam entry no longer exists.", "error");
+      const exam = snapshot.data();
+      editingExamId = editBtn.dataset.id;
+      document.getElementById("exam-board").value = exam.board || "SEE";
+      document.getElementById("exam-name").value = exam.examName || "";
+      const published = !!exam.date;
+      document.getElementById("exam-published").checked = published;
+      document.getElementById("exam-date-fields").hidden = !published;
+      document.getElementById("exam-date").value = exam.date || "";
+      document.getElementById("exam-date-bs").value = exam.dateBs || "";
+      document.getElementById("exam-subjects").value = Array.isArray(exam.subjects) ? exam.subjects.join(", ") : "";
+      document.getElementById("exam-save").textContent = "Update exam";
+      document.getElementById("exam-cancel").hidden = false;
+      message("exam-message", "Editing “" + (exam.examName || exam.id) + "”. Press Update exam to save.", "success");
+      document.getElementById("exam-form").scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch (error) {
+      message("exam-message", "Could not load the exam: " + (error.message || "try again."), "error");
+    }
+  }
+  if (delBtn) {
+    if (!window.confirm("Delete this exam entry? This cannot be undone.")) return;
+    try {
+      await deleteDoc(doc(db, "examSchedule", delBtn.dataset.id));
+      message("exam-message", "Exam entry deleted.", "success");
+      if (editingExamId === delBtn.dataset.id) resetExamForm();
+      loadExams();
+    } catch (error) {
+      message("exam-message", "Delete failed: " + (error.message || "try again."), "error");
+    }
+  }
 });
 
 // ---------------------------------------------------------------------------
