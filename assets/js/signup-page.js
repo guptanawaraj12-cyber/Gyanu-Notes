@@ -45,13 +45,21 @@
     return "Something went wrong. Please try again.";
   }
 
-  function saveProfile(user, name, classLevel) {
-    return setDoc(doc(db, "users", user.uid), {
+  // Create the profile only when it does not exist yet. The users create
+  // rule allows exactly name/classLevel/email/createdAt, and the update rule
+  // never allows createdAt to change — so re-writing an existing profile is
+  // denied, and a blind merge would also reset classLevel to null. Existing
+  // profiles are therefore left untouched (same approach as login-page.js).
+  async function saveProfile(user, name, classLevel) {
+    var profileRef = doc(db, "users", user.uid);
+    var profile = await getDoc(profileRef);
+    if (profile.exists()) return;
+    await setDoc(profileRef, {
       name: name || user.displayName || "",
-      email: user.email,
+      email: user.email || "",
       classLevel: classLevel || null,
       createdAt: new Date().toISOString()
-    }, { merge: true });
+    });
   }
 
   onAuthStateChanged(auth, function (user) {
