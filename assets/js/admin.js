@@ -1,5 +1,6 @@
 let auth, db, onAuthStateChanged, getSiteContent, doc, getDoc, setDoc, deleteDoc,
-    addDoc, collection, getDocs, query, orderBy, limit, where, updateDoc, serverTimestamp;
+    addDoc, collection, getDocs, query, orderBy, limit, where, updateDoc, serverTimestamp,
+    runTransaction;
 let contentRef;
 // Admin is auth-gated: if Firebase cannot be reached the access panel shows
 // the connection error instead of leaving the page silent.
@@ -16,8 +17,13 @@ let contentRef;
     doc = fs.doc; getDoc = fs.getDoc; setDoc = fs.setDoc; deleteDoc = fs.deleteDoc; addDoc = fs.addDoc;
     collection = fs.collection; getDocs = fs.getDocs; query = fs.query; orderBy = fs.orderBy;
     limit = fs.limit; where = fs.where; updateDoc = fs.updateDoc; serverTimestamp = fs.serverTimestamp;
+    runTransaction = fs.runTransaction;
     contentRef = doc(db, "siteContent", "current");
 let content = null;
+// updatedAt read when the admin panel loaded (or after our last successful
+// save). saveContent() compares it in a transaction so two admins editing at
+// the same time can't silently overwrite each other's catalogue.
+let loadedUpdatedAt = null;
 
 function message(id, text, type) {
   const el = document.getElementById(id);
@@ -77,13 +83,39 @@ function makeId(parts) {
     .toLowerCase();
 }
 
+// Normalise the Firestore updatedAt value (server Timestamp, Date, or null
+// when the field/document does not exist yet) to a comparable number.
+function stampMillis(value) {
+  if (value === null || value === undefined) return null;
+  if (typeof value.toMillis === "function") return value.toMillis();
+  if (value instanceof Date) return value.getTime();
+  return String(value);
+}
+
 async function saveContent() {
-  await setDoc(contentRef, {
-    notes: content.notes,
-    papers: content.papers,
-    updatedAt: serverTimestamp(),
-    updatedBy: auth.currentUser.uid
+  const expected = loadedUpdatedAt;
+  await runTransaction(db, async (transaction) => {
+    const current = await transaction.get(contentRef);
+    const actual = current.exists() ? stampMillis(current.get("updatedAt")) : null;
+    if (actual !== expected) {
+      throw new Error("Someone else updated the catalogue — reload first");
+    }
+    transaction.set(contentRef, {
+      notes: content.notes,
+      papers: content.papers,
+      updatedAt: serverTimestamp(),
+      updatedBy: auth.currentUser.uid
+    });
   });
+  // Refresh the stamp we compare against on the next save. If this read
+  // fails, keep the old stamp: the next save then aborts with "reload first"
+  // — the safe direction, never a silent overwrite.
+  try {
+    const saved = await getDoc(contentRef);
+    loadedUpdatedAt = stampMillis(saved.get("updatedAt"));
+  } catch (refreshError) {
+    // stale loadedUpdatedAt on purpose
+  }
   document.getElementById("source-state").textContent = "Firestore";
   message("catalogue-message", "Published successfully.", "success");
 }
@@ -105,6 +137,7 @@ async function saveEditor(kind) {
 
 async function loadAdmin() {
   const snapshot = await getDoc(contentRef);
+  loadedUpdatedAt = snapshot.exists() ? stampMillis(snapshot.get("updatedAt")) : null;
   content = await getSiteContent();
   document.getElementById("source-state").textContent = snapshot.exists() ? "Firestore" : "Bundled JSON";
   fillEditors();
