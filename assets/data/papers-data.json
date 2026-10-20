@@ -15,7 +15,7 @@
     { "slug": "chemistry", "label": "Chemistry" },
     { "slug": "biology", "label": "Biology" },
     { "slug": "computer-science", "label": "Computer Science" },
-    { "slug": "english-literature", "label": "English Literature" }
+    { "slug": "english", "label": "English Literature" }
   ],
 
   "papers": [

@@ -119,7 +119,6 @@ function ensureModal() {
       '<p class="notice-modal-meta"><span class="tag" id="notice-modal-tag">Notice</span>' +
       '<span class="notice-modal-date" id="notice-modal-date"></span></p>' +
       '<h3 id="notice-modal-title"></h3>' +
-      '<figure class="notice-modal-image" id="notice-modal-image" hidden></figure>' +
       '<div class="notice-modal-body" id="notice-modal-body"></div>' +
       '<p class="notice-modal-actions"><a class="btn btn-primary" id="notice-modal-link" hidden>Open link &rarr;</a></p>' +
     '</div>';
@@ -143,10 +142,6 @@ function openNoticeModal(notice, opener) {
   document.getElementById("notice-modal-date").textContent = formatDate(notice.createdAt);
   document.getElementById("notice-modal-title").textContent = notice.title || "";
   document.getElementById("notice-modal-body").innerHTML = notice.body ? bodyToParagraphs(notice.body) : "";
-  var imageWrap = document.getElementById("notice-modal-image");
-  var imageUrl = safeUrl(notice.image);
-  imageWrap.hidden = !imageUrl;
-  if (imageUrl) imageWrap.innerHTML = '<img src="' + escapeHtml(imageUrl) + '" alt="">';
   var link = document.getElementById("notice-modal-link");
   var url = safeUrl(notice.url);
   link.hidden = !url;
