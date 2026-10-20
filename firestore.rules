@@ -135,10 +135,12 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // Anonymous visitor feedback — write-only, no cross-user reads.
+    // Visitor feedback — signed-in users only, write-only, no cross-user
+    // reads. Requiring auth (and uid == own) keeps votes attributable and
+    // rate-limitable per account instead of open to drive-by spam.
     match /feedback/{feedbackId} {
       allow read: if isAdmin();
-      allow create: if
+      allow create: if signedIn() &&
         request.resource.data.keys().hasOnly([
           'noteId', 'slug', 'vote', 'uid', 'submittedAt'
         ]) &&
@@ -153,12 +155,14 @@ service cloud.firestore {
     }
 
     // Reader Q&A comments on note pages. Anyone can read; only signed-in
-    // users can post or flag. Flagging may only set reported=true (one flag
-    // is enough); text/uid/createdAt are immutable after posting. Only
-    // administrators can delete.
+    // users with a verified email can post. Flagging may only set
+    // reported=true (one flag is enough), needs a signed-in user, and can
+    // never be used on your own comment; text/uid/createdAt are immutable
+    // after posting. Only administrators can delete.
     match /comments/{commentId} {
       allow read: if true;
       allow create: if signedIn() &&
+        request.auth.token.email_verified == true &&
         request.resource.data.keys().hasOnly(['noteId', 'uid', 'displayName', 'text', 'createdAt', 'reported']) &&
         request.resource.data.noteId is string &&
         request.resource.data.noteId.size() > 0 && request.resource.data.noteId.size() <= 100 &&
@@ -171,7 +175,8 @@ service cloud.firestore {
         request.resource.data.reported == false;
       allow update: if signedIn() &&
         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reported']) &&
-        request.resource.data.reported == true;
+        request.resource.data.reported == true &&
+        request.auth.uid != resource.data.uid;
       allow delete: if isAdmin();
     }
 

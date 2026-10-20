@@ -134,6 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const moreBtn = document.getElementById("comments-more");
   const formWrap = document.getElementById("comment-form-wrap");
   const prompt = document.getElementById("comment-login-prompt");
+  // Original anonymous prompt (with its link) — restored when signed out.
+  const promptAnonHtml = prompt ? prompt.innerHTML : "";
   const form = document.getElementById("comment-form");
   const textEl = document.getElementById("comment-text");
   const submitBtn = document.getElementById("comment-submit");
@@ -151,8 +153,21 @@ document.addEventListener("DOMContentLoaded", function () {
       await loadFirebase();
       F.onAuthStateChanged(F.auth, function (user) {
         currentUser = user;
-        formWrap.hidden = !user;
-        prompt.hidden = !!user;
+        // The comments create rule requires a signed-in, EMAIL-VERIFIED user,
+        // so show the matching state up front instead of letting the post be
+        // denied after submit.
+        if (!user) {
+          formWrap.hidden = true;
+          prompt.hidden = false;
+          prompt.innerHTML = promptAnonHtml;
+        } else if (!user.emailVerified) {
+          formWrap.hidden = true;
+          prompt.hidden = false;
+          prompt.textContent = "Verify your email to post — open the link we sent you, then refresh this page.";
+        } else {
+          formWrap.hidden = false;
+          prompt.hidden = true;
+        }
       });
       await loadPage(true);
       moreBtn.addEventListener("click", function () {
@@ -191,6 +206,11 @@ document.addEventListener("DOMContentLoaded", function () {
     msg.className = "form-message";
     if (!text) { msg.textContent = "Write your question first."; msg.className = "form-message error"; return; }
     if (!currentUser) return;
+    if (!currentUser.emailVerified) {
+      msg.textContent = "Verify your email to post — open the link we sent you, then refresh this page.";
+      msg.className = "form-message error";
+      return;
+    }
     const reason = spamReason(text);
     if (reason) { msg.textContent = reason; msg.className = "form-message error"; return; }
     const name = currentUser.displayName ||

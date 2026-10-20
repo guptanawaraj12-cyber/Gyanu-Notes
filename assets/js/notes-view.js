@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var params = new URLSearchParams(window.location.search);
   var noteId = params.get('id');
   var currentUser = null;
+  // Resolved by the first onAuthStateChanged callback — feedback init waits
+  // for it, so anonymous visitors can be shown "Log in to vote" instead of
+  // buttons whose Firestore write would be denied.
+  var authResolve;
+  var authReady = new Promise(function (resolve) { authResolve = resolve; });
   var currentChapter = null;
   var hasLoggedView = false;
   var hasInlineContent = false;
@@ -60,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
       logView = hist.logView; isBookmarked = bm.isBookmarked; toggleBookmark = bm.toggleBookmark; secureDownload = sd.secureDownload;
       onAuthStateChanged(auth, function (user) {
         currentUser = user;
+        if (authResolve) { authResolve(); authResolve = null; }
         updateDownloadState();
         updateBookmarkState();
         maybeLogView();
@@ -69,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })();
 
-   // --- Was this helpful? feedback widget (anonymous-friendly, best-effort) ---
+   // --- Was this helpful? feedback widget (sign-in required, best-effort) ---
    function initFeedbackWidget() {
 
      // The feedback rule requires noteId to be a non-empty string, so never
@@ -82,6 +88,18 @@ document.addEventListener('DOMContentLoaded', function () {
      var upBtn = document.getElementById('fb-up');
      var downBtn = document.getElementById('fb-down');
      var thanks = widget.querySelector('.feedback-thanks');
+
+     // The feedback create rule requires a signed-in user (this init waits
+     // for the first auth callback), so anonymous visitors get a login prompt
+     // instead of buttons whose write would be denied silently.
+     if (!currentUser) {
+       if (prompt) prompt.innerHTML = '<a href="/login/">Log in to vote</a>';
+       if (btnGroup) btnGroup.style.display = 'none';
+       if (thanks) thanks.style.display = 'none';
+       widget.style.display = 'block';
+       return;
+     }
+
      var fbKey = 'note_feedback_' + (noteId || window.location.pathname);
      var alreadyVoted = localStorage.getItem(fbKey) === 'true';
 
@@ -104,7 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
        if (thanks) thanks.style.display = 'block';
        localStorage.setItem(fbKey, 'true');
 
-       // Best-effort Firestore write: anonymous-friendly, never surfaces errors
+       // Best-effort Firestore write: only offered when signed in (see the
+       // guard above), never surfaces errors
        (async function () {
          try {
            var fc = await import("/assets/js/firebase-config.js?v=3");
@@ -113,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
              noteId: noteId || null,
              slug: noteId || null,
              vote: vote,
-             uid: (currentUser && currentUser.uid) || null,
+             uid: currentUser.uid,
              submittedAt: fs.serverTimestamp()
            });
          } catch (error) {
@@ -129,7 +148,12 @@ document.addEventListener('DOMContentLoaded', function () {
    var _feedbackTried = false;
    function maybeInitFeedbackWidget() {
      if (_feedbackTried) return; _feedbackTried = true;
+     // Wait for Firebase AND the first auth callback before choosing what to
+     // show. If Firebase never loads, authReady stays pending and the widget
+     // simply stays hidden (fail closed).
      fbReady.then(function () {
+       return authReady;
+     }).then(function () {
        try { initFeedbackWidget(); } catch (e) { /* swallow */ }
      });
    }

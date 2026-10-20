@@ -1,0 +1,13 @@
+{
+  "name": "gyanu-notes-rules-tests",
+  "private": true,
+  "type": "module",
+  "description": "Firestore security-rules tests for Gyanu Notes. Not deployed (tests/** is ignored by Firebase Hosting).",
+  "scripts": {
+    "test": "node --test rules.test.mjs"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase": "^13.0.0"
+  }
+}

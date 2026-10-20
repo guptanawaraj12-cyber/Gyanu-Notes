@@ -8,6 +8,7 @@
       "**/node_modules/**",
       "functions/**",
       "scripts/**",
+      "tests/**",
       "**/*.md",
       ".vscode/**",
       "**/*.ps1",
