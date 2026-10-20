@@ -2,6 +2,30 @@
 
 import { getNotesData } from "/assets/js/content-store.js?v=5";
 
+// Chapter HTML comes from Firestore (chapterContent/{id}) or the bundled
+// /assets/content files and is sanitised before it touches the DOM.
+// DOMPurify is loaded (pinned, cdnjs) by notes/view/index.html. The config
+// keeps what chapter content actually needs — tabs (.ntabs/.tab-btn with
+// data-tab/.tab-panel), tables, figures with inline SVG, sub/sup, class and
+// id attributes — and forbids script/iframe/form/object/embed outright;
+// href/src may only be http(s) or relative (no scheme smuggling).
+var CHAPTER_SANITIZE_CONFIG = {
+  FORBID_TAGS: ["script", "iframe", "form", "object", "embed"],
+  ALLOWED_URI_REGEXP: /^(?:https?:\/\/|[^:]*$)/i
+};
+
+function sanitizeChapterHtml(html) {
+  // Fail closed: never inject unsanitised HTML when the filter is missing.
+  if (typeof window === "undefined" || !window.DOMPurify) return null;
+  return window.DOMPurify.sanitize(html, CHAPTER_SANITIZE_CONFIG);
+}
+
+function escapeHtml(text) {
+  return String(text == null ? "" : text)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
 // Firebase loads dynamically — the note content renders regardless; sign-in
 // features (downloads, bookmarks, history) activate once it arrives.
 let auth, db, doc, getDoc, onAuthStateChanged, sendEmailVerification,
@@ -172,17 +196,20 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('page-title').textContent = currentChapter.title + ' — Gyanu Notes';
     heading.textContent = currentChapter.title;
     breadcrumb.innerHTML =
-      '/ <a href="/notes/' + found.classSlug + '/">' + classLabel + '</a>' +
-      ' / <a href="/notes/' + found.classSlug + '/' + found.subjectSlug + '/">' + subjectLabel + '</a>' +
-      ' / ' + currentChapter.title;
+      '/ <a href="/notes/' + escapeHtml(found.classSlug) + '/">' + escapeHtml(classLabel) + '</a>' +
+      ' / <a href="/notes/' + escapeHtml(found.classSlug) + '/' + escapeHtml(found.subjectSlug) + '/">' + escapeHtml(subjectLabel) + '</a>' +
+      ' / ' + escapeHtml(currentChapter.title);
 
     // Inline HTML content wins when present; otherwise embed Drive preview
     // (real files need a real driveFileId — currently placeholder).
     loadInlineContent().then(function (html) {
-      if (html) {
+      var safeHtml = html ? sanitizeChapterHtml(html) : "";
+      if (html && safeHtml === null) {
+        holder.innerHTML = '<div class="empty-state" style="padding: 40px 0; color: var(--ink-faint);">This chapter could not be displayed safely — refresh the page to try again.</div>';
+      } else if (html) {
         hasInlineContent = true;
-        inlineHtml = html;
-        holder.innerHTML = '<div class="chapter-content">' + html + '</div>';
+        inlineHtml = safeHtml;
+        holder.innerHTML = '<div class="chapter-content">' + safeHtml + '</div>';
       } else if (validDriveId(currentChapter.driveFileId)) {
         var previewSrc = 'https://drive.google.com/file/d/' + currentChapter.driveFileId + '/preview';
         holder.innerHTML = '<iframe class="viewer-frame" src="' + previewSrc + '" allow="autoplay"></iframe>';
@@ -360,7 +387,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // "Save as PDF" in Chrome and Edge.
   function printBrandedNotesPdf() {
     if (!inlineHtml || !currentChapter) return;
-    var title = currentChapter.title || 'Chapter notes';
+    // The srcdoc document is one big concatenated string, so anything dynamic
+    // that lands in it must be escaped; the chapter body HTML is re-sanitised.
+    var safeBody = sanitizeChapterHtml(inlineHtml);
+    if (safeBody === null) return;
+    var title = escapeHtml(currentChapter.title || 'Chapter notes');
+    var meta = escapeHtml(currentMeta);
     var frame = document.createElement('iframe');
     frame.setAttribute('aria-hidden', 'true');
     frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden;';
@@ -402,9 +434,9 @@ document.addEventListener('DOMContentLoaded', function () {
       '<span class="brand-name">Gyanu Notes</span>' +
       '<span class="brand-tag">Free notes &amp; past papers · nawarajgupta.com.np</span></div>' +
       '<h1>' + title + '</h1>' +
-      '<p class="pdf-meta">' + (currentMeta ? currentMeta + ' — Chapter notes' : 'Chapter notes') + '</p>' +
+      '<p class="pdf-meta">' + (meta ? meta + ' — Chapter notes' : 'Chapter notes') + '</p>' +
       '</header>' +
-      '<div class="pdf-body">' + inlineHtml + '</div>' +
+      '<div class="pdf-body">' + safeBody + '</div>' +
       '<footer class="pdf-foot">Downloaded from nawarajgupta.com.np — © 2026 Gyanu Notes. Free for personal study use.</footer>' +
       '</body></html>';
 

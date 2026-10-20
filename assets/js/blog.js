@@ -47,6 +47,20 @@ function escapeHtml(text) {
     .replace(/'/g, "&#39;");
 }
 
+// Post HTML from Firestore is sanitised before it reaches the DOM.
+// DOMPurify is loaded (pinned, cdnjs) by blog/post/index.html — the only
+// page that renders post bodies. Chapters/posts never need script, iframe,
+// form, object or embed, and every href/src must be http(s) or relative.
+const POST_SANITIZE_CONFIG = {
+  FORBID_TAGS: ["script", "iframe", "form", "object", "embed"],
+  ALLOWED_URI_REGEXP: /^(?:https?:\/\/|[^:]*$)/i
+};
+
+function sanitizePostHtml(html) {
+  if (!window.DOMPurify) return null; // fail closed — never inject raw HTML
+  return window.DOMPurify.sanitize(html, POST_SANITIZE_CONFIG);
+}
+
 function formatDate(value) {
   try {
     var date = value && typeof value.toDate === "function" ? value.toDate() : null;
@@ -258,7 +272,12 @@ async function renderPost() {
       const hero = document.getElementById("post-cover");
       if (hero) { hero.innerHTML = '<img src="' + escapeHtml(cover) + '" alt="">'; hero.hidden = false; }
     }
-    body.innerHTML = post.html || "";
+    const safeHtml = sanitizePostHtml(post.html || "");
+    if (safeHtml === null) {
+      body.textContent = "This post could not be displayed — the safety filter failed to load. Refresh the page to try again.";
+    } else {
+      body.innerHTML = safeHtml;
+    }
     wireShare(post, cleanUrl);
     if (article) article.hidden = false;
   } catch (error) {
