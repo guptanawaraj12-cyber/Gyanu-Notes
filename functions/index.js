@@ -15,10 +15,18 @@ initializeApp();
 // one enforcement path avoids drift between duplicate checks.
 
 // ---------------------------------------------------------------------------
-// Secure downloads. The browser never receives a reusable Drive link: it asks
-// this function for a note/paper by its catalogue id, the function verifies
-// the caller's ID token and verified email, resolves the real Drive file id
-// from the Firestore catalogue server-side, and streams the file through.
+// Secure downloads — downloadFile is NOT deployed and NOT used by the site
+// while the project is on the free Spark plan (functions cannot deploy
+// there). Today the site's download button goes through
+// assets/js/secure-download.js, which is only a CLIENT-SIDE convenience gate
+// (sign-in + verified email checked in the browser; the Drive file IDs are
+// public anyway because they power the on-page preview iframes).
+//
+// This function is kept for a move to Blaze, where it becomes the download
+// path: the browser sends only the note/paper catalogue id, and the function
+// verifies the caller's ID token and verified email, resolves the real Drive
+// file id from the Firestore catalogue server-side, and streams the file
+// through. Do not deploy functions just to use it.
 // ---------------------------------------------------------------------------
 
 const ALLOWED_ORIGINS = [

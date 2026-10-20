@@ -1,13 +1,16 @@
-// Gyanu Notes — download gate (client-side, free-plan friendly).
-// Downloads are allowed only for signed-in visitors with a verified email.
-// The chapter/paper Drive file IDs are already public: the same IDs power
-// the on-page preview iframes, so this flow exposes nothing new — it simply
-// packages the file as a one-click download instead of a preview.
+// Gyanu Notes — download gate (client-side convenience gate, Spark plan).
 //
-// The earlier design streamed bytes through a Cloud Function so the Drive
-// ID never reached the browser. That requires Firebase's paid Blaze plan;
-// on the free Spark plan the function cannot deploy, so downloads point
-// straight at Drive's public download endpoint instead.
+// IMPORTANT: on the free Spark plan this is a CLIENT-SIDE ONLY convenience
+// gate. It checks sign-in + verified email in the browser to keep honest
+// visitors from hitting raw Drive links — it is NOT real access control.
+// The chapter/paper Drive file IDs are public either way: the same IDs power
+// the on-page preview iframes, so anyone can reconstruct the Drive URL.
+//
+// Server-side streaming (auth + verified email enforced, Drive file ID
+// resolved only inside the function) exists as downloadFile in
+// functions/index.js, but it is only used if the project moves to Blaze —
+// Cloud Functions cannot deploy on the free Spark plan. Until then, the
+// download below points straight at Drive's public download endpoint.
 
 
 var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;

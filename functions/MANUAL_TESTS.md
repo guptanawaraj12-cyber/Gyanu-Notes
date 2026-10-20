@@ -1,5 +1,14 @@
 # Cloud Functions — Manual Test Checklist
 
+> **Current status — read first.** `downloadFile` is **not deployed and not used by the
+> site** while the project is on the free Spark plan (functions cannot deploy there).
+> Site downloads go through `assets/js/secure-download.js`, a **client-side convenience
+> gate** on the Spark plan: sign-in + verified email are checked in the browser only —
+> that is not real access control, and the Drive file IDs are public anyway (they power
+> the on-page preview iframes). `downloadFile` is only used if the project moves to
+> Blaze, where this function becomes the download path. The checklist below applies to
+> that optional future state; do not deploy functions just to run it.
+
 Covers `downloadFile` (gen-1 HTTP), tested against a deployed instance. No automated
 harness exists by design — the checklist mirrors the exact acceptance cases, each with a
 curl command and the expected result.

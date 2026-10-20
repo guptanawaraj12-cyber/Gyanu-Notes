@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
         import("/assets/js/history.js?v=4"),
         import("/assets/js/bookmarks.js?v=4"),
-        import("/assets/js/secure-download.js?v=4")
+        import("/assets/js/secure-download.js?v=5")
       ]);
       auth = fc.auth; db = fc.db; doc = fs.doc; getDoc = fs.getDoc;
       onAuthStateChanged = am.onAuthStateChanged; sendEmailVerification = am.sendEmailVerification;
