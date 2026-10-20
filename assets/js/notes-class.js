@@ -1,5 +1,5 @@
 // Gyanu Notes — renders the subject list for a given class, e.g. /notes/class-10/
-import { getNotesData } from "/assets/js/content-store.js?v=5";
+import { getNotesData, chapterUsable } from "/assets/js/content-store.js?v=6";
 
 document.addEventListener('DOMContentLoaded', function () {
   var parts = window.location.pathname.split('/').filter(Boolean); // ["notes","class-10"]
@@ -21,26 +21,36 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('page-heading').textContent = classLabel + ' — all subjects';
     document.getElementById('page-sub').textContent = 'Pick a subject to see all available chapters.';
 
-    // subjects that actually have at least one entry for this class
+    // subjects with at least one usable chapter (real file or inline
+    // content) for this class, each with its chapter count
+    var usableBySubject = {};
+    data.notes.forEach(function (entry) {
+      if (entry.classSlug !== classSlug) return;
+      var n = (entry.chapters || []).filter(chapterUsable).length;
+      if (n) usableBySubject[entry.subjectSlug] = (usableBySubject[entry.subjectSlug] || 0) + n;
+    });
     var subjectSlugsForClass = Array.from(new Set(
       data.notes.filter(function (n) { return n.classSlug === classSlug; })
                 .map(function (n) { return n.subjectSlug; })
-    ));
+    )).filter(function (slug) { return usableBySubject[slug]; });
 
     var list = document.getElementById('subject-list');
     list.innerHTML = '';
 
     if (subjectSlugsForClass.length === 0) {
-      list.innerHTML = '<div class="empty-state">No subjects added yet for ' + classLabel + '. Check back soon.</div>';
+      list.innerHTML = '<div class="empty-state">' + classLabel + ' notes are coming soon &mdash; we are preparing them now.</div>';
       return;
     }
 
     subjectSlugsForClass.forEach(function (slug) {
       var subj = data.subjects.find(function (s) { return s.slug === slug; });
+      var count = usableBySubject[slug];
       var a = document.createElement('a');
       a.className = 'subject-row';
       a.href = '/notes/' + classSlug + '/' + slug + '/';
-      a.innerHTML = '<span>' + (subj ? subj.label : slug) + '</span><span class="arrow">&rarr;</span>';
+      a.innerHTML = '<span>' + (subj ? subj.label : slug) +
+        '<span class="subject-meta">\u00b7 ' + count + ' chapter' + (count === 1 ? '' : 's') + '</span></span>' +
+        '<span class="arrow">&rarr;</span>';
       list.appendChild(a);
     });
   }

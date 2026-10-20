@@ -1,5 +1,5 @@
 // Gyanu Notes — renders the /papers/ landing page from editable site content
-import { getPapersData } from "/assets/js/content-store.js?v=5";
+import { getPapersData, setUsable } from "/assets/js/content-store.js?v=6";
 
 document.addEventListener('DOMContentLoaded', function () {
   var mineOnly = new URLSearchParams(window.location.search).get('filter') === 'mine';
@@ -20,6 +20,25 @@ document.addEventListener('DOMContentLoaded', function () {
     footerClassLinks.innerHTML = ''; // clear the static fallback links shipped in the HTML
 
     data.classExamTypes.forEach(function (c) {
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="/papers/' + c.classSlug + '/">' + c.label + ' papers</a>';
+      footerClassLinks.appendChild(li);
+    });
+
+    // Honest listing: only classes with at least one usable paper set (a
+    // real Drive file id) are shown; a fully empty library says so.
+    var classesWithPapers = data.classExamTypes.filter(function (c) {
+      return data.papers.some(function (p) {
+        return p.classSlug === c.classSlug && (p.sets || []).some(setUsable);
+      });
+    });
+
+    if (classesWithPapers.length === 0) {
+      cardsHolder.innerHTML = '<div class="empty-state">Past papers are coming soon &mdash; we are uploading them now.</div>';
+      return;
+    }
+
+    classesWithPapers.forEach(function (c) {
       var num = c.label.replace(/\D/g, '');
       var a = document.createElement('a');
       a.href = '/papers/' + c.classSlug + '/';
@@ -29,10 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
         '<span class="label">' + c.label + '</span>' +
         '<span class="exam-tag">' + c.examType + '</span>';
       cardsHolder.appendChild(a);
-
-      var li = document.createElement('li');
-      li.innerHTML = '<a href="/papers/' + c.classSlug + '/">' + c.label + ' papers</a>';
-      footerClassLinks.appendChild(li);
     });
 
     document.querySelectorAll('.class-card').forEach(function (card) {

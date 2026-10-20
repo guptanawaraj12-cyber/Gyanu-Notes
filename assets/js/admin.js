@@ -8,7 +8,7 @@ let contentRef;
   try {
     const [fc, cs, am, fs] = await Promise.all([
       import("/assets/js/firebase-config.js?v=3"),
-      import("/assets/js/content-store.js?v=5"),
+      import("/assets/js/content-store.js?v=6"),
       import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js"),
       import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
     ]);

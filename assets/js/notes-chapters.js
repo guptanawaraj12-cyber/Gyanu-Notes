@@ -1,5 +1,5 @@
 // Gyanu Notes — renders a chapter list page based on the URL path
-import { getNotesData } from "/assets/js/content-store.js?v=5";
+import { getNotesData, chapterUsable } from "/assets/js/content-store.js?v=6";
 // Works for any /notes/{class-slug}/{subject-slug}/ page using the same template
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -30,12 +30,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var list = document.getElementById('chapter-list');
     list.innerHTML = '';
 
-    if (!entry || !entry.chapters || entry.chapters.length === 0) {
-      list.innerHTML = '<div class="empty-state">No chapters added yet for this subject. Check back soon.</div>';
+    // Only chapters that can actually be opened (real Drive file or inline
+    // content) are listed; placeholder entries stay out of sight.
+    var chapters = ((entry && entry.chapters) || []).filter(chapterUsable);
+
+    if (chapters.length === 0) {
+      list.innerHTML = '<div class="empty-state">' + classLabel + ' ' + subjectLabel + ' notes are coming soon &mdash; we are preparing them now.</div>';
       return;
     }
 
-    entry.chapters.forEach(function (ch) {
+    chapters.forEach(function (ch) {
       var row = document.createElement('a');
       row.className = 'chapter-row';
       row.href = '/notes/view/?id=' + encodeURIComponent(ch.id);

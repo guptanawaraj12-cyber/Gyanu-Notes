@@ -1,6 +1,6 @@
 // Notice board: renders admin-published notices on the homepage. The static
 // rows already in the HTML stay as the fallback when Firestore has none.
-import { withTimeout } from "/assets/js/content-store.js?v=5";
+import { withTimeout } from "/assets/js/content-store.js?v=6";
 
 function escapeHtml(text) {
   return String(text)

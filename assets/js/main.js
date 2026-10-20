@@ -37,33 +37,54 @@ document.addEventListener('DOMContentLoaded', function () {
     var statNotes = document.getElementById('stat-notes');
     var statPapers = document.getElementById('stat-papers');
     var statSubjects = document.getElementById('stat-subjects');
+    var stamp = document.querySelector('.stamp');
 
     if (!statNotes || !statPapers || !statSubjects) return;
 
-    import('/assets/js/content-store.js?v=5')
-      .then(function (mod) { return mod.getSiteContent(); })
-      .then(function (content) {
-        var notesData = content.notes;
-        var papersData = content.papers;
+    // Honest counts: only chapters/papers that can actually be opened (a
+    // real Drive file id or inline site content) are counted — the bundled
+    // placeholder catalogue does not inflate the numbers. The hero pill
+    // reads from the same count, with neutral wording while it is small.
+    function paintStamp(notesCount) {
+      if (!stamp) return;
+      stamp.textContent = notesCount >= 20
+        ? '\u2605 ' + notesCount + ' notes \u00b7 SEE & NEB aligned'
+        : '\u2605 Free \u00b7 NEB & SEE aligned';
+    }
 
-        var notesCount = notesData.notes.reduce(function (sum, entry) {
-          return sum + (entry.chapters ? entry.chapters.length : 0);
-        }, 0);
+    import('/assets/js/content-store.js?v=6')
+      .then(function (mod) {
+        return mod.getSiteContent().then(function (content) {
+          var notesData = content.notes;
+          var papersData = content.papers;
 
-        var papersCount = papersData.papers.reduce(function (sum, entry) {
-          return sum + (entry.sets ? entry.sets.length : 0);
-        }, 0);
+          var notesCount = notesData.notes.reduce(function (sum, entry) {
+            return sum + (entry.chapters || []).filter(mod.chapterUsable).length;
+          }, 0);
 
-        var subjectCount = notesData.subjects ? notesData.subjects.length : 0;
+          var papersCount = papersData.papers.reduce(function (sum, entry) {
+            return sum + (entry.sets || []).filter(mod.setUsable).length;
+          }, 0);
 
-        statNotes.textContent = notesCount.toString();
-        statPapers.textContent = papersCount.toString();
-        statSubjects.textContent = subjectCount.toString();
+          // subjects that have at least one usable chapter anywhere
+          var subjectCount = notesData.subjects.filter(function (subject) {
+            return notesData.notes.some(function (entry) {
+              return entry.subjectSlug === subject.slug &&
+                (entry.chapters || []).some(mod.chapterUsable);
+            });
+          }).length;
+
+          statNotes.textContent = notesCount.toString();
+          statPapers.textContent = papersCount.toString();
+          statSubjects.textContent = subjectCount.toString();
+          paintStamp(notesCount);
+        });
       })
       .catch(function () {
         statNotes.textContent = '0';
         statPapers.textContent = '0';
         statSubjects.textContent = '0';
+        paintStamp(0);
       });
   }
 
@@ -82,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     try {
       const [store, utils] = await Promise.all([
-        import("/assets/js/content-store.js?v=5"),
+        import("/assets/js/content-store.js?v=6"),
         import("/assets/js/countdown-utils.js?v=1")
       ]);
       var exams = await store.getExamsData();

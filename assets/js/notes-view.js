@@ -1,6 +1,6 @@
 // Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
-import { getNotesData } from "/assets/js/content-store.js?v=5";
+import { getNotesData } from "/assets/js/content-store.js?v=6";
 
 // Chapter HTML comes from Firestore (chapterContent/{id}) or the bundled
 // /assets/content files and is sanitised before it touches the DOM.

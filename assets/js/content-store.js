@@ -16,6 +16,30 @@ export function withTimeout(promise, ms) {
   ]);
 }
 
+// ---- Usability — used for honest counts and listings -----------------------
+// A chapter or paper set is only counted/listed when it can actually be
+// opened: a real Google Drive file id (20+ url-safe chars, with the bundled
+// "REPLACE_WITH_REAL_DRIVE_FILE_ID" placeholder rejected) or inline site
+// content (a `hasInline: true` flag in the catalogue data — client code
+// cannot check for the matching assets/content/{id}.html file itself).
+export function usableDriveId(value) {
+  return typeof value === "string" &&
+    value.trim() !== "REPLACE_WITH_REAL_DRIVE_FILE_ID" &&
+    /^[-\w]{20,}$/.test(value.trim());
+}
+
+export function chapterUsable(chapter) {
+  return !!chapter && (
+    chapter.hasInline === true ||
+    usableDriveId(chapter.driveFileId) ||
+    usableDriveId(chapter.handwrittenDriveId)
+  );
+}
+
+export function setUsable(set) {
+  return !!set && usableDriveId(set.driveFileId);
+}
+
 async function firestoreContent() {
   const [{ db }, { doc, getDoc }] = await Promise.all([
     import("/assets/js/firebase-config.js?v=3"),

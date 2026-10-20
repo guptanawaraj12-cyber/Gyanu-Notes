@@ -1,5 +1,5 @@
 // Gyanu Notes — renders filterable paper results for /papers/{class-slug}/
-import { getPapersData } from "/assets/js/content-store.js?v=5";
+import { getPapersData, setUsable } from "/assets/js/content-store.js?v=6";
 
 document.addEventListener('DOMContentLoaded', function () {
   var parts = window.location.pathname.split('/').filter(Boolean); // ["papers","class-10"]
@@ -26,7 +26,19 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('page-heading').textContent = classLabel + ' — ' + examType + ' past papers';
     document.getElementById('page-sub').textContent = 'Filter by year and subject to find the paper you need.';
 
-    var classPapers = data.papers.filter(function (p) { return p.classSlug === classSlug; });
+    // Only entries with at least one usable set (real Drive file id) are
+    // listed — placeholder entries never reach the page.
+    var classPapers = data.papers.filter(function (p) {
+      return p.classSlug === classSlug && (p.sets || []).some(setUsable);
+    });
+
+    if (classPapers.length === 0) {
+      var filterBlock = document.querySelector('.filter-block');
+      if (filterBlock) filterBlock.style.display = 'none';
+      document.getElementById('results-grid').innerHTML =
+        '<div class="empty-state">' + classLabel + ' past papers are coming soon &mdash; we are uploading them now.</div>';
+      return;
+    }
 
     // year chips, most recent first
     var years = Array.from(new Set(classPapers.map(function (p) { return p.year; }))).sort().reverse();
@@ -92,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var card = document.createElement('div');
       card.className = 'paper-card';
 
-      var setsHtml = entry.sets.map(function (set) {
+      var setsHtml = entry.sets.filter(setUsable).map(function (set) {
         return '<a class="set-link" href="/papers/view/?id=' + encodeURIComponent(set.id) + '"><span>' + set.label + '</span><span>&rarr;</span></a>';
       }).join('');
 

@@ -1,5 +1,5 @@
 {
-  "_readme": "Placeholder data. Replace driveFileId with real Google Drive file IDs once notes are uploaded. classSlug and subjectSlug must match the URL folders, e.g. class-10 / physics.",
+  "_readme": "Placeholder data. Replace driveFileId with real Google Drive file IDs once notes are uploaded. classSlug and subjectSlug must match the URL folders, e.g. class-10 / physics. Chapters written on the site itself (assets/content/{id}.html) must also carry \"hasInline\": true so counts and listings treat them as available.",
 
   "classes": [
     { "slug": "class-8", "label": "Class 8" },
@@ -42,7 +42,7 @@
       "classSlug": "class-12",
       "subjectSlug": "physics",
       "chapters": [
-        { "id": "c12-phy-01", "title": "Ch 01 — Rotational Dynamics", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
+        { "id": "c12-phy-01", "title": "Ch 01 — Rotational Dynamics", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID", "hasInline": true },
         { "id": "c12-phy-02", "title": "Ch 02 — Periodic Motion", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
         { "id": "c12-phy-03", "title": "Ch 03 — Fluid Statics", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
         { "id": "c12-phy-04", "title": "Ch 04 — First Law of Thermodynamics", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
@@ -73,7 +73,7 @@
       "classSlug": "class-12",
       "subjectSlug": "chemistry",
       "chapters": [
-        { "id": "c12-che-01", "title": "Ch 01 — Volumetric Analysis", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
+        { "id": "c12-che-01", "title": "Ch 01 — Volumetric Analysis", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID", "hasInline": true },
         { "id": "c12-che-02", "title": "Ch 02 — Ionic Equilibrium", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
         { "id": "c12-che-03", "title": "Ch 03 — Chemical Kinetics", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
         { "id": "c12-che-04", "title": "Ch 04 — Thermodynamics", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },

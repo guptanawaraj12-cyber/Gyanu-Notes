@@ -3,7 +3,7 @@
 // Newest-first, 20 per page; client-side first-pass spam filter (moderation
 // still happens in the admin panel via the reported flag).
 
-import { withTimeout } from "/assets/js/content-store.js?v=5";
+import { withTimeout } from "/assets/js/content-store.js?v=6";
 
 const PAGE_SIZE = 20;
 const noteId = new URLSearchParams(window.location.search).get("id");

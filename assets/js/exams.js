@@ -5,7 +5,7 @@
 // BS→AD conversion table was deliberately not hardcoded — swap it in later
 // if you want the `date` field itself to be BS.)
 
-import { getExamsData } from "/assets/js/content-store.js?v=5";
+import { getExamsData } from "/assets/js/content-store.js?v=6";
 import { daysRemaining, countdownText, formatDate, BOARD_LABELS } from "/assets/js/countdown-utils.js?v=1";
 
 function escapeHtml(text) {
