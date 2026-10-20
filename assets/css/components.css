@@ -265,7 +265,7 @@
   position: sticky;
   top: var(--header-h);
   z-index: 10;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--bar-bg);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
