@@ -1,6 +1,7 @@
 // Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
 import { getNotesData } from "/assets/js/content-store.js?v=6";
+import { initReadingAids } from "/assets/js/reading-aids.js?v=3";
 
 // Chapter HTML comes from Firestore (chapterContent/{id}) or the bundled
 // /assets/content files and is sanitised before it touches the DOM.
@@ -234,6 +235,9 @@ document.addEventListener('DOMContentLoaded', function () {
         hasInlineContent = true;
         inlineHtml = safeHtml;
         holder.innerHTML = '<div class="chapter-content">' + safeHtml + '</div>';
+        // Table of contents + progress bar are built from what actually
+        // rendered, so they always match the visible headings.
+        initReadingAids(holder.querySelector('.chapter-content'));
       } else if (validDriveId(currentChapter.driveFileId)) {
         var previewSrc = 'https://drive.google.com/file/d/' + currentChapter.driveFileId + '/preview';
         holder.innerHTML = '<iframe class="viewer-frame" src="' + previewSrc + '" allow="autoplay"></iframe>';

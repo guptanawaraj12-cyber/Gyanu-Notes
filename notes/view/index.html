@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/assets/css/tokens.css?v=8">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
 <link rel="stylesheet" href="/assets/css/layout.css?v=8">
-<link rel="stylesheet" href="/assets/css/components.css?v=18">
+<link rel="stylesheet" href="/assets/css/components.css?v=20">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=4">
 
 </head>
@@ -44,11 +44,26 @@
 </header>
 
 <main>
+  <!-- Reading progress for the chapter body; revealed by reading-aids.js -->
+  <div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% of this chapter read" hidden>
+    <span class="reading-progress-fill" id="reading-progress-fill"></span>
+  </div>
+
   <section style="padding: 40px 0 80px;">
     <div class="container">
       <div class="viewer-reading-column">
         <div class="breadcrumb"><a href="/notes/">Notes</a> <span id="breadcrumb-trail"></span></div>
         <h1 id="note-heading" aria-busy="true"><span class="skeleton sk-heading" aria-hidden="true"></span></h1>
+
+        <nav class="viewer-toc" id="viewer-toc" aria-labelledby="viewer-toc-title" hidden>
+          <button class="viewer-toc-toggle" id="viewer-toc-toggle" type="button" aria-expanded="false" aria-controls="viewer-toc-list">
+            <span class="viewer-toc-title" id="viewer-toc-title">On this page</span>
+            <span class="viewer-toc-count" id="viewer-toc-count"></span>
+            <span class="viewer-toc-chevron" aria-hidden="true">&#9662;</span>
+          </button>
+          <ol class="viewer-toc-list" id="viewer-toc-list"></ol>
+        </nav>
 
         <div id="viewer-holder" aria-busy="true"><div class="skeleton sk-viewer" aria-hidden="true"></div></div>
       </div>
@@ -118,7 +133,7 @@
 <script type="module" src="/assets/js/auth-state.js?v=4"></script>
 <!-- DOMPurify (pinned) — sanitises Firestore/bundled chapter HTML before rendering -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.4.17/purify.min.js"></script>
-<script type="module" src="/assets/js/notes-view.js?v=9"></script>
+<script type="module" src="/assets/js/notes-view.js?v=11"></script>
 <script type="module" src="/assets/js/comments.js?v=2"></script>
 </body>
 </html>
