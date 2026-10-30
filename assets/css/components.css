@@ -1006,6 +1006,13 @@
   font-size: 0.94rem;
 }
 
+/* Empty and error messages replace a whole skeleton grid, so they span every
+   track instead of landing in the first narrow cell. */
+.empty-state,
+.loading-state {
+  grid-column: 1 / -1;
+}
+
 /* ---------- Verify email banner ---------- */
 .verify-banner {
   display: flex;

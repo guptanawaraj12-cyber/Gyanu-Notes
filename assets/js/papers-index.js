@@ -10,7 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
   getPapersData()
     .then(function (data) { render(data); })
     .catch(function () {
-      document.getElementById('class-cards').innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p><p><a class="btn btn-outline" href="">Retry</a></p>';
+      var holder = document.getElementById('class-cards');
+      if (holder) {
+        holder.innerHTML = '<div class="empty-state">Couldn\'t load content — check your connection. '
+          + '<a class="btn btn-outline" href="">Retry</a></div>';
+      }
     });
 
   function render(data) {
@@ -49,6 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
         '<span class="exam-tag">' + c.examType + '</span>';
       cardsHolder.appendChild(a);
     });
+
+    // Pointer-only flourish — skipped for visitors who asked for less motion.
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
 
     document.querySelectorAll('.class-card').forEach(function (card) {
       card.addEventListener('mousemove', function (e) {

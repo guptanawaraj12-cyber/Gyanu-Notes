@@ -9,7 +9,16 @@ document.addEventListener('DOMContentLoaded', function () {
   getNotesData()
     .then(function (data) { render(data); })
     .catch(function () {
+      // Replace the skeletons with a message instead of leaving the page
+      // pulsing forever (aria-busy is released by main.js once they go).
       document.getElementById('page-heading').textContent = 'Could not load notes';
+      var sub = document.getElementById('page-sub');
+      if (sub) sub.textContent = 'Check your connection and try again.';
+      var list = document.getElementById('subject-list');
+      if (list) {
+        list.innerHTML = '<div class="empty-state">We could not load this class right now. '
+          + '<a class="btn btn-outline" href="">Retry</a></div>';
+      }
     });
 
   function render(data) {

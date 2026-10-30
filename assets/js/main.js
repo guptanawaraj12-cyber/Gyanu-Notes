@@ -33,6 +33,62 @@
 // needed for the homepage stats below, so the content module is loaded on demand
 // with a dynamic import() right where it is used.
 document.addEventListener('DOMContentLoaded', function () {
+  // Everyone who asks the OS for less motion gets instantaneous state changes
+  // instead of animated ones; the CSS side of this lives in base.css.
+  var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // Skeleton regions ship with aria-busy="true" so assistive tech waits
+  // instead of reading placeholder markup. Whichever path replaces the
+  // skeletons (data, empty state or error) would have to remember to clear
+  // the flag, so each region releases itself as soon as its skeletons go.
+  (function releaseBusyRegions() {
+    var regions = document.querySelectorAll('[aria-busy="true"]');
+    Array.prototype.forEach.call(regions, function (el) {
+      if (!el.querySelector('.skeleton')) {
+        el.removeAttribute('aria-busy');
+        return;
+      }
+      var observer = new MutationObserver(function () {
+        if (el.querySelector('.skeleton')) return;
+        el.removeAttribute('aria-busy');
+        observer.disconnect();
+      });
+      observer.observe(el, { childList: true, subtree: true });
+    });
+  })();
+
+  // Count a statistic up from zero the first time it scrolls into view. The
+  // final value is written straight away for reduced-motion visitors and
+  // when IntersectionObserver is unavailable, so the number is never wrong.
+  function animateStat(el, target) {
+    if (!el) return;
+    var final = String(target);
+    el.setAttribute('data-value', final);
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      el.textContent = final;
+      return;
+    }
+    el.textContent = '0';
+    var started = false;
+    var observe = new IntersectionObserver(function (entries) {
+      var visible = entries.some(function (entry) { return entry.isIntersecting; });
+      if (!visible || started) return;
+      started = true;
+      observe.disconnect();
+      var start = null;
+      var tick = function (now) {
+        if (start === null) start = now;
+        var progress = Math.min(1, (now - start) / 900);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = final;
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    observe.observe(el);
+  }
+
   function updateHomeStats() {
     var statNotes = document.getElementById('stat-notes');
     var statPapers = document.getElementById('stat-papers');
@@ -74,16 +130,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           }).length;
 
-          statNotes.textContent = notesCount.toString();
-          statPapers.textContent = papersCount.toString();
-          statSubjects.textContent = subjectCount.toString();
+          animateStat(statNotes, notesCount);
+          animateStat(statPapers, papersCount);
+          animateStat(statSubjects, subjectCount);
           paintStamp(notesCount);
         });
       })
       .catch(function () {
-        statNotes.textContent = '0';
-        statPapers.textContent = '0';
-        statSubjects.textContent = '0';
+        animateStat(statNotes, 0);
+        animateStat(statPapers, 0);
+        animateStat(statSubjects, 0);
         paintStamp(0);
       });
   }
@@ -206,9 +262,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // scroll reveal animations
+  // scroll reveal animations — reduced-motion visitors get the finished state
   var revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && revealEls.length) {
+  if ('IntersectionObserver' in window && !reduceMotion && revealEls.length) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -222,8 +278,9 @@ document.addEventListener('DOMContentLoaded', function () {
     revealEls.forEach(function (el) { el.classList.add('in-view'); });
   }
 
-  // 3D tilt on class/ticket cards
-  var tilters = document.querySelectorAll('.ticket');
+  // 3D tilt on class/ticket cards (pointer-only flourish; skipped when the
+  // visitor prefers reduced motion, matching the CSS hover overrides)
+  var tilters = reduceMotion ? [] : document.querySelectorAll('.ticket');
   tilters.forEach(function (card) {
     card.addEventListener('mousemove', function (e) {
       var rect = card.getBoundingClientRect();

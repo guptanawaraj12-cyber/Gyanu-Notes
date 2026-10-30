@@ -11,8 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
   getNotesData()
     .then(function (data) { render(data); })
     .catch(function () {
-      var list = document.getElementById('recent-notes-list');
-      if (list) list.innerHTML = '<p class="muted">Couldn\'t load content — check your connection.</p><p><a class="btn btn-outline" href="">Retry</a></p>';
+      // Every skeleton region gets a real message, so nothing keeps pulsing
+      // and main.js can release the aria-busy flag on each of them.
+      var message = '<div class="empty-state">Couldn\'t load content — check your connection. '
+        + '<a class="btn btn-outline" href="">Retry</a></div>';
+      ['recent-notes-list', 'class-grid', 'subject-list'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = message;
+      });
     });
 
   function render(data) {
