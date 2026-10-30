@@ -2306,6 +2306,12 @@
 
 .blog-excerpt {
   color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
 /* ---------- Was this helpful? feedback widget ---------- */
 .feedback-widget {
   margin-top: 12px;
@@ -2365,6 +2371,16 @@
 .exam-card .tag {
   align-self: flex-start;
   margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
  
 .exam-card h3 {
@@ -2377,14 +2393,59 @@
 .exam-date {
   color: var(--ink-soft);
   font-size: 0.9rem;
-  margin: 0 0 4px;
+  margin: 0 0 10px;
 }
- 
+
+.exam-date time,
+.cd-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Countdown: one big figure plus its unit. The state class (is-upcoming,
+   is-today, is-past, is-unknown) comes from countdown-utils.paintCountdown,
+   so the wording and the colour always agree. */
 .exam-countdown {
-  font-weight: 600;
-  color: var(--accent);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 3px 9px;
   margin: 0 0 8px;
-  font-size: 1rem;
+  color: var(--ink);
+}
+
+.cd-figure {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.cd-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.cd-unit {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.exam-countdown.is-today .cd-value {
+  color: var(--danger);
+}
+
+.exam-countdown.is-past .cd-value,
+.exam-countdown.is-unknown .cd-value {
+  color: var(--ink-faint);
+}
+
+.exam-note {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
 }
  
 .exam-subjects {
@@ -2462,12 +2523,6 @@
 .tag-reported {
   background: #b45309;
   color: #ffffff;
-}
- 
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0;
-  overflow-wrap: break-word;
 }
 
 .blog-meta {

@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       const [store, utils] = await Promise.all([
         import("/assets/js/content-store.js?v=6"),
-        import("/assets/js/countdown-utils.js?v=1")
+        import("/assets/js/countdown-utils.js?v=3")
       ]);
       var exams = await store.getExamsData();
       if (!Array.isArray(exams)) exams = [];
@@ -126,19 +126,40 @@ document.addEventListener('DOMContentLoaded', function () {
         var upcoming = forBoard
           .filter(function (e) { var d = utils.daysRemaining(e.date); return !isNaN(d) && d >= 0; })
           .sort(function (a, b) { return utils.daysRemaining(a.date) - utils.daysRemaining(b.date); });
-        var exam = upcoming[0] || forBoard[0];
-        var name = (exam && exam.examName) || utils.BOARD_LABELS[board];
-        var countdown = upcoming.length
-          ? utils.countdownText(exam.date)
-          : (exam ? "Routine not published yet" : "No exams listed");
-        return '<div class="exam-card"><div class="exam-card-body">'
-          + '<span class="tag">' + escapeHtml(name) + '</span>'
-          + '<p class="exam-countdown">' + escapeHtml(countdown) + '</p>'
-          + '</div></div>';
+        var exam = upcoming[0] || forBoard[0] || null;
+        var iso = exam && exam.date ? exam.date : "";
+        var dateText = utils.formatDate(iso);
+        var bsLabel = exam && exam.dateBs ? " \u00b7 " + escapeHtml(exam.dateBs) + " BS" : "";
+        var note = !exam
+          ? "Exam dates are not published yet."
+          : (upcoming.length ? "" : "Routine not published yet \u2014 dates are provisional.");
+        return '<article class="exam-card">'
+          + '<div class="exam-card-body">'
+          + '<span class="tag">' + escapeHtml(utils.BOARD_LABELS[board]) + '</span>'
+          + '<h3>' + escapeHtml((exam && exam.examName) || "Routine not announced") + '</h3>'
+          + '<p class="exam-date">' + (dateText
+            ? '<time datetime="' + escapeHtml(iso) + '">' + dateText + '</time>' + bsLabel
+            : "Date not set") + '</p>'
+          + utils.countdownMarkup(iso)
+          + (note ? '<p class="exam-note">' + note + '</p>' : "")
+          + '</div></article>';
       }).join("");
+      // Keep the figures honest on a page left open past midnight.
+      utils.mountCountdownTicker();
+      container.removeAttribute("aria-busy");
+      var status = document.getElementById("exam-countdown-status");
+      if (status) {
+        status.textContent = exams.length
+          ? "Exam countdown loaded: " + exams.length + " exams listed."
+          : "No exam dates are published yet.";
+      }
     } catch (error) {
       console.warn("Exam preview unavailable:", error);
-      container.innerHTML = "";
+      container.removeAttribute("aria-busy");
+      container.innerHTML = '<p class="muted">Exam dates are unavailable right now. '
+        + '<a href="/exams/">Open the exam page</a> to try again.</p>';
+      var failed = document.getElementById("exam-countdown-status");
+      if (failed) failed.textContent = "Exam countdown could not be loaded.";
     }
   })();
 

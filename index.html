@@ -28,8 +28,8 @@
 <link rel="stylesheet" href="/assets/css/tokens.css?v=8">
 <link rel="stylesheet" href="/assets/css/base.css?v=3">
 <link rel="stylesheet" href="/assets/css/layout.css?v=8">
-<link rel="stylesheet" href="/assets/css/components.css?v=15">
-<link rel="stylesheet" href="/assets/css/utilities.css?v=3">
+<link rel="stylesheet" href="/assets/css/components.css?v=17">
+<link rel="stylesheet" href="/assets/css/utilities.css?v=4">
 </head>
 <body>
 
@@ -185,11 +185,12 @@
       <span class="eyebrow">Upcoming exams</span>
       <h2>Exam countdown</h2>
       <p class="lead">How long until the next board exams — BLE, SEE, and NEB +2.</p>
-      <div class="exam-grid" id="exam-countdown-cards">
-        <div class="exam-card"><div class="exam-card-body"><span class="tag">Loading…</span></div></div>
-        <div class="exam-card"><div class="exam-card-body"><span class="tag">Loading…</span></div></div>
-        <div class="exam-card"><div class="exam-card-body"><span class="tag">Loading…</span></div></div>
+      <div class="exam-grid" id="exam-countdown-cards" aria-busy="true" aria-live="off">
+        <div class="skeleton sk-card" aria-hidden="true"></div>
+        <div class="skeleton sk-card" aria-hidden="true"></div>
+        <div class="skeleton sk-card" aria-hidden="true"></div>
       </div>
+      <p class="visually-hidden" id="exam-countdown-status" role="status"></p>
       <p><a class="btn btn-outline" href="/exams/">Full exam schedule &rarr;</a></p>
     </div>
   </section>
@@ -316,6 +317,6 @@
 <script type="module" src="/assets/js/auth-state.js?v=4"></script>
 <script type="module" src="/assets/js/notices.js?v=8"></script>
 <script type="module" src="/assets/js/blog.js?v=8"></script>
-<script src="/assets/js/main.js?v=9"></script>
+<script src="/assets/js/main.js?v=12"></script>
 </body>
 </html>

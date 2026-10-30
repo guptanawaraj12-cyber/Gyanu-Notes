@@ -6,7 +6,9 @@
 // if you want the `date` field itself to be BS.)
 
 import { getExamsData } from "/assets/js/content-store.js?v=6";
-import { daysRemaining, countdownText, formatDate, BOARD_LABELS } from "/assets/js/countdown-utils.js?v=1";
+import {
+  daysRemaining, countdownMarkup, mountCountdownTicker, formatDate, BOARD_LABELS
+} from "/assets/js/countdown-utils.js?v=3";
 
 function escapeHtml(text) {
   return String(text == null ? "" : text)
@@ -14,25 +16,30 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
-// daysRemaining / countdownText / formatDate come from the shared
-// countdown-utils module (also used by the homepage exam preview).
+// daysRemaining / countdownInner / formatDate come from the shared
+// countdown-utils module (also used by the homepage exam preview), so both
+// surfaces render identical markup and refresh on the same ticker.
 
 function renderExamCard(exam) {
   var dateStr = formatDate(exam.date);
   var bsLabel = exam.dateBs ? " <small>(" + escapeHtml(exam.dateBs) + " BS)</small>" : "";
+  var iso = exam.date || "";
 
   return (
-    '<div class="exam-card" data-date="' + escapeHtml(exam.date || "") + '">'
+    '<article class="exam-card" data-date="' + escapeHtml(iso) + '">'
     + '<div class="exam-card-body">'
     + '<span class="tag">' + escapeHtml(exam.class || BOARD_LABELS[exam.board] || "Exam") + '</span>'
     + '<h3>' + escapeHtml(exam.examName || "Exam") + '</h3>'
-    + '<p class="exam-date">' + dateStr + bsLabel + '</p>'
-    + '<p class="exam-countdown">' + countdownText(exam.date) + '</p>'
+    + '<p class="exam-date">' + (dateStr
+      ? '<time datetime="' + escapeHtml(iso) + '">' + dateStr + '</time>'
+      : 'Date not set')
+    + bsLabel + '</p>'
+    + countdownMarkup(iso)
     + '</div>'
     + (Array.isArray(exam.subjects) && exam.subjects.length
       ? '<div class="exam-subjects"><strong>Subjects:</strong> ' + exam.subjects.map(escapeHtml).join(", ") + '</div>'
       : '')
-    + '</div>'
+    + '</article>'
   );
 }
 
@@ -49,8 +56,16 @@ function renderExams(exams) {
     else upcoming.push(exam);
   }
 
-  // Soonest first; past exams most-recent first.
-  upcoming.sort(function (a, b) { return sortKey(a) - sortKey(b); });
+  // Soonest first; exams without a date sink to the bottom rather than
+  // jumping to the top through NaN comparisons. Past exams most-recent first.
+  upcoming.sort(function (a, b) {
+    var da = sortKey(a);
+    var db = sortKey(b);
+    if (isNaN(da) && isNaN(db)) return 0;
+    if (isNaN(da)) return 1;
+    if (isNaN(db)) return -1;
+    return da - db;
+  });
   past.sort(function (a, b) { return sortKey(b) - sortKey(a); });
 
   var upcomingGrid = document.getElementById("upcoming-exams");
@@ -80,14 +95,10 @@ function renderExams(exams) {
 // Ticker: refresh ONLY the countdown text every 60s — cheap, no refetch,
 // and it never disturbs the past-exams toggle state. Day rollovers are
 // picked up because the text is recomputed from each card's data-date.
+var stopTicker = null;
 function startCountdownTicker() {
-  setInterval(function () {
-    var nodes = document.querySelectorAll(".exam-card[data-date] .exam-countdown");
-    for (var i = 0; i < nodes.length; i++) {
-      var card = nodes[i].closest(".exam-card");
-      nodes[i].textContent = countdownText(card.getAttribute("data-date"));
-    }
-  }, 60000);
+  if (stopTicker) stopTicker();
+  stopTicker = mountCountdownTicker();
 }
 
 async function loadAndRender() {
