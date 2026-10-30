@@ -271,6 +271,18 @@ document.addEventListener('DOMContentLoaded', function () {
     bookmarkBtn.setAttribute('aria-pressed', bookmarkActive ? 'true' : 'false');
   }
 
+  // One pop per save. Re-adding the class after a reflow restarts the CSS
+  // animation, and the class is cleared so the star is never left mid-scale.
+  function popBookmarkStar() {
+    if (!bookmarkBtn) return;
+    bookmarkBtn.classList.remove('is-popping');
+    void bookmarkBtn.offsetWidth;
+    bookmarkBtn.classList.add('is-popping');
+    setTimeout(function () {
+      bookmarkBtn.classList.remove('is-popping');
+    }, 400);
+  }
+
   function updateBookmarkState() {
     if (!bookmarkBtn || !currentChapter) return;
     if (!currentUser) {
@@ -550,6 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
       toggleBookmark(currentUser.uid, noteId, bookmarkEntry()).then(function (nowSaved) {
         bookmarkActive = nowSaved;
         paintBookmarkButton();
+        if (nowSaved) popBookmarkStar();
         bookmarkBtn.disabled = false;
       }).catch(function () {
         bookmarkBtn.disabled = false;

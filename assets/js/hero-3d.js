@@ -7,6 +7,10 @@
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Phones keep the light SVG illustration: a WebGL scene there costs more
+  // than the decoration is worth.
+  if (window.matchMedia('(max-width: 760px)').matches) return;
+
   var width = container.clientWidth;
   var height = container.clientHeight;
 
@@ -30,11 +34,12 @@
   var keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
   keyLight.position.set(4, 6, 6);
   scene.add(keyLight);
-  var rimLight = new THREE.DirectionalLight(0x7b8fff, 0.6);
+  var rimLight = new THREE.DirectionalLight(0x7fd8e4, 0.6);
   rimLight.position.set(-5, -3, -4);
   scene.add(rimLight);
 
-  var accentColor = 0x3654f4;
+  // Brand teal, matching --accent in tokens.css.
+  var accentColor = 0x0e7490;
   var cardGroup = new THREE.Group();
   scene.add(cardGroup);
 
@@ -48,8 +53,8 @@
       color: isAccent ? accentColor : 0xffffff,
       roughness: 0.35,
       metalness: 0.05,
-      emissive: isAccent ? 0x14204d : 0x000000,
-      emissiveIntensity: isAccent ? 0.15 : 0
+      emissive: isAccent ? 0x063f4d : 0x000000,
+      emissiveIntensity: isAccent ? 0.2 : 0
     });
     var edges = new THREE.EdgesGeometry(geometry);
     var lineMat = new THREE.LineBasicMaterial({ color: isAccent ? 0xffffff : 0xd6d8e4, transparent: true, opacity: 0.6 });
@@ -93,24 +98,74 @@
   });
 
   var clock = new THREE.Clock();
+  // Time only advances while the scene is actually running, so a paused loop
+  // resumes from where it stopped instead of jumping forward.
+  var elapsed = 0;
+  var running = false;
+  var rafId = null;
 
-  function animate() {
-    requestAnimationFrame(animate);
-    var t = clock.getElapsedTime();
-
-    if (!prefersReducedMotion) {
-      cardGroup.rotation.y = cardGroup.rotation.y * 0.96 + (targetRotY + t * 0.08) * 0.04;
-      cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.04;
-
-      cards.forEach(function (mesh) {
-        mesh.position.y = mesh.userData.baseY + Math.sin(t * mesh.userData.floatSpeed + mesh.userData.floatOffset) * 0.25;
-        mesh.rotation.z += 0.0015;
-      });
-    }
-
+  function renderOnce() {
     renderer.render(scene, camera);
   }
-  animate();
+
+  function step() {
+    rafId = null;
+    if (!running) return;
+
+    // Clamp the delta so a long stall (tab throttling, slow paint) cannot
+    // teleport the cards.
+    elapsed += Math.min(clock.getDelta(), 0.1);
+    var t = elapsed;
+
+    cardGroup.rotation.y = cardGroup.rotation.y * 0.96 + (targetRotY + t * 0.08) * 0.04;
+    cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.04;
+
+    cards.forEach(function (mesh) {
+      mesh.position.y = mesh.userData.baseY + Math.sin(t * mesh.userData.floatSpeed + mesh.userData.floatOffset) * 0.25;
+      mesh.rotation.z += 0.0015;
+    });
+
+    renderOnce();
+    rafId = requestAnimationFrame(step);
+  }
+
+  function start() {
+    // Reduced motion: paint one static frame and never spin an animation loop.
+    if (prefersReducedMotion) {
+      renderOnce();
+      return;
+    }
+    if (running) return;
+    running = true;
+    clock.getDelta(); // drop the idle gap before resuming
+    rafId = requestAnimationFrame(step);
+  }
+
+  function stop() {
+    running = false;
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  }
+
+  // Stop rendering when the tab is in the background or the hero has been
+  // scrolled away — a decorative scene should not burn a phone's battery.
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop();
+    else if (isVisible) start();
+  });
+
+  var isVisible = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      isVisible = entries[0].isIntersecting;
+      if (!isVisible || document.hidden) stop();
+      else start();
+    }, { threshold: 0 }).observe(container);
+  }
+
+  start();
 
   window.addEventListener('resize', function () {
     var w = container.clientWidth;
@@ -118,5 +173,8 @@
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
+    // While paused (reduced motion, off-screen) the canvas still has to match
+    // its new size.
+    if (!running) renderOnce();
   });
 })();

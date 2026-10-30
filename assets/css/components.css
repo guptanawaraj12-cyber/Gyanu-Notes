@@ -1206,6 +1206,26 @@
   line-height: 1;
 }
 
+/* Saving a chapter gets one small, deliberate beat: the star pops, it does
+   not bounce around. Class is added on the real save and removed when the
+   animation ends, so repeated saves replay it. */
+@keyframes bm-star-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.28) rotate(-6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+#bookmark-btn.is-popping .bm-star {
+  animation: bm-star-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #bookmark-btn.is-popping .bm-star {
+    animation: none;
+  }
+}
+
 /* ============================================================
    SETTINGS (profile)
    ============================================================ */
