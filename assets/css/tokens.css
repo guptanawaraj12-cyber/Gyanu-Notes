@@ -46,7 +46,9 @@
   --prose-width:  720px;
   --gutter:       24px;
   --header-h:     68px;
-  --section-y:    96px;
+  --section-y:    72px;
+  /* Note viewer reading column — breadcrumb, title, tags and body share it */
+  --viewer-width: 760px;
   /* Translucent sticky bars (site header, filter bar) — flips with the theme
      so chrome text keeps WCAG AA contrast in dark mode. */
   --bar-bg:       rgba(255, 255, 255, 0.88);
@@ -62,6 +64,19 @@
 
   /* ---- Text/icon color on accent backgrounds (buttons, tags) ---- */
   --accent-contrast: #ffffff;
+  --band-from: #155e75;
+  --band-to: #0e7490;
+  --band-ink: #ffffff;
+  --band-muted: #e8f4f7;
+  --warn-bg: #fff7e8;
+  --warn-border: #f0d9a8;
+  --warn-icon-bg: #ffe9bd;
+  --warn-icon-ink: #9a6a00;
+  --warn-ink: #7a4d00;
+  --danger-border: #e7c6c2;
+  --hero-from: #fefefe;
+  --hero-to: #ffffff;
+  --hero-dot: rgba(27, 31, 36, 0.07);
   color-scheme: light;
 }
 
@@ -86,6 +101,19 @@ html[data-theme="dark"] {
   --accent-light:  #122b33;
   --accent-glow:   rgba(55, 182, 211, 0.18);
   --accent-contrast: #062730;
+  --band-from: #12333c;
+  --band-to: #0e1418;
+  --band-ink: #f0f3f7;
+  --band-muted: #8fa3b8;
+  --warn-bg: #291f0a;
+  --warn-border: #4a3a12;
+  --warn-icon-bg: #3a2e10;
+  --warn-icon-ink: #f0c05a;
+  --warn-ink: #f0c05a;
+  --danger-border: #5c2a26;
+  --hero-from: #141a21;
+  --hero-to: #101418;
+  --hero-dot: rgba(255, 255, 255, 0.045);
 
   --border:        #262d36;
   --border-strong: #3a434e;

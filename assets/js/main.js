@@ -90,6 +90,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   updateHomeStats();
 
+  // Decorate the static homepage subject links with the same decorative
+  // currentColor glyphs used by the data-driven notes catalogue.
+  import('/assets/js/subject-icons.js?v=1').then(function (icons) {
+    document.querySelectorAll('.subject-row[href*="/search/?q="]').forEach(function (row) {
+      var main = row.querySelector('.subject-main');
+      if (!main || main.querySelector('.subject-icon')) return;
+      var href = row.getAttribute('href') || '';
+      var slug = new URL(href, window.location.origin).searchParams.get('q');
+      var icon = icons.subjectIconSvg(slug);
+      if (icon) main.insertAdjacentHTML('afterbegin', icon);
+    });
+  }).catch(function () {});
+
   // Homepage exam countdown preview: soonest upcoming exam per board
   // (BLE / SEE / +2) from the admin-editable examSchedule collection via
   // getExamsData(), using the shared countdown helpers.

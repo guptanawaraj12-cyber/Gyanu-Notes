@@ -1,5 +1,6 @@
 // Gyanu Notes — renders the /notes/ landing page from editable site content
 import { getNotesData, chapterUsable } from "/assets/js/content-store.js?v=6";
+import { subjectIconSvg } from "/assets/js/subject-icons.js?v=1";
 
 document.addEventListener('DOMContentLoaded', function () {
   var mineOnly = new URLSearchParams(window.location.search).get('filter') === 'mine';
@@ -72,7 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
         a.href = '/search/?q=' + encodeURIComponent(s.slug);
         a.className = 'subject-row';
         var n = usableBySubject[s.slug];
-        a.innerHTML = '<span>' + s.label + '<span class="subject-meta">\u00b7 ' + n + ' chapter' + (n === 1 ? '' : 's') + '</span></span><span class="arrow">&rarr;</span>';
+        a.innerHTML = '<span class="subject-main">' + subjectIconSvg(s.slug) + s.label +
+          '<span class="subject-meta">\u00b7 ' + n + ' chapter' + (n === 1 ? '' : 's') + '</span></span>' +
+          '<span class="arrow">&rarr;</span>';
         subjectList.appendChild(a);
       });
     }

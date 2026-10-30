@@ -29,7 +29,7 @@
 
 .btn-primary:hover {
   background: var(--accent-dark);
-  color: #fff;
+  color: var(--accent-contrast);
   transform: translateY(-2px);
   box-shadow: 0 10px 26px var(--accent-glow);
 }
@@ -49,7 +49,7 @@
 .btn-danger {
   background: var(--card);
   color: var(--danger);
-  border-color: #e7c6c2;
+  border-color: var(--danger-border);
 }
 
 .btn-danger:hover {
@@ -299,7 +299,7 @@
 /* ---------- Class ticket (notes) ---------- */
 .ticket-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
   perspective: 800px;
 }
@@ -890,7 +890,7 @@
   background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
   border-radius: var(--radius-lg);
   padding: 30px 34px;
-  color: #fff;
+  color: var(--accent-contrast);
   margin-top: 30px;
   display: flex;
   align-items: center;
@@ -913,7 +913,7 @@
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--accent-contrast);
 }
 
 .continue-card .btn {
@@ -1014,11 +1014,11 @@
   gap: 16px;
   flex-wrap: wrap;
   margin-top: 22px;
-  background: #fff7e8;
-  border: 1px solid #f0d9a8;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
   border-radius: var(--radius);
   padding: 16px 20px;
-  color: #7a4d00;
+  color: var(--warn-ink);
   font-size: 0.92rem;
 }
 
@@ -1032,8 +1032,8 @@
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: #ffe9bd;
-  color: #9a6a00;
+  background: var(--warn-icon-bg);
+  color: var(--warn-icon-ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1042,7 +1042,7 @@
 }
 
 .verify-banner strong {
-  color: #7a4d00;
+  color: var(--warn-ink);
 }
 
 .verify-banner .btn {
@@ -1246,7 +1246,7 @@
   display: none;
   margin-top: 16px;
   background: var(--danger-bg);
-  border: 1px solid #eacaca;
+  border: 1px solid var(--danger-border);
   border-radius: var(--radius);
   padding: 18px 20px;
 }
@@ -1807,7 +1807,7 @@
 }
 
 .key-takeaway {
-  background: linear-gradient(135deg, var(--accent-light), #fff);
+  background: linear-gradient(135deg, var(--accent-light), var(--bg));
   border-radius: var(--radius);
   padding: 20px 24px;
   margin: 20px 0;
@@ -1851,6 +1851,14 @@
 /* ============================================================
    RESPONSIVE COMPONENTS
    ============================================================ */
+@media (max-width: 1023px) {
+  /* Six tracks let five class tiles become a centered 3+2 on tablets. */
+  .ticket-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .ticket-grid > .ticket { grid-column: span 2; }
+  .ticket-grid > .ticket:nth-last-child(2):nth-child(4) { grid-column: 2 / span 2; }
+  .ticket-grid > .ticket:last-child { grid-column: 4 / span 2; }
+}
+
 @media (max-width: 900px) {
   .class-cards {
     grid-template-columns: repeat(3, 1fr);
@@ -1892,6 +1900,10 @@
 }
 
 @media (max-width: 560px) {
+  .ticket-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ticket-grid > .ticket,
+  .ticket-grid > .ticket:nth-last-child(2):nth-child(4),
+  .ticket-grid > .ticket:last-child { grid-column: auto; }
   .class-cards {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1981,7 +1993,7 @@
   to   { opacity: 1; transform: none; }
 }
 .chapter-intro {
-  background: linear-gradient(135deg, var(--accent-light), #fff);
+  background: linear-gradient(135deg, var(--accent-light), var(--bg));
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 22px;
@@ -2095,7 +2107,7 @@
   flex: none;
   padding: 6px 12px;
   font-size: 0.8rem;
-  color: #b3261e;
+  color: var(--danger);
 }
 
 .muted {
@@ -2682,4 +2694,112 @@
 .blog-more-wrap {
   text-align: center;
   margin-top: 28px;
+}
+
+/* ---------- Mobile responsiveness hardening ---------- */
+
+/* Exam cards: 3-up on desktop, fluid down to 1-up on phones (no fixed
+   breakpoints needed thanks to auto-fit). */
+.exam-grid {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.feedback-btns { flex-wrap: wrap; }
+
+/* Chapter tables (class="chapter-table" in the content fragments): styled,
+   and horizontally scrollable on narrow screens instead of stretching the
+   page. Also catches any plain <table> inside chapter HTML. */
+.chapter-table,
+.chapter-content table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-size: 0.92rem;
+  border: 1px solid var(--border);
+}
+
+.chapter-table th,
+.chapter-table td,
+.chapter-content table th,
+.chapter-content table td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.chapter-table th,
+.chapter-content table th {
+  background: var(--accent-light);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.chapter-table tbody tr:nth-child(even),
+.chapter-content table tbody tr:nth-child(even) {
+  background: var(--bg-soft);
+}
+
+.chapter-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.chapter-content pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.chapter-content { overflow-wrap: break-word; }
+
+/* Subject labels keep their decorative icon and chapter count aligned. */
+.subject-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.subject-icon {
+  display: block;
+  flex: 0 0 20px;
+  color: var(--accent);
+}
+
+/* The viewer heading, breadcrumb, tags, controls and inline note share one reading edge. */
+.viewer-reading-column {
+  width: min(100%, var(--viewer-width));
+  margin-inline: auto;
+}
+
+.viewer-reading-column > #viewer-holder > .chapter-content {
+  max-width: none;
+}
+
+.viewer-actions,
+.login-gate {
+  width: min(100%, var(--viewer-width));
+  margin-inline: auto;
+}
+
+.viewer-actions { margin-top: 22px; }
+.login-gate { margin-top: 22px; }
+
+/* iOS Safari auto-zooms any focused input below 16px — keep them at 1rem. */
+.field input,
+.field select,
+.field textarea,
+.search-bar input,
+.search-box input,
+#comment-form textarea {
+  font-size: 1rem;
 }

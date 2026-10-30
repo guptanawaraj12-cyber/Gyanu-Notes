@@ -1,5 +1,6 @@
 // Gyanu Notes — renders the subject list for a given class, e.g. /notes/class-10/
 import { getNotesData, chapterUsable } from "/assets/js/content-store.js?v=6";
+import { subjectIconSvg } from "/assets/js/subject-icons.js?v=1";
 
 document.addEventListener('DOMContentLoaded', function () {
   var parts = window.location.pathname.split('/').filter(Boolean); // ["notes","class-10"]
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var a = document.createElement('a');
       a.className = 'subject-row';
       a.href = '/notes/' + classSlug + '/' + slug + '/';
-      a.innerHTML = '<span>' + (subj ? subj.label : slug) +
+      a.innerHTML = '<span class="subject-main">' + subjectIconSvg(slug) + (subj ? subj.label : slug) +
         '<span class="subject-meta">\u00b7 ' + count + ' chapter' + (count === 1 ? '' : 's') + '</span></span>' +
         '<span class="arrow">&rarr;</span>';
       list.appendChild(a);
