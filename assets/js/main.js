@@ -262,6 +262,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Live suggestions on the homepage field. Loaded on demand so the combobox
+  // code and content catalogue never delay the hero; the form still submits
+  // when the module is unavailable.
+  var siteSearchInput = document.getElementById('site-search');
+  if (siteSearchInput) {
+    import('/assets/js/search-suggest.js?v=2').then(function (mod) {
+      mod.attachSearchSuggestions(siteSearchInput);
+    }).catch(function () { /* keep the plain search form */ });
+  }
+
   // scroll reveal animations — reduced-motion visitors get the finished state
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reduceMotion && revealEls.length) {

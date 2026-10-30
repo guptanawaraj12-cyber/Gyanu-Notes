@@ -328,14 +328,81 @@ section {
   .nav-links.open {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+    max-height: calc(100vh - var(--header-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background: var(--card);
-    padding: 16px 24px;
+    padding: 6px 16px 10px;
     border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Stacked menu rows read as a list: full-width targets with dividers,
+     not floating centred words. */
+  .nav-links.open li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-links.open li:last-child {
+    border-bottom: 0;
+  }
+
+  .nav-links.open a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 8px;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .nav-links.open a.active::after {
+    display: none;
+  }
+
+  .nav-links.open a.active {
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
+}
+
+/* Very narrow phones: the brand, Login, theme and menu buttons have to share
+   one 360px row without spilling into a horizontal scrollbar. */
+@media (max-width: 400px) {
+  .navbar {
+    gap: 10px;
+    padding: 0 16px;
+  }
+
+  .brand {
+    font-size: 1rem;
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .theme-toggle,
+  .nav-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-actions .btn {
+    padding: 8px 12px;
+    font-size: 0.86rem;
   }
 }
 

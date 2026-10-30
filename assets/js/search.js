@@ -1,6 +1,8 @@
 import { getSiteContent } from "/assets/js/content-store.js?v=6";
+import { attachSearchSuggestions } from "/assets/js/search-suggest.js?v=2";
 
 const input = document.getElementById("search-input");
+if (input) attachSearchSuggestions(input);
 const results = document.getElementById("search-results");
 const summary = document.getElementById("search-summary");
 const query = new URLSearchParams(location.search).get("q") || "";

@@ -67,6 +67,7 @@
 
 /* ---------- Search bar (form) ---------- */
 .search-bar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -121,6 +122,69 @@
 
 .search-bar button:hover {
   background: var(--accent-dark);
+}
+
+/* ---------- Live search suggestions (combobox listbox) ---------- */
+.search-suggest {
+  position: absolute;
+  top: calc(100% + 8px);
+  /* Match the field's outer edge (it has a 1.5px border) so nothing behind
+     the panel peeks out along its left and right sides. */
+  left: -1.5px;
+  right: -1.5px;
+  z-index: 70;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.search-suggest[hidden] {
+  display: none;
+}
+
+/* The homepage hero clips overflow for its decorative art; the open dropdown
+   must be able to extend past the section edge. */
+.hero.is-suggesting {
+  overflow: visible;
+}
+
+.search-suggest-option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 44px;
+  justify-content: center;
+}
+
+.search-suggest-option:hover,
+.search-suggest-option.is-active {
+  background: var(--accent-light);
+}
+
+.search-suggest-label {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.94rem;
+  line-height: 1.3;
+}
+
+.search-suggest-meta {
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  text-transform: capitalize;
+}
+
+@media (max-width: 560px) {
+  /* The dropdown follows the field, which is full-width on phones. */
+  .search-suggest { max-height: 52vh; }
 }
 
 /* ---------- Search box (navbar variant) ---------- */
