@@ -7,3 +7,15 @@ service-account*.json
 .env
 .env.*
 .vscode/
+
+# CI workflows must be tracked
+!.github/
+
+# ECC harness (local only - not for repo)
+ECC/
+
+# Inline content generated at runtime (not needed in repo if regenerating from scripts)
+# assets/data/inline-content.json
+
+# Package lock (will be installed on clone)
+package-lock.json
