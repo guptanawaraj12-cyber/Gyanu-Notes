@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var chapters = ((entry && entry.chapters) || []).filter(chapterUsable);
 
     if (chapters.length === 0) {
-      list.innerHTML = '<div class="empty-state">' + classLabel + ' ' + subjectLabel + ' notes are coming soon &mdash; we are preparing them now.</div>';
+      list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg><h3>' + classLabel + ' ' + subjectLabel + ' notes coming soon</h3><p>We are preparing these chapters for you. Check back soon.</p><a class="btn btn-outline" href="/notes/">Browse available notes</a></div>';
       return;
     }
 

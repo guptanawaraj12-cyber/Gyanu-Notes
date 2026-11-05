@@ -1,6 +1,6 @@
 // Gyanu Notes — chapter viewer: loads note data, shows preview, gates download behind login
 
-import { getNotesData } from "/assets/js/content-store.js?v=6";
+import { getNotesData, getInlineContent } from "/assets/js/content-store.js?v=6";
 import { initReadingAids } from "/assets/js/reading-aids.js?v=3";
 
 // Chapter HTML comes from Firestore (chapterContent/{id}) or the bundled
@@ -177,7 +177,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Inline note content: the admin-editable version lives in Firestore
-  // (chapterContent/{id}); the bundled /assets/content file is the fallback.
+  // (chapterContent/{id}); inline-content.json is the bundled fallback that
+  // covers all chapters; /assets/content/{id}.html is the legacy fallback.
   // When present either way it is rendered instead of the Drive preview.
   async function loadInlineContent() {
     try {
@@ -187,7 +188,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var published = snapshot.data().html;
         if (typeof published === "string" && published.trim()) return published;
       }
-    } catch (error) { /* fall through to the bundled file */ }
+    } catch (error) { /* fall through to bundled content */ }
+    try {
+      var inline = await getInlineContent(noteId);
+      if (inline && inline.html) return inline.html;
+    } catch (error) { /* fall through to bundled file */ }
     try {
       var res = await fetch('/assets/content/' + encodeURIComponent(noteId) + '.html');
       return res.ok ? await res.text() : null;
@@ -245,10 +250,8 @@ document.addEventListener('DOMContentLoaded', function () {
         holder.innerHTML = '<div class="empty-state" style="padding: 40px 0; color: var(--ink-faint);">No preview or file is attached to this chapter yet.</div>';
       }
       updateDownloadState();
+      updateBookmarkState();
     });
-
-    updateDownloadState();
-    updateBookmarkState();
     maybeLogView();
     maybeInitFeedbackWidget();
   }
@@ -520,6 +523,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('dl-handwritten').addEventListener('click', function () {
+    if (!currentChapter || !currentChapter.handwrittenDriveId) return;
     if (this.disabled || !currentUser || !currentUser.emailVerified) return;
     var item = this;
     item.disabled = true;

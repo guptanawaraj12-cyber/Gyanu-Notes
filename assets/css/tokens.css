@@ -21,11 +21,36 @@
   --border:        #e6e8eb;
   --border-strong: #cfd4da;
 
+  /* ---- Form tokens ---- */
+  --input-bg:      var(--card);
+  --input-border:  var(--border-strong);
+  --input-focus:   var(--accent);
+  --label-color:   var(--ink-soft);
+  --helper-color:  var(--ink-faint);
+
   /* ---- Color: feedback ---- */
   --success:       #1a7f4b;
   --success-bg:    #e9faf1;
   --danger:        #b42318;
   --danger-bg:     #fdf0ef;
+
+  /* ---- Brand: Nepal crimson (breaks the generic blue template feel) ---- */
+  --brand:         #dc143c;
+  --brand-dark:    #b9102a;
+  --brand-bg:      #fdf0f2;
+  --brand-glow:    rgba(220, 20, 60, 0.14);
+
+  /* ---- Badge tokens ---- */
+  --badge-bg:      var(--bg-soft);
+  --badge-border:  var(--border);
+  --badge-ink:     var(--ink-soft);
+  --badge-brand-bg: var(--brand-bg);
+  --badge-brand-ink: var(--brand-dark);
+
+  /* ---- Toast / notification surface ---- */
+  --toast-bg:      var(--ink-strong);
+  --toast-ink:     #ffffff;
+  --toast-border:  rgba(255,255,255,0.1);
 
   /* ---- Surface fill for white cards on tinted bands ---- */
   --card:          #ffffff;
@@ -61,13 +86,18 @@
   /* ---- Motion ---- */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --stagger-step: 0.06s;
+
+  /* ---- Page transition ---- */
+  --page-fade-duration: 0.35s;
+
+  /* ---- Toast tokens ---- */
+  --toast-transition: 0.3s var(--ease-spring);
 
   /* ---- Text/icon color on accent backgrounds (buttons, tags) ---- */
   --accent-contrast: #ffffff;
-  --band-from: #155e75;
-  --band-to: #0e7490;
-  --band-ink: #ffffff;
-  --band-muted: #e8f4f7;
   --warn-bg: #fff7e8;
   --warn-border: #f0d9a8;
   --warn-icon-bg: #ffe9bd;
@@ -123,6 +153,10 @@ html[data-theme="dark"] {
   --danger:        #f87171;
   --danger-bg:     #2f1512;
 
+  --brand:         #ff6b81;
+  --brand-dark:    #ff8fa3;
+  --brand-bg:      #2c1418;
+  --brand-glow:    rgba(255, 107, 129, 0.18);
   --card:          #1a2027;
   --bar-bg:        rgba(16, 20, 24, 0.92);
 

@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // class cards
     if (classesWithContent.length === 0) {
-      classGrid.innerHTML = '<div class="empty-state">New notes are on the way &mdash; coming soon.</div>';
+      classGrid.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg><h3>New notes are on the way</h3><p>We are preparing notes for all classes. Check back soon.</p><a class="btn btn-outline" href="/exams/">View exam dates</a></div>';
     } else {
       classesWithContent.forEach(function (c) {
         var num = c.label.replace(/\D/g, '');

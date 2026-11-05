@@ -117,12 +117,12 @@
     elapsed += Math.min(clock.getDelta(), 0.1);
     var t = elapsed;
 
-    cardGroup.rotation.y = cardGroup.rotation.y * 0.96 + (targetRotY + t * 0.08) * 0.04;
-    cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.04;
+    cardGroup.rotation.y = cardGroup.rotation.y * 0.96 + (targetRotY + t * 0.04) * 0.03;
+    cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.03;
 
     cards.forEach(function (mesh) {
-      mesh.position.y = mesh.userData.baseY + Math.sin(t * mesh.userData.floatSpeed + mesh.userData.floatOffset) * 0.25;
-      mesh.rotation.z += 0.0015;
+      mesh.position.y = mesh.userData.baseY + Math.sin(t * mesh.userData.floatSpeed + mesh.userData.floatOffset) * 0.18;
+      mesh.rotation.z += 0.001;
     });
 
     renderOnce();

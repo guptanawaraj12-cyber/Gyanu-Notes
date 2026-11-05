@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (classesWithPapers.length === 0) {
-      cardsHolder.innerHTML = '<div class="empty-state">Past papers are coming soon &mdash; we are uploading them now.</div>';
+      cardsHolder.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06a1 1 0 0 0 1.41 1.41l3.34-3.34a1 1 0 0 0 1.41-1.41l1.06 1.06a1 1 0 0 0 1.41 1.41l3.34-3.34a5.5 5.5 0 0 0-7.78-7.78l-1.06-1.06a5.5 5.5 0 0 0-7.78 0l-1.06 1.06a1 1 0 0 0-1.41-1.41l3.34-3.34a1 1 0 0 0-1.41-1.41l-1.06 1.06a5.5 5.5 0 0 0 0 7.78l1.06 1.06a1 1 0 0 0 1.41 1.41l3.34-3.34a1 1 0 0 0 1.41-1.41z"></path><path d="M9 10a1 1 0 0 0 1-1v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1z"></path><path d="M15 10a1 1 0 0 0 1-1v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1z"></path></svg><h3>Past papers are coming soon</h3><p>We are uploading SEE and NEB past papers now. Check back next week.</p><a class="btn btn-outline" href="/notes/">Browse notes instead</a></div>';
       return;
     }
 

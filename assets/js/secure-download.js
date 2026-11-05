@@ -13,7 +13,7 @@
 // download below points straight at Drive's public download endpoint.
 
 
-var DRIVE_ID_PATTERN = /^[-\w]{10,80}$/;
+var DRIVE_ID_PATTERN = /^[-\w]{20,}$/;
 // The catalogue ships with this placeholder until real files are uploaded.
 // It matches the pattern above, so it must be rejected explicitly.
 var PLACEHOLDER_ID = "REPLACE_WITH_REAL_DRIVE_FILE_ID";

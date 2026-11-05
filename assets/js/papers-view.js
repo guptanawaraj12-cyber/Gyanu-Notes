@@ -1,6 +1,17 @@
 // Gyanu Notes — paper viewer: loads paper data, shows preview, gates download behind login
 
-import { getPapersData } from "/assets/js/content-store.js?v=6";
+import { getPapersData, getInlinePaperContent } from "/assets/js/content-store.js?v=6";
+
+// DOMPurify config — mirrors notes-view.js so paper inline HTML is sanitised.
+var PAPER_SANITIZE_CONFIG = {
+  FORBID_TAGS: ["script", "iframe", "form", "object", "embed"],
+  ALLOWED_URI_REGEXP: /^(?:https?:\\/\\/|[^:]*$)/i
+};
+
+function sanitizePaperHtml(html) {
+  if (typeof window === "undefined" || !window.DOMPurify) return null;
+  return window.DOMPurify.sanitize(html, PAPER_SANITIZE_CONFIG);
+}
 
 // Firebase loads dynamically — the paper preview renders regardless; sign-in
 // features activate once it arrives.
@@ -56,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return null;
   }
 
-  function render(data) {
+  async function render(data) {
     var found = findSet(data, setId);
     var holder = document.getElementById('viewer-holder');
     var heading = document.getElementById('note-heading');
@@ -86,9 +97,16 @@ document.addEventListener('DOMContentLoaded', function () {
       '/ <a href="/papers/' + entry.classSlug + '/">' + classLabel + '</a>' +
       ' / ' + subjectLabel + ' ' + entry.year + ' / ' + currentSet.label;
 
-    // Embedded Drive preview; placeholder/malformed ids get an empty state
-    // instead of a broken iframe.
-    if (validDriveId(currentSet.driveFileId)) {
+    // Render inline HTML content if available; otherwise fall back to Drive preview.
+    var inlinePaper = await getInlinePaperContent(setId);
+    if (inlinePaper && inlinePaper.html) {
+      var safeHtml = sanitizePaperHtml(inlinePaper.html);
+      if (safeHtml) {
+        holder.innerHTML = safeHtml;
+      } else {
+        holder.innerHTML = '<div class="empty-state" style="padding: 40px 0; color: var(--ink-faint);">This paper could not be displayed safely.</div>';
+      }
+    } else if (validDriveId(currentSet.driveFileId)) {
       var previewSrc = 'https://drive.google.com/file/d/' + currentSet.driveFileId + '/preview';
       holder.innerHTML = '<iframe class="viewer-frame" src="' + previewSrc + '" allow="autoplay"></iframe>';
     } else {
@@ -276,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
             import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
           ]);
           await fs.addDoc(fs.collection(db, "feedback"), {
-            noteId: id,
+            contentId: id,
             vote: vote,
             uid: (currentUser && currentUser.uid) || null,
             submittedAt: fs.serverTimestamp()

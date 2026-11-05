@@ -288,6 +288,13 @@ document.addEventListener('DOMContentLoaded', function () {
     revealEls.forEach(function (el) { el.classList.add('in-view'); });
   }
 
+  // Staggered reveal for chapter/subject lists — floats in one by one,
+  // breaks the "everything appears at once" template feel.
+  var staggerLists = document.querySelectorAll('.chapter-list, .subject-list, .browse-grid');
+  staggerLists.forEach(function (list) {
+    list.classList.add('reveal-stagger');
+  });
+
   // 3D tilt on class/ticket cards (pointer-only flourish; skipped when the
   // visitor prefers reduced motion, matching the CSS hover overrides)
   var tilters = reduceMotion ? [] : document.querySelectorAll('.ticket');
@@ -302,4 +309,99 @@ document.addEventListener('DOMContentLoaded', function () {
       card.style.transform = 'rotateY(0deg) rotateX(0deg) translateY(0)';
     });
   });
+
+  // ---------- Toast notification system ----------
+  var toastContainer = null;
+  function ensureToastContainer() {
+    if (toastContainer) return toastContainer;
+    toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container';
+    document.body.appendChild(toastContainer);
+    return toastContainer;
+  }
+
+  window.showToast = function (message, type, duration) {
+    type = type || 'info';
+    duration = duration !== undefined ? duration : 4000;
+    ensureToastContainer();
+    var el = document.createElement('div');
+    el.className = 'toast toast-' + type;
+    el.innerHTML = '<span>' + escapeHtml(message) + '</span><button class="toast-close" aria-label="Dismiss">✕</button>';
+    var close = el.querySelector('.toast-close');
+    close.style.border = 'none';
+    close.style.background = 'transparent';
+    close.style.color = 'inherit';
+    close.style.fontSize = '1.1rem';
+    close.style.cursor = 'pointer';
+    close.style.padding = '0';
+    close.style.lineHeight = '1';
+    close.onclick = function () { dismissToast(el); };
+    toastContainer.appendChild(el);
+    var timer = setTimeout(function () { dismissToast(el); }, duration);
+    el.dataset.timer = timer;
+  };
+
+  function dismissToast(el) {
+    if (!el || !el.parentNode) return;
+    clearTimeout(parseInt(el.dataset.timer || '0', 10));
+    el.classList.add('toast-exit');
+    el.addEventListener('animationend', function () {
+      el.parentNode.removeChild(el);
+    }, { once: true });
+  }
+
+  // ---------- Page transition overlay ----------
+  var pageTransition = null;
+  function ensurePageTransition() {
+    if (pageTransition) return pageTransition;
+    pageTransition = document.createElement('div');
+    pageTransition.className = 'page-transition';
+    pageTransition.innerHTML = '<div class="page-transition-content"><div class="badge badge-brand" style="font-size:0.9rem;padding:6px 12px;">Loading</div></div>';
+    document.body.appendChild(pageTransition);
+    return pageTransition;
+  }
+
+  window.showPageTransition = function (show) {
+    var el = ensurePageTransition();
+    if (show) {
+      el.classList.add('is-active');
+    } else {
+      el.classList.remove('is-active');
+    }
+  };
+
+  // ---------- Reading progress bar ----------
+  var readingProgress = null;
+  var readingProgressFill = null;
+  function ensureReadingProgress() {
+    if (readingProgress) return;
+    readingProgress = document.getElementById('reading-progress');
+    readingProgressFill = document.getElementById('reading-progress-fill');
+    if (readingProgress) {
+      readingProgress.hidden = false;
+      window.addEventListener('scroll', updateReadingProgress, { passive: true });
+      updateReadingProgress();
+    }
+  }
+
+  function updateReadingProgress() {
+    if (!readingProgress || !readingProgressFill) return;
+    var winHeight = window.innerHeight;
+    var docHeight = document.documentElement.scrollHeight - winHeight;
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    readingProgress.style.width = Math.min(100, Math.max(0, progress)) + '%';
+    readingProgress.setAttribute('aria-valuenow', Math.round(progress));
+    readingProgress.setAttribute('aria-valuetext', Math.round(progress) + '% of this chapter read');
+  }
+
+  // ---------- Escape HTML helper ----------
+  window.escapeHtml = function (text) {
+    return String(text == null ? '' : text)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
+  };
+
+  // Initialize reading progress on chapter pages
+  ensureReadingProgress();
 });

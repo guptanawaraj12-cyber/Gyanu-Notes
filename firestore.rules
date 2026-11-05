@@ -20,7 +20,7 @@ service cloud.firestore {
     // or alter the admin field; administrators set it from the Console or the
     // privileged Cloud Function.
     match /users/{userId} {
-      allow read: if signedIn() && request.auth.uid == userId || isAdmin();
+      allow read: if (signedIn() && request.auth.uid == userId) || isAdmin();
       allow create: if signedIn() && request.auth.uid == userId &&
         request.resource.data.keys().hasOnly(['name', 'classLevel', 'email', 'createdAt']) &&
         request.resource.data.name is string &&
@@ -34,7 +34,7 @@ service cloud.firestore {
           request.resource.data.name is string &&
           request.resource.data.email is string &&
           (request.resource.data.classLevel is string || request.resource.data.classLevel == null));
-      allow delete: if signedIn() && request.auth.uid == userId || isAdmin();
+      allow delete: if (signedIn() && request.auth.uid == userId) || isAdmin();
     }
 
     // Browsing history is private to its owner.
@@ -64,6 +64,13 @@ service cloud.firestore {
         request.resource.data.savedAt == request.time;
       allow update: if false;
       allow delete: if signedIn() && request.auth.uid == userId;
+    }
+
+    // Chapter HTML content — public read, admin write.
+    // Used by notes-view.js when a chapter has inline HTML content.
+    match /chapterContent/{chapterId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // Site notices shown on the homepage notice board. Public read;

@@ -1,5 +1,5 @@
 {
-  "_readme": "Placeholder data. Replace driveFileId with real Google Drive file IDs once papers are uploaded.",
+  "_readme": "Inline content is served from assets/data/inline-content.json. Paper sets with hasInline: true render HTML content directly — no Google Drive file needed.",
 
   "classExamTypes": [
     { "classSlug": "class-8", "label": "Class 8", "examType": "Terminal Exam" },
@@ -24,8 +24,8 @@
       "year": "2081",
       "subjectSlug": "mathematics",
       "sets": [
-        { "id": "c10-math-2081-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
-        { "id": "c10-math-2081-model", "label": "Model Paper", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+        { "id": "c10-math-2081-real", "label": "Real Exam", "hasInline": true },
+        { "id": "c10-math-2081-model", "label": "Model Paper", "hasInline": true }
       ]
     },
     {
@@ -33,7 +33,7 @@
       "year": "2080",
       "subjectSlug": "mathematics",
       "sets": [
-        { "id": "c10-math-2080-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+        { "id": "c10-math-2080-real", "label": "Real Exam", "hasInline": true }
       ]
     },
     {
@@ -41,8 +41,8 @@
       "year": "2081",
       "subjectSlug": "physics",
       "sets": [
-        { "id": "c10-phy-2081-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" },
-        { "id": "c10-phy-2081-preboard", "label": "Pre-board", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+        { "id": "c10-phy-2081-real", "label": "Real Exam", "hasInline": true },
+        { "id": "c10-phy-2081-preboard", "label": "Pre-board", "hasInline": true }
       ]
     },
     {
@@ -50,7 +50,7 @@
       "year": "2081",
       "subjectSlug": "physics",
       "sets": [
-        { "id": "c12-phy-2081-real", "label": "Real Exam", "driveFileId": "REPLACE_WITH_REAL_DRIVE_FILE_ID" }
+        { "id": "c12-phy-2081-real", "label": "Real Exam", "hasInline": true }
       ]
     }
   ]
