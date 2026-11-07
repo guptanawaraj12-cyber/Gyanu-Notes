@@ -24,7 +24,7 @@ function walkStatic(dir, base) {
     const html = fs.readFileSync(full, "utf8");
     if (/name=["']robots["'][^>]*noindex/.test(html)) continue;
     let route = rel === "index.html" ? "/" : "/" + rel.replace(/\/index\.html$/, "") + "/";
-    if (SKIP_ROUTES.some((r) => route.startsWith("/" + r + "/"))) continue;
+    if (route === "/blog/post/") continue;
     routes.push({ loc: SITE + route, lastmod: today(fs.statSync(full).mtimeMs) });
   }
   return routes;
