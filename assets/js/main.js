@@ -6,7 +6,7 @@
 (function () {
   var root = document.documentElement;
   var stored = null;
-  try { stored = localStorage.getItem("gn_theme"); } catch (e) {}
+  try { stored = localStorage.getItem("gn_theme"); } catch (e) { /* localStorage unavailable */ }
   var system = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   root.setAttribute("data-theme", stored === "light" || stored === "dark" ? stored : system);
   document.addEventListener("DOMContentLoaded", function () {
@@ -21,7 +21,7 @@
     btn.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
-      try { localStorage.setItem("gn_theme", next); } catch (e) {}
+      try { localStorage.setItem("gn_theme", next); } catch (e) { /* localStorage unavailable */ }
       paint();
     });
   });
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.escapeHtml = function (text) {
     return String(text == null ? '' : text)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   };
 
   // Initialize reading progress on chapter pages

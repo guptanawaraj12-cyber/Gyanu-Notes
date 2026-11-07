@@ -20,30 +20,6 @@ let auth, db, onAuthStateChanged, doc, getDoc,
     getRecentHistory = hist.getRecentHistory; countHistory = hist.countHistory; clearHistory = hist.clearHistory;
     getBookmarkCount = bm.getBookmarkCount; getBookmarks = bm.getBookmarks;
 
-// Only relative paths and https links are allowed as targets, so user-stored
-// urls can never become javascript: links; titles render via textContent.
-function safeUrl(url) {
-  if (typeof url !== 'string') return null;
-  var value = url.trim();
-  if (value.charAt(0) === '/') return value;
-  if (/^https:\/\//i.test(value)) return value;
-  return null;
-}
-
-function timeAgo(isoOrTimestamp) {
-  if (!isoOrTimestamp) return '';
-  var date = isoOrTimestamp.toDate ? isoOrTimestamp.toDate() : new Date(isoOrTimestamp);
-  var seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (seconds < 60) return 'Just now';
-  var minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
-  var hours = Math.floor(minutes / 60);
-  if (hours < 24) return hours + (hours === 1 ? ' hour ago' : ' hours ago');
-  var days = Math.floor(hours / 24);
-  if (days < 7) return days + (days === 1 ? ' day ago' : ' days ago');
-  return date.toLocaleDateString();
-}
-
   onAuthStateChanged(auth, function (user) {
     if (!user) {
       window.location.href = '/login/';
@@ -106,6 +82,20 @@ function safeUrl(url) {
   if (value.charAt(0) === '/') return value;
   if (/^https:\/\//i.test(value)) return value;
   return null;
+}
+
+function timeAgo(isoOrTimestamp) {
+  if (!isoOrTimestamp) return '';
+  var date = isoOrTimestamp.toDate ? isoOrTimestamp.toDate() : new Date(isoOrTimestamp);
+  var seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (seconds < 60) return 'Just now';
+  var minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
+  var hours = Math.floor(minutes / 60);
+  if (hours < 24) return hours + (hours === 1 ? ' hour ago' : ' hours ago');
+  var days = Math.floor(hours / 24);
+  if (days < 7) return days + (days === 1 ? ' day ago' : ' days ago');
+  return date.toLocaleDateString();
 }
 
 function renderClassLinks(classLevel) {

@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var classSlug = parts[1] || '';
   var activeYear = null;
   var activeSubject = null;
-  var pageData = null;
 
   getPapersData()
     .then(function (data) { init(data); })
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
   function init(data) {
-    pageData = data;
     var classInfo = data.classExamTypes.find(function (c) { return c.classSlug === classSlug; });
     var classLabel = classInfo ? classInfo.label : classSlug;
     var examType = classInfo ? classInfo.examType : '';

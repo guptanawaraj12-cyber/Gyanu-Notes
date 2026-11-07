@@ -235,7 +235,7 @@ async function renderPost() {
   const article = document.getElementById("post-article");
   const missing = document.getElementById("post-missing");
   // Clean URLs: /blog/post/<slug>/ — fall back to the legacy ?slug= query.
-  const pathMatch = location.pathname.match(/^\/blog\/post\/([^\/]+)\/?$/);
+  const pathMatch = location.pathname.match(/^\/blog\/post\/([^/]+)\/?$/);
   const slug = pathMatch
     ? decodeURIComponent(pathMatch[1])
     : new URLSearchParams(location.search).get("slug");

@@ -5,6 +5,11 @@ let auth, db, onAuthStateChanged, updateProfile, EmailAuthProvider,
     FacebookAuthProvider, reauthenticateWithPopup, deleteUser,
     doc, getDoc, setDoc, deleteDoc, collection, getDocs, writeBatch;
 (async function () {
+  function showMsg(elId, text, type) {
+    var el = document.getElementById(elId);
+    el.textContent = text;
+    el.className = 'form-message ' + type;
+  }
   try {
     const [fc, am, fs] = await Promise.all([
       import("/assets/js/firebase-config.js?v=3"),
@@ -22,12 +27,6 @@ let auth, db, onAuthStateChanged, updateProfile, EmailAuthProvider,
 
 var currentUser = null;
 var isPasswordAccount = false;
-
-function showMsg(elId, text, type) {
-  var el = document.getElementById(elId);
-  el.textContent = text;
-  el.className = 'form-message ' + type;
-}
 
 onAuthStateChanged(auth, function (user) {
   if (!user) {
@@ -212,4 +211,4 @@ confirmDeleteBtn.addEventListener('click', function () {
     var ps = document.getElementById('profile-submit');
     if (ps) ps.disabled = true;
   }
-();
+})();

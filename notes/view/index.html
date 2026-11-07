@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin">
-<title id="page-title">Viewing note — Gyanu Notes</title>
+<title id="page-title">Viewing note â€” Gyanu Notes</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/assets/css/components.css?v=25">
 <link rel="stylesheet" href="/assets/css/utilities.css?v=4">
 
-</head>
+<meta name="description" content="View chapter or paper content - Gyanu Notes.">`r`n  <link rel="canonical" href="https://nawarajgupta.com.np/notes/view/">`r`n  </head>
 <body>
 
 <header class="site-header">
@@ -36,8 +36,8 @@
         <a href="/login/" class="btn btn-outline login-trigger">Login</a>
         <div class="login-panel"></div>
       </div>
-      <button class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
-        <button class="nav-toggle" aria-label="Open menu">☰</button>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode">ðŸŒ™</button>
+        <button class="nav-toggle" aria-label="Open menu">â˜°</button>
     </div>
   </nav>
 </header>
@@ -69,7 +69,7 @@
 
       <div class="viewer-actions">
         <div class="download-menu">
-          <button class="btn btn-brand" id="download-btn" aria-haspopup="true" aria-expanded="false" aria-controls="download-panel">Download ▾</button>
+          <button class="btn btn-brand" id="download-btn" aria-haspopup="true" aria-expanded="false" aria-controls="download-panel">Download â–¾</button>
           <div class="download-panel" id="download-panel">
             <button class="dl-item btn btn-outline" id="dl-notes" type="button">Download notes (PDF)<small>Branded PDF of the written notes</small></button>
             <button class="dl-item btn btn-outline" id="dl-handwritten" type="button" style="display:none;">Download handwritten notes<small>The handwritten version of this chapter</small></button>
@@ -81,13 +81,13 @@
           WhatsApp
         </a>
                 <button class="btn btn-outline" id="bookmark-btn" aria-pressed="false" style="display:none;">
-          <span class="bm-star">☆</span> <span class="bm-label">Save</span>
+          <span class="bm-star">â˜†</span> <span class="bm-label">Save</span>
         </button>
         <div class="feedback-widget" id="feedback-widget" style="display:none;">
           <p class="feedback-prompt">Was this helpful?</p>
           <div class="feedback-btns">
-            <button class="btn btn-outline" id="fb-up" type="button" aria-pressed="false">👍 Helpful</button>
-            <button class="btn btn-outline" id="fb-down" type="button" aria-pressed="false">👎 Not helpful</button>
+            <button class="btn btn-outline" id="fb-up" type="button" aria-pressed="false">ðŸ‘ Helpful</button>
+            <button class="btn btn-outline" id="fb-down" type="button" aria-pressed="false">ðŸ‘Ž Not helpful</button>
           </div>
           <p class="feedback-thanks" style="display:none;">Thanks for the feedback!</p>
         </div>
@@ -102,13 +102,13 @@
         <h2>Questions &amp; answers</h2>
         <div id="comment-form-wrap" hidden>
           <form id="comment-form">
-            <textarea id="comment-text" maxlength="1000" placeholder="Ask a question or share feedback about this note…" required></textarea>
+            <textarea id="comment-text" maxlength="1000" placeholder="Ask a question or share feedback about this noteâ€¦" required></textarea>
             <p><button class="btn btn-primary" id="comment-submit" type="submit">Post</button></p>
             <p class="form-message" id="comment-message"></p>
           </form>
         </div>
-        <p id="comment-login-prompt"><a href="/login/">Log in to ask a question</a> — it’s free and takes a minute.</p>
-        <div id="comments-list" aria-live="polite"><p class="muted">Loading questions…</p></div>
+        <p id="comment-login-prompt"><a href="/login/">Log in to ask a question</a> â€” itâ€™s free and takes a minute.</p>
+        <div id="comments-list" aria-live="polite"><p class="muted">Loading questionsâ€¦</p></div>
         <p><button class="btn btn-outline" id="comments-more" type="button" hidden>Load more</button></p>
       </div>
     </div>
@@ -118,7 +118,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-bottom">
-      <span>© 2026 Gyanu Notes. All rights reserved.</span>
+      <span>Â© 2026 Gyanu Notes. All rights reserved.</span>
       <div class="legal-links">
         <a href="/privacy/">Privacy policy</a>
         <a href="/terms/">Terms</a>
@@ -130,7 +130,7 @@
 
 <script src="/assets/js/main.js?v=15"></script>
 <script type="module" src="/assets/js/auth-state.js?v=4"></script>
-<!-- DOMPurify (pinned) — sanitises Firestore/bundled chapter HTML before rendering -->
+<!-- DOMPurify (pinned) â€” sanitises Firestore/bundled chapter HTML before rendering -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.4.17/purify.min.js"></script>
 <script type="module" src="/assets/js/notes-view.js?v=12"></script>
 <script type="module" src="/assets/js/comments.js?v=2"></script>

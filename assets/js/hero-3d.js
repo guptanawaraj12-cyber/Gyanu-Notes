@@ -1,6 +1,6 @@
 // Gyanu Notes — 3D hero scene (floating note cards)
 // Requires three.js loaded before this script.
-
+/* global THREE */
 (function () {
   var container = document.getElementById('hero-3d-canvas');
   if (!container || typeof THREE === 'undefined') return;

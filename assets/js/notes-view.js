@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var hasLoggedView = false;
   var hasInlineContent = false;
   var inlineHtml = null;
-  var currentFileLabel = 'gyanu-notes';
   var currentMeta = '';
   var bookmarkBtn = document.getElementById('bookmark-btn');
   var bookmarkActive = false;

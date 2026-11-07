@@ -81,6 +81,10 @@ export async function getPapersData() {
 // ---- Inline paper content ----------------------------------------------------
 export async function getInlinePaperContent(id) {
   try {
+    const response = await fetch("/assets/content/" + encodeURIComponent(id) + ".html");
+    if (response.ok) return { html: await response.text() };
+  } catch (error) { /* fall through */ }
+  try {
     const response = await fetch("/assets/data/inline-content.json");
     if (!response.ok) throw new Error("Could not load inline content");
     const all = await response.json();

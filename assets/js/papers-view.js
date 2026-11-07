@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var thanks = widget.querySelector('.feedback-thanks');
     var fbKey = 'paper_feedback_' + id;
     var alreadyVoted = false;
-    try { alreadyVoted = localStorage.getItem(fbKey) === 'true'; } catch (e) {}
+    try { alreadyVoted = localStorage.getItem(fbKey) === 'true'; } catch (e) { /* localStorage unavailable */ }
     if (alreadyVoted) {
       if (prompt) prompt.style.display = 'none';
       if (btns) btns.style.display = 'none';
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (prompt) prompt.style.display = 'none';
       if (btns) btns.style.display = 'none';
       if (thanks) thanks.style.display = 'block';
-      try { localStorage.setItem(fbKey, 'true'); } catch (e) {}
+      try { localStorage.setItem(fbKey, 'true'); } catch (e) { /* localStorage unavailable */ }
       (async function () {
         try {
           const [{ db }, fs] = await Promise.all([
@@ -306,6 +306,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (upBtn) upBtn.addEventListener('click', function () { submitVote('up'); });
     if (downBtn) downBtn.addEventListener('click', function () { submitVote('down'); });
   }
-  fbReady.then(function () { try { initFeedbackWidget(setId); } catch (e) {} });
+  fbReady.then(function () { try { initFeedbackWidget(setId); } catch (e) { /* localStorage unavailable */ } });
 
 });

@@ -36,7 +36,7 @@ onAuthStateChanged(auth, async function (user) {
   var welcomeBanner = document.querySelector(".welcome-banner");
   var welcomeName = document.querySelector(".welcome-banner strong");
 
-  function renderTrigger(name) {
+  function renderTrigger() {
     if (!loginTrigger) return;
     loginTrigger.setAttribute("href", user ? "#" : "/login/");
     if (user) {
@@ -149,12 +149,12 @@ onAuthStateChanged(auth, async function (user) {
       welcomeName.textContent = "Welcome back, " + (user.displayName ? user.displayName.split(" ")[0] : "there") + ".";
       welcomeBanner.classList.add("show");
     }
-    renderTrigger(user.displayName);
+    renderTrigger();
     buildLoggedInPanel();
   } else {
     if (loginMenu) loginMenu.classList.remove("authed");
     if (welcomeBanner) welcomeBanner.classList.remove("show");
-    renderTrigger(null);
+    renderTrigger();
     clearLoggedInPanel();
   }
   });
