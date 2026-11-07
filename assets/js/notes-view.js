@@ -190,13 +190,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     } catch (error) { /* fall through to bundled content */ }
     try {
+      var res = await fetch('/assets/content/' + encodeURIComponent(noteId) + '.html');
+      if (res.ok) return await res.text();
+    } catch (error) { /* fall through to bundled content */ }
+    try {
       var inline = await getInlineContent(noteId);
       if (inline && inline.html) return inline.html;
-    } catch (error) { /* fall through to bundled file */ }
-    try {
-      var res = await fetch('/assets/content/' + encodeURIComponent(noteId) + '.html');
-      return res.ok ? await res.text() : null;
-    } catch (error) { return null; }
+    } catch (error) { /* fall through */ }
+    return null;
   }
 
   function render(data) {

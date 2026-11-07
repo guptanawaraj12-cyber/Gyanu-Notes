@@ -4,7 +4,7 @@
   "description": "Free study notes and past exam papers for Class 8–12 students in Nepal (NEB / SEE aligned).",
   "private": true,
   "scripts": {
-    "deploy": "firebase deploy",
+    "sitemap": "node scripts/gen-sitemap.js",
     "deploy:hosting": "firebase deploy --only hosting",
     "deploy:rules": "firebase deploy --only firestore:rules",
     "deploy:indexes": "firebase deploy --only firestore:indexes",

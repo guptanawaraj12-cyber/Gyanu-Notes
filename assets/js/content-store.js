@@ -96,6 +96,10 @@ export async function getInlinePaperContent(id) {
 // chapter content directly instead of relying on Google Drive file IDs.
 export async function getInlineContent(id) {
   try {
+    const response = await fetch("/assets/content/" + encodeURIComponent(id) + ".html");
+    if (response.ok) return { html: await response.text() };
+  } catch (error) { /* fall through */ }
+  try {
     const response = await fetch("/assets/data/inline-content.json");
     if (!response.ok) throw new Error("Could not load inline content");
     const all = await response.json();
