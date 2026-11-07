@@ -212,4 +212,4 @@ confirmDeleteBtn.addEventListener('click', function () {
     var ps = document.getElementById('profile-submit');
     if (ps) ps.disabled = true;
   }
-()
+();

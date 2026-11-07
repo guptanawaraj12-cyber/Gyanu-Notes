@@ -474,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function () {
       '.pdf-foot { margin-top: 22px; border-top: 1px solid #dfe3e8; padding-top: 7px; font-size: 9.5px; color: #5c636e; }' +
       '</style></head><body>' +
       '<header class="pdf-head">' +
-      '<div class="brand-row"><img src="/assets/images/logo.jpeg" alt="Gyanu Notes">' +
+      '<div class="brand-row"><img src="/assets/images/logo.jpg" alt="Gyanu Notes">' +
       '<span class="brand-name">Gyanu Notes</span>' +
       '<span class="brand-tag">Free notes &amp; past papers · nawarajgupta.com.np</span></div>' +
       '<h1>' + title + '</h1>' +
