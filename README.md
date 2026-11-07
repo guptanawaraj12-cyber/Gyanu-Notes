@@ -1,14 +1,33 @@
-# Gyanu Notes
+# 📚 Gyanu Notes
 
-Free study notes and past exam papers for Class 8–12 students in Nepal (NEB / SEE aligned).
+**Free study notes & past exam papers for Class 8–12 students in Nepal (NEB / SEE aligned).**
 
-## Stack
-- Static frontend (HTML/CSS/JS)
+![Status](https://img.shields.io/badge/status-production--ready-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![Firebase](https://img.shields.io/badge/backend-Firebase-orange)
+
+## ✨ Features
+- Class-wise & subject-wise notes
+- Past papers & model papers
+- Search & bookmarks
+- User dashboard & history
+- Admin content management
+
+## 🛠️ Tech Stack
+- HTML, CSS, JavaScript
 - Firebase Hosting, Firestore, Auth, Cloud Functions
 
-## Run locally
-- Serve static files (e.g. `npx serve .`)
-- Firebase emulators for rules: `npm run test:rules`
+## 🚀 Getting Started
+```bash
+# Serve locally
+npx serve .
 
-## Deploy
-- `npm run deploy` (Firebase)
+# Run Firestore rules tests
+npm run test:rules
+```
+
+## 📦 Deploy
+```bash
+npm run deploy
+```
+
+## 📄 License
+MIT © Nawaraj Gupta
