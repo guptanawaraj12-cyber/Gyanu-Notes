@@ -48,28 +48,20 @@ function main() {
   const data = JSON.parse(fs.readFileSync(NOTES_DATA_PATH, 'utf8'));
   const inlineContent = {};
 
-  data.notes.forEach(function (entry) {
-    // Look up the human-readable class label from the classes array
+  const contentDir = path.join(ROOT, 'assets', 'content');
+if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir, { recursive: true });
+
+data.notes.forEach(function (entry) {
     var classInfo = data.classes.find(function (c) { return c.slug === entry.classSlug; });
     var classLabel = classInfo ? classInfo.label : '';
-
     (entry.chapters || []).forEach(function (ch) {
-      var chNumMatch = ch.title.match(/Ch\s+(\d+)/);
-      var chapterNum = chNumMatch ? chNumMatch[1] : '0';
-
-      inlineContent[ch.id] = {
-        id: ch.id,
-        title: ch.title,
-        classSlug: entry.classSlug,
-        subjectSlug: entry.subjectSlug,
-        html: buildFullHtml(ch.title, classLabel, subjectLabel(entry.subjectSlug), sectionsHtml(entry.subjectSlug, ch.title))
-      };
-
+      var fragment = '<div class="chapter-content"><h1>' + ch.title + '</h1><p class="muted" style="font-size:0.9rem;color:var(--ink-faint);">' + classLabel + ' · ' + subjectLabel(entry.subjectSlug) + '</p>' + introHtml(classLabel, ch.title, subjectLabel(entry.subjectSlug)) + sectionsHtml(entry.subjectSlug, ch.title) + '</div>';
+      var outPath = path.join(contentDir, ch.id + '.html');
+      if (!fs.existsSync(outPath)) fs.writeFileSync(outPath, fragment, 'utf8');
+      inlineContent[ch.id] = { id: ch.id, title: ch.title, classSlug: entry.classSlug, subjectSlug: entry.subjectSlug, html: fragment };
       ch.hasInline = true;
       delete ch.driveFileId;
-      if (ch.handwrittenDriveId === 'REPLACE_WITH_REAL_DRIVE_FILE_ID') {
-        delete ch.handwrittenDriveId;
-      }
+      if (ch.handwrittenDriveId === 'REPLACE_WITH_REAL_DRIVE_FILE_ID') delete ch.handwrittenDriveId;
     });
   });
 
