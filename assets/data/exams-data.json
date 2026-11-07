@@ -30,13 +30,5 @@
     "dateBs": "2084-02-10",
     "class": "Class 12",
     "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "English", "Nepali", "Computer Science", "Social Studies"]
-  },
-  {
-    "board": "SEE",
-    "examName": "SEE 2082",
-    "date": "2025-05-02",
-    "dateBs": "2082-01-20",
-    "class": "Class 10",
-    "subjects": ["Nepali", "English", "Mathematics", "Science", "Social Studies"]
   }
 ]
