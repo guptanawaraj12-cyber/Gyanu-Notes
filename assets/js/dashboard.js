@@ -100,6 +100,14 @@ function timeAgo(isoOrTimestamp) {
   }
 })();
 
+function safeUrl(url) {
+  if (typeof url !== 'string') return null;
+  var value = url.trim();
+  if (value.charAt(0) === '/') return value;
+  if (/^https:\/\//i.test(value)) return value;
+  return null;
+}
+
 function renderClassLinks(classLevel) {
   var holder = document.getElementById('class-links');
   if (!/^[0-9]+$/.test(String(classLevel))) return; // user input — digits only ever form a link
