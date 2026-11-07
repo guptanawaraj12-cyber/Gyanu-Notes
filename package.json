@@ -9,7 +9,7 @@
     "deploy:rules": "firebase deploy --only firestore:rules",
     "deploy:indexes": "firebase deploy --only firestore:indexes",
     "test:rules": "cd tests && npm install && npx firebase-tools emulators:exec --project demo-gyanu-notes --only firestore \"node --test rules.test.mjs\"",
-    "lint": "npx eslint assets/js/*.js || true",
+    "lint": "npx eslint assets/js/*.js",
     "postinstall": "echo \"Gyanu Notes — static site. Use npm run deploy to publish to Firebase Hosting.\""
   },
   "repository": {
