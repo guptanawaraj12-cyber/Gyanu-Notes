@@ -1,8 +1,9 @@
 # 📚 Gyanu Notes
 
-**Free study notes & past exam papers for Class 8–12 students in Nepal (NEB / SEE aligned).**
+Free study notes & past exam papers for Class 8–12 students in Nepal (NEB / SEE aligned).
 
-![Status](https://img.shields.io/badge/status-production--ready-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![Firebase](https://img.shields.io/badge/backend-Firebase-orange)
+Status: In active development. Not yet production-ready.
+
 
 ## ✨ Features
 - Class-wise & subject-wise notes
