@@ -25,6 +25,7 @@ service cloud.firestore {
         request.resource.data.keys().hasOnly(['name', 'classLevel', 'email', 'createdAt']) &&
         request.resource.data.name is string &&
         request.resource.data.email is string &&
+        request.resource.data.email == request.auth.token.email &&
         (request.resource.data.classLevel is string || request.resource.data.classLevel == null) &&
         request.resource.data.createdAt is string;
       allow update: if isAdmin() ||
@@ -33,6 +34,7 @@ service cloud.firestore {
             .hasOnly(['name', 'classLevel', 'email']) &&
           request.resource.data.name is string &&
           request.resource.data.email is string &&
+          request.resource.data.email == request.auth.token.email &&
           (request.resource.data.classLevel is string || request.resource.data.classLevel == null));
       allow delete: if (signedIn() && request.auth.uid == userId) || isAdmin();
     }
@@ -154,7 +156,7 @@ service cloud.firestore {
         request.resource.data.vote in ['up', 'down'] &&
         request.resource.data.noteId is string &&
         request.resource.data.noteId.size() > 0 &&
-        (request.resource.data.slug == null || request.resource.data.slug is string) &&
+        ((!('slug' in request.resource.data) || request.resource.data.slug == null) || request.resource.data.slug is string) &&
         (request.resource.data.uid == null || request.resource.data.uid is string) &&
         (request.resource.data.uid == null || request.resource.data.uid == request.auth.uid) &&
         request.resource.data.submittedAt == request.time;

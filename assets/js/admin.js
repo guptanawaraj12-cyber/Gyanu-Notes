@@ -200,42 +200,13 @@ document.getElementById("import-bundled").addEventListener("click", async () => 
 });
 
 async function setRole(enabled) {
-  const email = document.getElementById("role-email").value.trim();
-  if (!email) return message("role-message", "Enter the account email first.", "error");
+  const uid = document.getElementById("role-uid").value.trim();
+  if (!uid) return message("role-message", "Enter the account UID first.", "error");
+  if (uid === auth.currentUser.uid) return message("role-message", "You cannot change your own role here.", "error");
   try {
-    // Firestore equality is case-sensitive. Email/password accounts store the
-    // canonical lowercase email (Firebase normalises it), but social-linked
-    // profiles may keep the provider's casing and legacy rows can be anything.
-    // Probe every plausible casing in a single `in` query (max 10 values).
-    const variants = [];
-    const push = (v) => { if (v && variants.indexOf(v) === -1) variants.push(v); };
-    push(email);
-    push(email.toLowerCase());
-    push(email.toUpperCase());
-    // Title-case the local part ("john.doe@x.com" -> "John.Doe@x.com")
-    const at = email.indexOf("@");
-    if (at > 0) {
-      const local = email.slice(0, at);
-      const title = local.split(/[._+-]/).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(".") + email.slice(at);
-      push(title);
-    }
-
-    let matches = await getDocs(query(collection(db, "users"), where("email", "in", variants), limit(10)));
-    let updated = 0;
-    const seen = new Set();
-    for (const snap of matches.docs) {
-      if (seen.has(snap.id)) continue;
-      seen.add(snap.id);
-      if (snap.id === auth.currentUser.uid) continue; // an admin never changes their own role here
-      await updateDoc(doc(db, "users", snap.id), { admin: enabled });
-      updated++;
-    }
-    if (!updated) {
-      message("role-message", "No other account with that email was found. The user must sign up first.", "error");
-    } else {
-      message("role-message", (enabled ? "Administrator role granted" : "Administrator role revoked") +
-        " for " + updated + " account(s). The user must sign out and back in.", "success");
-    }
+    await updateDoc(doc(db, "users", uid), { admin: enabled });
+    message("role-message", (enabled ? "Administrator role granted" : "Administrator role revoked") +
+      " for " + uid + ". The user must sign out and back in.", "success");
   } catch (error) {
     message("role-message", "Role update failed: " + (error.message || "try again."), "error");
   }
