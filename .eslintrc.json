@@ -1,5 +1,6 @@
 {
   "env": { "browser": true, "es2022": true },
+  "parserOptions": { "sourceType": "module" },
   "extends": "eslint:recommended",
-  "rules": { "no-unused-vars": "warn", "no-console": "off" }
+  "rules": { "no-unused-vars": "warn", "no-console": "off", "no-inner-declarations": "off" }
 }

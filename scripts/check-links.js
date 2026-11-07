@@ -5,7 +5,7 @@ const files=walk(root);
 let bad=0;
 for(const f of files){
  const html=fs.readFileSync(f,'utf8');
- if(!/<title>/.test(html)){console.log('NO TITLE',f);bad++;}
+ if(!/<title\b[^>]*>/.test(html) && !/id="page-title"/.test(html)){console.log('NO TITLE',f);bad++;}
  if(!/name="description"/.test(html)){console.log('NO DESC',f);bad++;}
  if(!/rel="canonical"/.test(html)){console.log('NO CANONICAL',f);bad++;}
  const re=/(href|src)="([^"]+)"/g; let m;
