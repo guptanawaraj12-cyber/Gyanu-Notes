@@ -32,8 +32,7 @@ export function chapterUsable(chapter) {
   return !!chapter && (
     chapter.hasInline === true ||
     usableDriveId(chapter.driveFileId) ||
-    usableDriveId(chapter.handwrittenDriveId) ||
-    !!chapter.title
+    usableDriveId(chapter.handwrittenDriveId)
   );
 }
 

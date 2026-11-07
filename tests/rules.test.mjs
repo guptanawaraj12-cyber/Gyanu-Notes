@@ -138,7 +138,37 @@ test("comments: author cannot report their own comment; another signed-in user c
   );
 });
 
-test("users: a user can never grant admin on their own profile", async () => {
+test("users: email must equal auth token email", async () => {
+  const alice = testEnv.authenticatedContext("alice2", {
+    email: "alice2@example.com",
+    email_verified: true
+  });
+  const profile = {
+    name: "Alice",
+    classLevel: "12",
+    email: "alice2@example.com",
+    createdAt: new Date().toISOString()
+  };
+  await assertSucceeds(setDoc(doc(alice.firestore(), "users", "alice2"), profile));
+  // forged email → denied
+  await assertFails(updateDoc(doc(alice.firestore(), "users", "alice2"), { email: "other@example.com" }));
+  // case mismatch → denied
+  await assertFails(updateDoc(doc(alice.firestore(), "users", "alice2"), { email: "ALICE2@example.com" }));
+});
+
+test("feedback: create succeeds without slug", async () => {
+  const user = testEnv.authenticatedContext("user-noslug", {
+    email: "noslug@example.com",
+    email_verified: true
+  });
+  const payload = {
+    noteId: "c12-phy-01",
+    vote: "up",
+    uid: "user-noslug",
+    submittedAt: serverTimestamp()
+  };
+  await assertSucceeds(setDoc(doc(user.firestore(), "feedback", "user-noslug-vote"), payload));
+});
   const alice = testEnv.authenticatedContext("alice", {
     email: "alice@example.com",
     email_verified: true
