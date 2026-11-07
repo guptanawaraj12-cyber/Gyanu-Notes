@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
       var row = document.createElement('a');
       row.className = 'chapter-row';
       row.href = '/notes/view/?id=' + encodeURIComponent(ch.id);
-      row.innerHTML = '<span class="title">' + ch.title + '</span><span class="arrow" style="color: var(--accent);">&rarr;</span>';
+      row.innerHTML = '<span class="title"></span><span class="arrow" style="color: var(--accent);">&rarr;</span>';
+      row.querySelector('.title').textContent = ch.title;
       list.appendChild(row);
     });
   }

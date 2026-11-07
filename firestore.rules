@@ -66,13 +66,6 @@ service cloud.firestore {
       allow delete: if signedIn() && request.auth.uid == userId;
     }
 
-    // Chapter HTML content — public read, admin write.
-    // Used by notes-view.js when a chapter has inline HTML content.
-    match /chapterContent/{chapterId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
     // Site notices shown on the homepage notice board. Public read;
     // administrators publish and remove them.
     match /notices/{noticeId} {
@@ -87,7 +80,14 @@ service cloud.firestore {
         request.resource.data.pinned is bool &&
         request.resource.data.createdAt == request.time &&
         request.resource.data.createdBy == request.auth.uid;
-      allow update: if isAdmin();
+      allow update: if isAdmin() &&
+        request.resource.data.keys().hasOnly(['title', 'body', 'url', 'pinned', 'createdAt', 'createdBy']) &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 200 &&
+        request.resource.data.body is string &&
+        request.resource.data.body.size() <= 4000 &&
+        (request.resource.data.url is string || request.resource.data.url == null) &&
+        request.resource.data.pinned is bool;
       allow delete: if isAdmin();
     }
 

@@ -5,7 +5,7 @@ import { getPapersData, getInlinePaperContent } from "/assets/js/content-store.j
 // DOMPurify config — mirrors notes-view.js so paper inline HTML is sanitised.
 var PAPER_SANITIZE_CONFIG = {
   FORBID_TAGS: ["script", "iframe", "form", "object", "embed"],
-  ALLOWED_URI_REGEXP: /^(?:https?:\\/\\/|[^:]*$)/i
+  ALLOWED_URI_REGEXP: /^(?:https?:\/\/|[^:]*$)/i
 };
 
 function sanitizePaperHtml(html) {
@@ -294,7 +294,8 @@ document.addEventListener('DOMContentLoaded', function () {
             import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js")
           ]);
           await fs.addDoc(fs.collection(db, "feedback"), {
-            contentId: id,
+            noteId: id,
+            slug: id,
             vote: vote,
             uid: (currentUser && currentUser.uid) || null,
             submittedAt: fs.serverTimestamp()

@@ -27,16 +27,20 @@ export function logView(uid, entry) {
   if (!uid) return Promise.resolve();
   var docId = historyDocId(entry.url);
   if (!docId) return Promise.resolve();
-  return fs().then(({ db, doc, setDoc, serverTimestamp }) =>
-    // Deterministic id: first view creates, later views overwrite (the update
-    // rule below permits only the viewedAt field to change).
-    setDoc(doc(db, "history", uid, "items", docId), {
-      title: entry.title,
-      url: entry.url,
-      type: entry.type,
-      viewedAt: serverTimestamp()
-    })
-  ).catch(function (err) {
+  return fs().then(({ db, doc, setDoc, updateDoc, getDoc, serverTimestamp }) => {
+    const ref = doc(db, "history", uid, "items", docId);
+    return getDoc(ref).then(function (snap) {
+      if (snap.exists()) {
+        return updateDoc(ref, { viewedAt: serverTimestamp() });
+      }
+      return setDoc(ref, {
+        title: entry.title,
+        url: entry.url,
+        type: entry.type,
+        viewedAt: serverTimestamp()
+      });
+    });
+  }).catch(function (err) {
     // Non-critical — don't break the viewing experience if this fails
     console.warn("Could not log view history:", err);
   });

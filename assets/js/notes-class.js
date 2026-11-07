@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(function () {
       // Replace the skeletons with a message instead of leaving the page
       // pulsing forever (aria-busy is released by main.js once they go).
-      document.getElementById('page-heading').textContent = 'Could not load notes';
+      var heading = document.getElementById('page-heading');
+      if (heading) heading.textContent = 'Could not load notes';
       var sub = document.getElementById('page-sub');
       if (sub) sub.textContent = 'Check your connection and try again.';
       var list = document.getElementById('subject-list');

@@ -32,7 +32,8 @@ export function chapterUsable(chapter) {
   return !!chapter && (
     chapter.hasInline === true ||
     usableDriveId(chapter.driveFileId) ||
-    usableDriveId(chapter.handwrittenDriveId)
+    usableDriveId(chapter.handwrittenDriveId) ||
+    !!chapter.title
   );
 }
 
@@ -48,7 +49,8 @@ async function firestoreContent() {
   const snapshot = await withTimeout(getDoc(doc(db, "siteContent", "current")), 4000);
   if (snapshot.exists()) {
     const content = snapshot.data();
-    if (Array.isArray(content.notes?.notes) && Array.isArray(content.papers?.papers)) {
+    if (Array.isArray(content.notes?.notes)) {
+      if (!Array.isArray(content.papers?.papers)) content.papers = { papers: [], classes: [], subjects: [] };
       return content;
     }
   }

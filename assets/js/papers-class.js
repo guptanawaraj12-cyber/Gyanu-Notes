@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   getPapersData()
     .then(function (data) { init(data); })
     .catch(function () {
-      document.getElementById('page-heading').textContent = 'Could not load papers';
+      var ph = document.getElementById('page-heading'); if (ph) ph.textContent = 'Could not load papers';
     });
 
   function init(data) {

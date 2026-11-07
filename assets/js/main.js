@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 3D tilt on class/ticket cards (pointer-only flourish; skipped when the
   // visitor prefers reduced motion, matching the CSS hover overrides)
-  var tilters = reduceMotion ? [] : document.querySelectorAll('.ticket');
+  var tilters = (reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) ? [] : document.querySelectorAll('.ticket');
   tilters.forEach(function (card) {
     card.addEventListener('mousemove', function (e) {
       var rect = card.getBoundingClientRect();

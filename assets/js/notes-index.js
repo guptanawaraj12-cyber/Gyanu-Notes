@@ -40,7 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
       var n = (entry.chapters || []).filter(chapterUsable).length;
       if (n) usableBySubject[entry.subjectSlug] = (usableBySubject[entry.subjectSlug] || 0) + n;
     });
-    var subjectsWithContent = data.subjects.filter(function (s) { return usableBySubject[s.slug]; });
+    var subjectsWithContent = (data.subjects || []).filter(function (s) { return usableBySubject[s.slug]; });
+var subjectSlugsFromNotes = Object.keys(usableBySubject).filter(function (slug) {
+  return !subjectsWithContent.some(function (s) { return s.slug === slug; });
+});
+subjectSlugsFromNotes.forEach(function (slug) { subjectsWithContent.push({ slug: slug, label: slug }); });
     var classesWithContent = data.classes.filter(function (c) {
       return data.notes.some(function (entry) {
         return entry.classSlug === c.slug && (entry.chapters || []).some(chapterUsable);
@@ -116,8 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
       recentList.appendChild(row);
     });
 
-    // re-run tilt effect setup for newly injected .ticket cards
-    document.querySelectorAll('.ticket').forEach(function (card) {
+    // re-run tilt effect setup for newly injected .ticket cards (pointer only)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.ticket').forEach(function (card) {
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
         var x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -127,7 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
       card.addEventListener('mouseleave', function () {
         card.style.transform = 'rotateY(0deg) rotateX(0deg) translateY(0)';
       });
-    });
+      });
+    }
   }
 
   function renderMine() {
@@ -155,13 +161,15 @@ document.addEventListener('DOMContentLoaded', function () {
               list.innerHTML = '<p style="color: var(--ink-faint);">You have not viewed any notes yet. <a href="/notes/">Browse notes</a></p>';
               return;
             }
-            notes.forEach(function (item) {
-              var row = document.createElement('a');
-              row.className = 'update-row';
-              row.href = item.url;
-              row.textContent = item.title;
-              list.appendChild(row);
-            });
+             notes.forEach(function (item) {
+               var safe = (typeof item.url === 'string' && (item.url.charAt(0) === '/' || /^https:\/\//i.test(item.url.trim()))) ? item.url.trim() : null;
+               if (!safe) return;
+               var row = document.createElement('a');
+               row.className = 'update-row';
+               row.href = safe;
+               row.textContent = item.title;
+               list.appendChild(row);
+             });
           });
         });
       } catch (error) {
