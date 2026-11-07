@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ensureToastContainer();
     var el = document.createElement('div');
     el.className = 'toast toast-' + type;
-    el.innerHTML = '<span>' + escapeHtml(message) + '</span><button class="toast-close" aria-label="Dismiss">✕</button>';
+    el.innerHTML = '<span>' + (window.escapeHtml ? window.escapeHtml(message) : String(message)) + '</span><button class="toast-close" aria-label="Dismiss">✕</button>';
     var close = el.querySelector('.toast-close');
     close.style.border = 'none';
     close.style.background = 'transparent';
